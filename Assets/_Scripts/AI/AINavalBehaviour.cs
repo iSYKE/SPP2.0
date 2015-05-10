@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AINavalBehaviour : MonoBehaviour {
 
+	//--------------------------------
 	public enum BehaviourMode{
 
 		Peaceful, Combat
@@ -11,18 +12,38 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	public BehaviourMode behaviourMode;
 
-	public GameObject target;
+	//--------------------------------
 
+	public enum Morale{
+		Surrender, Wavering, Steady
+	}
+
+	public Morale morale;
+
+	//--------------------------------
+
+
+	// Situational Awareness Vars
 	bool hasEnemy;
 
-	public Vector3 moveTo;
-	public Vector3 targetLocation;
+	public GameObject target;
 
+	public Vector3 targetLocation;
+	//Movement Vars
+
+
+	public Vector3 moveTo;
+
+
+
+	//Firing Vars
 	public 	float rangeToTarget;
 	private float maxWeaponsRange;
 	private float minWeaponsRange;
 
-	// Use this for initialization
+
+
+	//------------------------------------
 	void Start () {
 	
 		maxWeaponsRange = 400f;
@@ -31,7 +52,7 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	}
 	
-	// Update is called once per frame
+	//------------------------------------
 	void Update () {
 		print ( Vector3.Dot( (transform.position - targetLocation).normalized, transform.right ) );
 		SeekEnemy();
@@ -57,9 +78,7 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	}
 
-
-
-
+	//------------------------------------
 
 
 	void SeekEnemy(){
@@ -91,6 +110,21 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	void SailTo(){
 
+		if( behaviourMode == BehaviourMode.Combat && targetLocation != null ){
+			moveTo = targetLocation;
+		}else{
+			moveTo = Vector3.zero;
+		}
+
+		if( moveTo != null ){
+
+			Vector3 headingVec = transform.position - moveTo;
+			//DO STUFF HERE...
+
+			if( transform.forward. != heading
+
+		}
+
 
 
 	}
@@ -98,7 +132,11 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	void MoveTowardsEnemy(){
 
+		if( rangeToTarget > maxWeaponsRange){
 
+
+
+		}
 
 	}
 

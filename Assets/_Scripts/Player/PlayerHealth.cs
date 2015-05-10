@@ -10,14 +10,9 @@ public class PlayerHealth : MonoBehaviour {
 	public Slider healthSlider;
 	public Text HealthNumberText;
 	public Text GameOverText;
-	public Image damageImage;
-	//public AudioClip sinkingClip;
-	public float flashSpeed = 5f;
-	public Color flashColor = new Color(1f, 0f, 0f, 0.1f);
 
 	//AudioSource playerAudio;
 	bool isDead;
-	bool damaged;
 
 	GameObject sinking;
 	BuoyancyForce buoyancyForce;
@@ -35,18 +30,11 @@ public class PlayerHealth : MonoBehaviour {
 
 	void Update()
 	{
-		if (damaged) {
-			damageImage.color = flashColor;
-		} else {
-			damageImage.color = Color.Lerp (damageImage.color, Color.clear, flashSpeed * Time.deltaTime);
-		}
 		HealthNumberText.text = (hullCurrentHealth.ToString() + " / " + hullStartingHealth.ToString());
-		damaged = false;
 	}
 
 	public void TakeDamage (int amount)
 	{
-		damaged = true;
 		hullCurrentHealth -= amount;
 		healthSlider.value = hullCurrentHealth;
 		//playerAudio.Play();

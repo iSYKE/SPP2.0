@@ -10,6 +10,13 @@ public class NavalMovement : MonoBehaviour {
 	public Wind wind;
 
 	GameObject courseSail;
+	GameObject topSail;
+	GameObject aftSail;
+
+	GameObject courseSailFolded;
+	GameObject topSailFolded;
+	GameObject aftSailFolded;
+
 
 	public enum SailSet {
 		no,
@@ -50,11 +57,16 @@ public class NavalMovement : MonoBehaviour {
 	void Start () {
 
 		sailSet = SailSet.no;
-		sailCharCoef 		= 100000f;
+		sailCharCoef 		= 400000f;
 		turningForceCoeff 	= 1000000f;
 
 
-		//courseSail = transform.Find("CourseSail").gameObject;
+		courseSail 			= transform.Find("Sloop/MainMast1/CourseSailMast/CourseSail").gameObject;
+		courseSailFolded 	= transform.Find("Sloop/MainMast1/CourseSailMast/CourseSailFolded").gameObject;
+		topSail 			= transform.Find("Sloop/MainMast1/CourseSailMast/TopSailMast/TopSail").gameObject;
+		topSailFolded		= transform.Find("Sloop/MainMast1/CourseSailMast/TopSailMast/TopSailFolded").gameObject;
+		aftSail 			= transform.Find("Sloop/AftMast1/AftSail").gameObject;
+		aftSailFolded 		= transform.Find("Sloop/AftMast1/AftSailFolded").gameObject;
 
 
 
@@ -96,27 +108,41 @@ public class NavalMovement : MonoBehaviour {
 
 			currSailSetMod = sailNoMod;
 
-			//print (sailSet);
+			courseSail.SetActive(false);
+			topSail.SetActive(false);
+			aftSail.SetActive(false);
+
+			courseSailFolded.SetActive(true);
+			topSailFolded.SetActive(true);
+			aftSailFolded.SetActive(true);
 
 		}else if (sailSet == SailSet.min){
 
 			currSailSetMod = sailMinMod;
 
-			//print (sailSet);
-
-			//courseSail.SetActive(false);
+			courseSail.SetActive(false);
+			topSail.SetActive(true);
+			aftSail.SetActive(true);
+			
+			courseSailFolded.SetActive(true);
+			topSailFolded.SetActive(false);
+			aftSailFolded.SetActive(false);
 		
 		}else if(sailSet == SailSet.max){
 
 			currSailSetMod = sailMaxMod;
 
-			//print (sailSet);
-
-			//courseSail.SetActive(true);
+			courseSail.SetActive(true);
+			topSail.SetActive(true);
+			aftSail.SetActive(true);
+			
+			courseSailFolded.SetActive(false);
+			topSailFolded.SetActive(false);
+			aftSailFolded.SetActive(false);
 
 		}
 
-		//print (transform.GetComponent<Rigidbody>().velocity.magnitude +"     "+ transform.GetComponent<Rigidbody>().angularVelocity.magnitude);
+		print (transform.GetComponent<Rigidbody>().velocity.magnitude +"     "+ transform.GetComponent<Rigidbody>().angularVelocity.magnitude);
 
 			
 	}
@@ -136,11 +162,11 @@ public class NavalMovement : MonoBehaviour {
 
 		if( windLR == Wind.left){
 
-			transform.GetComponent<Rigidbody>().AddRelativeTorque(  -0.2f * (1-sailIntoWind) * vec * windEffect );
+			transform.GetComponent<Rigidbody>().AddRelativeTorque(  -0.1f * (1-sailIntoWind) * vec * windEffect );
 
 		}else if( windLR == Wind.right){
 			
-			transform.GetComponent<Rigidbody>().AddRelativeTorque(  0.2f * (1-sailIntoWind)* vec * windEffect );
+			transform.GetComponent<Rigidbody>().AddRelativeTorque(  0.1f * (1-sailIntoWind)* vec * windEffect );
 
 		}
 

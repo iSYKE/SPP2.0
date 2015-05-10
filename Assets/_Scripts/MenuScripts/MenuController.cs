@@ -17,6 +17,7 @@ public class MenuController : MonoBehaviour {
 	public RectTransform optionsImageRect;
 	public RectTransform controlsImageRect;
 	public RectTransform creditsImageRect;
+	public RectTransform shipSecletionImageRect;
 
 	public Text playText;
 	public Text optionsText;
@@ -48,8 +49,6 @@ public class MenuController : MonoBehaviour {
 					child.GetComponentInChildren<CannonFire>().doFire = true;
 					//Debug.Log(child.name + " FIRED!!!");
 				}
-				
-				
 			}
 
 		}
@@ -127,6 +126,8 @@ public class MenuController : MonoBehaviour {
 
 		backButtonObj.GetComponent<Animator> ().SetTrigger ("BackButtonSlideIn");
 		startGameButtonObj.GetComponent<Animator> ().SetTrigger ("StartGameSlideIn");
+
+		shipSecletionImageRect.anchoredPosition = new Vector3 (0f, 0f, 0f);
 	}
 
 	void ReturningToMainMenu()
@@ -140,6 +141,8 @@ public class MenuController : MonoBehaviour {
 
 		startGameButtonObj.GetComponent<Animator> ().SetTrigger ("StartGameSlideOff");
 		backButtonObj.GetComponent<Animator> ().SetTrigger ("BackButtonSlideOff");
+
+		shipSecletionImageRect.anchoredPosition = new Vector3 (-480f, 0f, 0f);
 
 		playButtonObj.GetComponent<Animator> ().SetTrigger ("PlayButtonSlideIn");
 		optionsButtonObj.GetComponent<Animator> ().SetTrigger ("OptionsButtonSlideIn");

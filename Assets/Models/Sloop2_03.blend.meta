@@ -26,6 +26,8 @@ ModelImporter:
     100036: TopDeck
     100038: TopSail
     100040: TopSailMast
+    100042: CourseSail_001
+    100044: Hull
     400000: AftMast1
     400002: AftMast2
     400004: AftSail
@@ -47,6 +49,8 @@ ModelImporter:
     400036: TopDeck
     400038: TopSail
     400040: TopSailMast
+    400042: CourseSail_001
+    400044: Hull
     2300000: AftMast1
     2300002: AftMast2
     2300004: AftSail
@@ -68,6 +72,8 @@ ModelImporter:
     2300036: TopDeck
     2300038: TopSail
     2300040: TopSailMast
+    2300042: CourseSail_001
+    2300044: Hull
     3300000: AftMast1
     3300002: AftMast2
     3300004: AftSail
@@ -89,6 +95,8 @@ ModelImporter:
     3300036: TopDeck
     3300038: TopSail
     3300040: TopSailMast
+    3300042: CourseSail_001
+    3300044: Hull
     4300000: Hull
     4300002: Ropes
     4300004: MainMast1
@@ -110,6 +118,7 @@ ModelImporter:
     4300036: ForeMast2
     4300038: Coupling_002
     4300040: FrontSail2
+    4300042: CourseSail_001
     7400000: Default Take
     9500000: //RootNode
   materials:

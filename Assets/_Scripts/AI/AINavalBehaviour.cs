@@ -33,7 +33,7 @@ public class AINavalBehaviour : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		print ( Vector3.Dot( (transform.position - targetLocation).normalized, transform.right ) );
 		SeekEnemy();
 
 		if( hasEnemy ){
@@ -134,7 +134,7 @@ public class AINavalBehaviour : MonoBehaviour {
 			
 		}
 
-		if( rangeToTarget <= maxWeaponsRange  ){
+		if( rangeToTarget <= maxWeaponsRange  &&  Vector3.Dot( (transform.position - targetLocation).normalized, transform.right ) > 0.91f  ){
 			
 			foreach( Transform child in transform.FindChild("Sloop/Nodes/LeftGuns") ){
 				
@@ -147,7 +147,7 @@ public class AINavalBehaviour : MonoBehaviour {
 			}
 			
 			
-		}else if( rangeToTarget <= maxWeaponsRange   ){
+		}else if( rangeToTarget <= maxWeaponsRange && Vector3.Dot( (transform.position - targetLocation).normalized, transform.right ) < -0.91f ){
 			
 			foreach( Transform child in transform.FindChild("Sloop/Nodes/RightGuns") ){
 				

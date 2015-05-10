@@ -3,6 +3,7 @@ using System.Collections;
 
 public class NavalMovement : MonoBehaviour {
 
+	public bool isAlive = true;
 
 	public enum Wind {
 		left, right
@@ -63,8 +64,8 @@ public class NavalMovement : MonoBehaviour {
 
 		courseSail 			= transform.Find("Sloop/MainMast1/CourseSailMast/CourseSail").gameObject;
 		courseSailFolded 	= transform.Find("Sloop/MainMast1/CourseSailMast/CourseSailFolded").gameObject;
-		topSail 			= transform.Find("Sloop/MainMast1/CourseSailMast/TopSailMast/TopSail").gameObject;
-		topSailFolded		= transform.Find("Sloop/MainMast1/CourseSailMast/TopSailMast/TopSailFolded").gameObject;
+		topSail 			= transform.Find("Sloop/MainMast1/TopSailMast/TopSail").gameObject;
+		topSailFolded		= transform.Find("Sloop/MainMast1/TopSailMast/TopSailFolded").gameObject;
 		aftSail 			= transform.Find("Sloop/AftMast1/AftSail").gameObject;
 		aftSailFolded 		= transform.Find("Sloop/AftMast1/AftSailFolded").gameObject;
 
@@ -75,74 +76,77 @@ public class NavalMovement : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
-		windHdg = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection;
-		LRwind();
-
-
-
-		windStrength = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windStrength;
-
-		windDir = Quaternion.Euler( 0, GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection, 0 );
-		shipDir = transform.rotation;
-		//Calculate abs value of quaternion dot prduct between boat and the wind.
-		sailIntoWind = Mathf.Abs(Quaternion.Dot(shipDir, windDir));
-
-		//print(Quaternion.Dot(shipDir, windDir));
-
-		WindForceOnShip();
-
-
-
-		if( turnRight == true ){
-
-			TurnForceOnShipRight();
-
-		}else if( turnLeft == true){
-
-			TurnForceOnShipLeft();
+		if( isAlive ){
+			windHdg = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection;
+			LRwind();
+			
+			
+			
+			windStrength = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windStrength;
+			
+			windDir = Quaternion.Euler( 0, GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection, 0 );
+			shipDir = transform.rotation;
+			//Calculate abs value of quaternion dot prduct between boat and the wind.
+			sailIntoWind = Mathf.Abs(Quaternion.Dot(shipDir, windDir));
+			
+			//print(Quaternion.Dot(shipDir, windDir));
+			
+			WindForceOnShip();
+			
+			
+			
+			if( turnRight == true ){
+				
+				TurnForceOnShipRight();
+				
+			}else if( turnLeft == true){
+				
+				TurnForceOnShipLeft();
+				
+			}
+			
+			
+			if( sailSet == SailSet.no){
+				
+				currSailSetMod = sailNoMod;
+				
+				courseSail.SetActive(false);
+				topSail.SetActive(false);
+				aftSail.SetActive(false);
+				
+				courseSailFolded.SetActive(true);
+				topSailFolded.SetActive(true);
+				aftSailFolded.SetActive(true);
+				
+			}else if (sailSet == SailSet.min){
+				
+				currSailSetMod = sailMinMod;
+				
+				courseSail.SetActive(false);
+				topSail.SetActive(true);
+				aftSail.SetActive(true);
+				
+				courseSailFolded.SetActive(true);
+				topSailFolded.SetActive(false);
+				aftSailFolded.SetActive(false);
+				
+			}else if(sailSet == SailSet.max){
+				
+				currSailSetMod = sailMaxMod;
+				
+				courseSail.SetActive(true);
+				topSail.SetActive(true);
+				aftSail.SetActive(true);
+				
+				courseSailFolded.SetActive(false);
+				topSailFolded.SetActive(false);
+				aftSailFolded.SetActive(false);
+				
+			}
 
 		}
 
-
-		if( sailSet == SailSet.no){
-
-			currSailSetMod = sailNoMod;
-
-			courseSail.SetActive(false);
-			topSail.SetActive(false);
-			aftSail.SetActive(false);
-
-			courseSailFolded.SetActive(true);
-			topSailFolded.SetActive(true);
-			aftSailFolded.SetActive(true);
-
-		}else if (sailSet == SailSet.min){
-
-			currSailSetMod = sailMinMod;
-
-			courseSail.SetActive(false);
-			topSail.SetActive(true);
-			aftSail.SetActive(true);
-			
-			courseSailFolded.SetActive(true);
-			topSailFolded.SetActive(false);
-			aftSailFolded.SetActive(false);
-		
-		}else if(sailSet == SailSet.max){
-
-			currSailSetMod = sailMaxMod;
-
-			courseSail.SetActive(true);
-			topSail.SetActive(true);
-			aftSail.SetActive(true);
-			
-			courseSailFolded.SetActive(false);
-			topSailFolded.SetActive(false);
-			aftSailFolded.SetActive(false);
-
-		}
-
-		print (transform.GetComponent<Rigidbody>().velocity.magnitude +"     "+ transform.GetComponent<Rigidbody>().angularVelocity.magnitude);
+		//print (transform.GetComponent<Rigidbody>().velocity.magnitude +"     "+ transform.GetComponent<Rigidbody>().angularVelocity.magnitude);
 
 			
 	}
@@ -155,7 +159,7 @@ public class NavalMovement : MonoBehaviour {
 
 		Vector3 vec = new Vector3( 0, 0, 1);
 
-		float windEffect = windStrength * sailCharCoef * sailIntoWind * currSailSetMod ;
+		float windEffect = windStrength * sailCharCoef * (sailIntoWind + 0.1f) * currSailSetMod ;
 		transform.GetComponent<Rigidbody>().AddForceAtPosition( (windEffect * transform.forward) ,  transform.position /*+ Vector3.up*/ );
 
 		Wind windLR = wind;
@@ -184,7 +188,7 @@ public class NavalMovement : MonoBehaviour {
 
 		turningForce =  ( (2*velocity + 5)/(velocity + 1) ) * turningForceCoeff;
 
-		transform.GetComponent<Rigidbody>().AddRelativeTorque(  -1 * vec * turningForce );
+		transform.GetComponent<Rigidbody>().AddRelativeTorque(  -2 * vec * turningForce );
 
 	}
 	void TurnForceOnShipRight(){
@@ -198,7 +202,7 @@ public class NavalMovement : MonoBehaviour {
 
 		turningForce = ( (velocity + 5)/(velocity + 1) ) * turningForceCoeff;
 		
-		transform.GetComponent<Rigidbody>().AddRelativeTorque(   1 * vec * turningForce );
+		transform.GetComponent<Rigidbody>().AddRelativeTorque(   2 * vec * turningForce );
 
 	}
 

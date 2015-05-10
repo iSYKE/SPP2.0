@@ -17,8 +17,11 @@ public class AIHealth : MonoBehaviour {
 	void Death(){
 
 		if( aiHealth <= 0 ){
+			print (transform.name +" IS DEAD");
+			transform.GetComponent<BuoyancyForce>().Density = 1300f;
+			transform.GetComponent<NavalMovement>().isAlive = false;
 
-			transform.GetComponent<BuoyancyForce>().Density = 1000f;
+			Destroy (gameObject, 45f);
 
 		}
 

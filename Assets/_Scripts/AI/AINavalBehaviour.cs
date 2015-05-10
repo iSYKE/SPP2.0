@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AINavalBehaviour : MonoBehaviour {
 
+	// AI Behaviour States
 	//--------------------------------
 	public enum BehaviourMode{
 
@@ -12,7 +13,6 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	public BehaviourMode behaviourMode;
 
-	//--------------------------------
 
 	public enum Morale{
 		Surrender, Wavering, Steady
@@ -20,24 +20,54 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	public Morale morale;
 
+	// AI Decision Making
 	//--------------------------------
+
+	public enum CurrentAction{
+		Chase, Engage, Withdraw, Surrender, Travel
+	}
+
+	public CurrentAction currentAction;
 
 
 	// Situational Awareness Vars
+	//--------------------------------
+	public enum TargetLeftRight{
+		Left, Right
+	}
+
+	private TargetLeftRight targetLR;
+
 	bool hasEnemy;
 
 	public GameObject target;
 
 	public Vector3 targetLocation;
-	//Movement Vars
 
+
+	//Movement Vars
+	//--------------------------------
+	public  float relativeDot;
+	public 	float minusRelativeDot;
+	private float zRot;
+	private float yRot;
+	private float windDirection;
 
 	public Vector3 moveTo;
 
+	
+	public Vector3 heading;
+	public Vector3 headingToTarget;
 
 
-	//Firing Vars
+
+	//Engaging Vars
+	//--------------------------------
 	public 	float rangeToTarget;
+
+	private float maxEngageRange;
+	private float minEngageRange;
+
 	private float maxWeaponsRange;
 	private float minWeaponsRange;
 
@@ -45,36 +75,68 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	//------------------------------------
 	void Start () {
-	
+
+		maxEngageRange  = 200f;
+		minEngageRange  = 100f;
+
 		maxWeaponsRange = 400f;
+		minWeaponsRange =  0f;
 
 		behaviourMode = BehaviourMode.Peaceful;
 
 	}
 	
 	//------------------------------------
-	void Update () {
-		print ( Vector3.Dot( (transform.position - targetLocation).normalized, transform.right ) );
+	void FixedUpdate () {
+
+
+		zRot = transform.eulerAngles.z;
+		yRot = transform.eulerAngles.y;
+
+		relativeDot = Vector3.Dot( (transform.position - targetLocation).normalized, transform.right );
+		minusRelativeDot = -relativeDot;
+
+
+		windDirection = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection;
+
+
+
 		SeekEnemy();
+
+
 
 		if( hasEnemy ){
 
 			targetLocation 	= target.transform.position;
 			rangeToTarget 	= (transform.position - targetLocation).magnitude;
 
+		}else{
+
+			targetLocation = transform.position;
+			rangeToTarget  = 0f;
+
 		}
 
 
-		if( behaviourMode == BehaviourMode.Peaceful){
+		/*
+		 * if( behaviourMode == BehaviourMode.Peaceful){
 
 
 		}else if( behaviourMode == BehaviourMode.Combat){
 
-			AimAndFireCannons();
-
+			if( relativeDot > 0 ){
+				targetLR = TargetLeftRight.Left; 
+			}else if( relativeDot < 0){
+				targetLR = TargetLeftRight.Right; 
+			}
+			//CombatSeamanship();
+			//AimAndFireCannons();
 		}
+		*/
 
-
+		DetermineMorale();
+		DetermineAction();
+		Action();
 
 	}
 
@@ -101,48 +163,174 @@ public class AINavalBehaviour : MonoBehaviour {
 			target = null;
 
 		}
-
-
-
-
 	}
 
 
-	void SailTo(){
+//--------------------------------------------------------
+	void DetermineMorale(){
 
-		if( behaviourMode == BehaviourMode.Combat && targetLocation != null ){
-			moveTo = targetLocation;
+		if ( behaviourMode == BehaviourMode.Combat ){
+
+			if ( transform.GetComponent<AIHealth>().aiHealth > 50f ){
+				morale = Morale.Steady;
+			}else if ( transform.GetComponent<AIHealth>().aiHealth < 50f ){
+				morale = Morale.Wavering;
+			}else if ( transform.GetComponent<AIHealth>().aiHealth < 20f ){
+				morale = Morale.Surrender;
+			}
+
 		}else{
-			moveTo = Vector3.zero;
+
+			morale = Morale.Steady;
+
 		}
 
+	}
+
+	void DetermineAction(){
+
+		if( behaviourMode == BehaviourMode.Combat ){
+			if ( morale == Morale.Steady){
+
+				if ( rangeToTarget > maxEngageRange ){
+					
+					currentAction = CurrentAction.Chase;
+					
+				}else if( rangeToTarget < maxEngageRange){
+					
+					currentAction = CurrentAction.Engage;
+					
+				}
+
+
+			}else if(morale == Morale.Wavering){
+				
+				currentAction = CurrentAction.Withdraw;
+			
+			}else if(morale == Morale.Surrender){
+
+				currentAction = CurrentAction.Surrender;
+
+			}
+		
+		}
+
+	}
+
+
+	void Action(){
+
+		if( currentAction == CurrentAction.Chase){
+
+			Chase();
+
+		}else if( currentAction == CurrentAction.Engage){
+
+			Engage();
+
+		}else if( currentAction == CurrentAction.Withdraw){
+			
+			Withdraw();
+
+		}else if( currentAction == CurrentAction.Surrender){
+
+			Surrender();
+			
+		}else if( currentAction == CurrentAction.Travel){
+			
+			Travel();
+
+		}
+
+
+	}
+//--------------------------------------------------------
+
+	void Chase(){
+
+		SailTo ( targetLocation, relativeDot );
+
+		SailSpeed( NavalMovement.SailSet.max);
+
+	}
+
+	void Engage(){
+		CombatSeamanship();
+		SailSpeed( NavalMovement.SailSet.min);
+	}
+
+	void Withdraw(){
+
+		//SailTo ( -targetLocation, minusRelativeDot );
+	
+	}
+	void Surrender(){
+		
+	}
+
+	void Travel(){
+
+	}
+
+
+//--------------------------------------------------------
+
+	void SailSpeed( NavalMovement.SailSet sail ){
+		
+		transform.GetComponent<NavalMovement>().sailSet = sail; 
+		
+	}
+
+
+	void SailTo( Vector3 tarLoc, float relD ){
+
+		moveTo = tarLoc;
+		
 		if( moveTo != null ){
-
-			Vector3 headingVec = transform.position - moveTo;
-			//DO STUFF HERE...
-
-			if( transform.forward. != heading
-
+			
+			if(  relD > 0.05 ){
+				
+				transform.GetComponent<NavalMovement>().turnLeft  = true;
+				transform.GetComponent<NavalMovement>().turnRight = false;
+				
+			}else if( relD < -0.05){
+				
+				transform.GetComponent<NavalMovement>().turnLeft  = false;
+				transform.GetComponent<NavalMovement>().turnRight = true;
+				
+			}else{
+				
+				transform.GetComponent<NavalMovement>().turnLeft  = false;
+				transform.GetComponent<NavalMovement>().turnRight = false;
+				
+			}
+			
+			
 		}
-
-
-
+		
 	}
 
-
-	void MoveTowardsEnemy(){
-
-		if( rangeToTarget > maxWeaponsRange){
-
-
-
-		}
-
-	}
 
 	void CombatSeamanship(){
 
+		if(  relativeDot < 0.98f ){
+			
+			transform.GetComponent<NavalMovement>().turnLeft  = true;
+			transform.GetComponent<NavalMovement>().turnRight = false;
+			
+		}else if( relativeDot > -0.98f){
+			
+			transform.GetComponent<NavalMovement>().turnLeft  = false;
+			transform.GetComponent<NavalMovement>().turnRight = true;
+			
+		}else{
+			
+			transform.GetComponent<NavalMovement>().turnLeft  = false;
+			transform.GetComponent<NavalMovement>().turnRight = false;
+			
+		}
 
+		AimAndFireCannons();
 
 	}
 
@@ -158,7 +346,7 @@ public class AINavalBehaviour : MonoBehaviour {
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
 				
-				child.GetComponentInChildren<CannonFire>().transform.eulerAngles = new Vector3(  -aimTheta , child.GetComponentInChildren<CannonFire>().transform.eulerAngles.y , 0);
+				child.GetComponentInChildren<CannonFire>().transform.localEulerAngles = new Vector3(  -aimTheta , child.GetComponentInChildren<CannonFire>().transform.localEulerAngles.y , 0);
 				
 			}
 			
@@ -166,13 +354,14 @@ public class AINavalBehaviour : MonoBehaviour {
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
 				
-				child.GetComponentInChildren<CannonFire>().transform.eulerAngles = new Vector3(  -aimTheta , child.GetComponentInChildren<CannonFire>().transform.eulerAngles.y , 0);
+				child.GetComponentInChildren<CannonFire>().transform.localEulerAngles = new Vector3(  -aimTheta , child.GetComponentInChildren<CannonFire>().transform.localEulerAngles.y , 0);
 				
 			}
 			
 		}
 
-		if( rangeToTarget <= maxWeaponsRange  &&  Vector3.Dot( (transform.position - targetLocation).normalized, transform.right ) > 0.91f  ){
+
+		if( rangeToTarget <= maxWeaponsRange  &&  relativeDot > 0.95f && ( zRot > 355f || zRot < 5f) ){
 			
 			foreach( Transform child in transform.FindChild("Sloop/Nodes/LeftGuns") ){
 				
@@ -185,7 +374,7 @@ public class AINavalBehaviour : MonoBehaviour {
 			}
 			
 			
-		}else if( rangeToTarget <= maxWeaponsRange && Vector3.Dot( (transform.position - targetLocation).normalized, transform.right ) < -0.91f ){
+		}else if( rangeToTarget <= maxWeaponsRange && relativeDot < -0.95f && ( zRot > 355f || zRot < 5f) ){
 			
 			foreach( Transform child in transform.FindChild("Sloop/Nodes/RightGuns") ){
 				
@@ -196,14 +385,12 @@ public class AINavalBehaviour : MonoBehaviour {
 				
 				
 			}
-			
-			
-			
+	
 		}
-
-
-
 	}
+
+
+
 
 
 }

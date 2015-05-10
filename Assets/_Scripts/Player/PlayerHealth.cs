@@ -31,6 +31,10 @@ public class PlayerHealth : MonoBehaviour {
 	void Update()
 	{
 		HealthNumberText.text = (hullCurrentHealth.ToString() + " / " + hullStartingHealth.ToString());
+
+		if (hullCurrentHealth <= 0 && !isDead) {
+			Death();
+		}
 	}
 
 	public void TakeDamage (int amount)

@@ -104,9 +104,9 @@ public class PlayerControl : MonoBehaviour {
 		
 		}
 		if (gunSide == "PortDown") {
-			if(portAimRange > 125f) {
+			if(portAimRange > 75f) {
 				portAimRange -= 25f;
-			} else { portAimRange = 100f; }
+			} else { portAimRange = 50f; }
 		}
 		if (gunSide == "StarboardUp") {
 			if(starBoardAimRange < 375f) {
@@ -114,9 +114,9 @@ public class PlayerControl : MonoBehaviour {
 			} else { starBoardAimRange = 400f; }
 		}
 		if (gunSide == "StarboardDown") {
-			if(starBoardAimRange > 125f) {
+			if(starBoardAimRange > 75f) {
 				starBoardAimRange -= 25f;
-			}	else { starBoardAimRange = 100f; }
+			}	else { starBoardAimRange = 50f; }
 		}
 
 		portNumberText.text = portAimRange + "m";
@@ -139,7 +139,7 @@ public class PlayerControl : MonoBehaviour {
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
 
-				child.GetComponentInChildren<CannonFire>().transform.eulerAngles = new Vector3(  -aimTheta , child.GetComponentInChildren<CannonFire>().transform.eulerAngles.y , 0);
+				child.GetComponentInChildren<CannonFire>().transform.localEulerAngles = new Vector3(  -aimTheta , child.GetComponentInChildren<CannonFire>().transform.localEulerAngles.y , 0);
 
 			}
 		}
@@ -157,7 +157,7 @@ public class PlayerControl : MonoBehaviour {
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
 				
-				child.GetComponentInChildren<CannonFire>().transform.eulerAngles = new Vector3(  -aimTheta , child.GetComponentInChildren<CannonFire>().transform.eulerAngles.y , 0);
+				child.GetComponentInChildren<CannonFire>().transform.localEulerAngles = new Vector3(  -aimTheta , child.GetComponentInChildren<CannonFire>().transform.localEulerAngles.y , 0);
 				
 			}	
 		}

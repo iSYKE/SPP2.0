@@ -1,0 +1,172 @@
+fileFormatVersion: 2
+guid: 22a3797b171d9634cbd9f1c33d4cf394
+timeCreated: 1431138872
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: AftMast1
+    100002: AftMast2
+    100004: AftSail
+    100006: Coupling
+    100008: Coupling_001
+    100010: Coupling_002
+    100012: CourseSail
+    100014: CourseSailMast
+    100016: ForeMast1
+    100018: ForeMast2
+    100020: FrontSail1
+    100022: FrontSail2
+    100024: MainMast1
+    100026: MainMast2
+    100028: MastShroud
+    100030: Ropes
+    100032: Rudder
+    100034: //RootNode
+    100036: TopDeck
+    100038: TopSail
+    100040: TopSailMast
+    400000: AftMast1
+    400002: AftMast2
+    400004: AftSail
+    400006: Coupling
+    400008: Coupling_001
+    400010: Coupling_002
+    400012: CourseSail
+    400014: CourseSailMast
+    400016: ForeMast1
+    400018: ForeMast2
+    400020: FrontSail1
+    400022: FrontSail2
+    400024: MainMast1
+    400026: MainMast2
+    400028: MastShroud
+    400030: Ropes
+    400032: Rudder
+    400034: //RootNode
+    400036: TopDeck
+    400038: TopSail
+    400040: TopSailMast
+    2300000: AftMast1
+    2300002: AftMast2
+    2300004: AftSail
+    2300006: Coupling
+    2300008: Coupling_001
+    2300010: Coupling_002
+    2300012: CourseSail
+    2300014: CourseSailMast
+    2300016: ForeMast1
+    2300018: ForeMast2
+    2300020: FrontSail1
+    2300022: FrontSail2
+    2300024: MainMast1
+    2300026: MainMast2
+    2300028: MastShroud
+    2300030: Ropes
+    2300032: Rudder
+    2300034: //RootNode
+    2300036: TopDeck
+    2300038: TopSail
+    2300040: TopSailMast
+    3300000: AftMast1
+    3300002: AftMast2
+    3300004: AftSail
+    3300006: Coupling
+    3300008: Coupling_001
+    3300010: Coupling_002
+    3300012: CourseSail
+    3300014: CourseSailMast
+    3300016: ForeMast1
+    3300018: ForeMast2
+    3300020: FrontSail1
+    3300022: FrontSail2
+    3300024: MainMast1
+    3300026: MainMast2
+    3300028: MastShroud
+    3300030: Ropes
+    3300032: Rudder
+    3300034: //RootNode
+    3300036: TopDeck
+    3300038: TopSail
+    3300040: TopSailMast
+    4300000: Hull
+    4300002: Ropes
+    4300004: MainMast1
+    4300006: Coupling
+    4300008: CourseSailMast
+    4300010: CourseSail
+    4300012: TopSailMast
+    4300014: TopSail
+    4300016: MastShroud
+    4300018: MainMast2
+    4300020: Coupling_001
+    4300022: Rudder
+    4300024: TopDeck
+    4300026: AftMast1
+    4300028: AftMast2
+    4300030: AftSail
+    4300032: ForeMast1
+    4300034: FrontSail1
+    4300036: ForeMast2
+    4300038: Coupling_002
+    4300040: FrontSail2
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 1
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

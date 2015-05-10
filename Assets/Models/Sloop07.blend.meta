@@ -1,0 +1,152 @@
+fileFormatVersion: 2
+guid: 19b304e894daa43479b003226f9bc4e8
+timeCreated: 1431058372
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: AftMast
+    100002: AftMast_001
+    100004: Coupling1
+    100006: Coupling2
+    100008: Front
+    100010: Mast1_1
+    100012: Mast1_2
+    100014: Mast1_3
+    100016: Mast1_3_001
+    100018: MastFront
+    100020: Sail
+    100022: Sail_001
+    100024: Sail_002
+    100026: Sail_003
+    100028: Sail_004
+    100030: //RootNode
+    100032: TopDeck
+    400000: AftMast
+    400002: AftMast_001
+    400004: Coupling1
+    400006: Coupling2
+    400008: Front
+    400010: Mast1_1
+    400012: Mast1_2
+    400014: Mast1_3
+    400016: Mast1_3_001
+    400018: MastFront
+    400020: Sail
+    400022: Sail_001
+    400024: Sail_002
+    400026: Sail_003
+    400028: Sail_004
+    400030: //RootNode
+    400032: TopDeck
+    2300000: AftMast
+    2300002: AftMast_001
+    2300004: Coupling1
+    2300006: Coupling2
+    2300008: Front
+    2300010: Mast1_1
+    2300012: Mast1_2
+    2300014: Mast1_3
+    2300016: Mast1_3_001
+    2300018: MastFront
+    2300020: Sail
+    2300022: Sail_001
+    2300024: Sail_002
+    2300026: Sail_003
+    2300028: Sail_004
+    2300030: //RootNode
+    2300032: TopDeck
+    3300000: AftMast
+    3300002: AftMast_001
+    3300004: Coupling1
+    3300006: Coupling2
+    3300008: Front
+    3300010: Mast1_1
+    3300012: Mast1_2
+    3300014: Mast1_3
+    3300016: Mast1_3_001
+    3300018: MastFront
+    3300020: Sail
+    3300022: Sail_001
+    3300024: Sail_002
+    3300026: Sail_003
+    3300028: Sail_004
+    3300030: //RootNode
+    3300032: TopDeck
+    4300000: Hull
+    4300002: Mast1_1
+    4300004: AftMast
+    4300006: Mast1_2
+    4300008: Coupling2
+    4300010: Coupling1
+    4300012: Mast1_3
+    4300014: Sail
+    4300016: Mast1_3_001
+    4300018: Sail_001
+    4300020: AftMast_001
+    4300022: Sail_002
+    4300024: Front
+    4300026: MastFront
+    4300028: Sail_003
+    4300030: Sail_004
+    4300032: TopDeck
+    7400000: Default Take
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 1
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

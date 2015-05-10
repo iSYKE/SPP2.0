@@ -11,7 +11,7 @@ public class CannonballDamage : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		print(transform.GetComponent<Rigidbody>().velocity.magnitude);
+		//print(transform.GetComponent<Rigidbody>().velocity.magnitude);
 
 	}
 
@@ -22,13 +22,19 @@ public class CannonballDamage : MonoBehaviour {
 
 			if( contact.otherCollider.transform.parent){
 
-				if ( contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>() ){
+				if ( contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>() || contact.otherCollider.transform.parent.transform.GetComponent<PlayerHealth>()){
 
 					Destroy (gameObject);
 
-					print ("HIT ENEMY!");
-				
-					contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>().aiHealth -= 10;
+					if(contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>()){
+
+						contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>().aiHealth -= 10;
+					
+					}else if(contact.otherCollider.transform.parent.transform.GetComponent<PlayerHealth>()){
+
+						print ("PLAYER HIT!!!");
+
+					}
 
 					Instantiate( Resources.Load("VFX/WoodSplinter") , contact.point , Quaternion.Euler( contact.normal) );
 

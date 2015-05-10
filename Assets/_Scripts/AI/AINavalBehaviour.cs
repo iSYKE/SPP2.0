@@ -9,7 +9,7 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	}
 
-	BehaviourMode behaviourMode;
+	public BehaviourMode behaviourMode;
 
 	public GameObject target;
 
@@ -25,6 +25,8 @@ public class AINavalBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	
+		maxWeaponsRange = 400f;
+
 		behaviourMode = BehaviourMode.Peaceful;
 
 	}
@@ -47,7 +49,7 @@ public class AINavalBehaviour : MonoBehaviour {
 
 		}else if( behaviourMode == BehaviourMode.Combat){
 
-
+			AimAndFireCannons();
 
 		}
 
@@ -112,7 +114,7 @@ public class AINavalBehaviour : MonoBehaviour {
 		float aimForm	= (( rangeToTarget *9.81f)/(100f*100f)) ; 
 		float aimThetaR	= 0.5f * Mathf.Asin( aimForm ) ;
 		float aimTheta	= aimThetaR * (360/(2*Mathf.PI));
-		print (aimTheta);
+		//print (aimTheta);
 		
 		foreach( Transform child in transform.FindChild("Sloop/Nodes/LeftGuns") ){
 			

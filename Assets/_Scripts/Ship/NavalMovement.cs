@@ -54,7 +54,7 @@ public class NavalMovement : MonoBehaviour {
 		turningForceCoeff 	= 1000000f;
 
 
-		courseSail = GameObject.Find("CourseSail").gameObject;
+		//courseSail = transform.Find("CourseSail").gameObject;
 
 
 
@@ -96,23 +96,23 @@ public class NavalMovement : MonoBehaviour {
 
 			currSailSetMod = sailNoMod;
 
-			print (sailSet);
+			//print (sailSet);
 
 		}else if (sailSet == SailSet.min){
 
 			currSailSetMod = sailMinMod;
 
-			print (sailSet);
+			//print (sailSet);
 
-			courseSail.SetActive(false);
+			//courseSail.SetActive(false);
 		
 		}else if(sailSet == SailSet.max){
 
 			currSailSetMod = sailMaxMod;
 
-			print (sailSet);
+			//print (sailSet);
 
-			courseSail.SetActive(true);
+			//courseSail.SetActive(true);
 
 		}
 

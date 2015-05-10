@@ -133,7 +133,7 @@ public class PlayerControl : MonoBehaviour {
 		float aimForm	= (( portAimRange *9.81f)/(100f*100f)) ; 
 		float aimThetaR	= 0.5f * Mathf.Asin( aimForm ) ;
 		float aimTheta	= aimThetaR * (360/(2*Mathf.PI));
-		print (aimTheta);
+		//print (aimTheta);
 
 		foreach( Transform child in transform.FindChild("Sloop/Nodes/LeftGuns") ){
 			
@@ -151,7 +151,7 @@ public class PlayerControl : MonoBehaviour {
 		float aimForm	= (( starBoardAimRange *9.81f)/(100f*100f)) ; 
 		float aimThetaR	= 0.5f * Mathf.Asin( aimForm ) ;
 		float aimTheta	= aimThetaR * (360/(2*Mathf.PI));
-		print (aimTheta);
+		//print (aimTheta);
 			
 		foreach( Transform child in transform.FindChild("Sloop/Nodes/RightGuns") ){
 			

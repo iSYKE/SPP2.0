@@ -32,7 +32,7 @@ public class CannonballDamage : MonoBehaviour {
 					
 					}else if(contact.otherCollider.transform.parent.transform.GetComponent<PlayerHealth>()){
 
-						contact.otherCollider.transform.parent.transform.GetComponent<PlayerHealth>().hullCurrentHealth -= 10;
+						contact.otherCollider.transform.parent.transform.GetComponent<PlayerHealth>().TakeDamage( 10 );
 
 					}
 

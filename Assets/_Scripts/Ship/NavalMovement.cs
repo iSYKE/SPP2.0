@@ -58,7 +58,7 @@ public class NavalMovement : MonoBehaviour {
 	void Start () {
 
 		sailSet = SailSet.no;
-		sailCharCoef 		= 400000f;
+		sailCharCoef 		= 200000f;
 		turningForceCoeff 	= 1000000f;
 
 
@@ -159,7 +159,7 @@ public class NavalMovement : MonoBehaviour {
 
 		Vector3 vec = new Vector3( 0, 0, 1);
 
-		float windEffect = windStrength * sailCharCoef * (sailIntoWind + 0.1f) * currSailSetMod ;
+		float windEffect = windStrength * sailCharCoef * (sailIntoWind + 0.2f) * currSailSetMod ;
 
 		if( transform.position.y < 10f){
 
@@ -172,11 +172,11 @@ public class NavalMovement : MonoBehaviour {
 
 		if( windLR == Wind.left){
 
-			transform.GetComponent<Rigidbody>().AddRelativeTorque(  -0.1f * (1-sailIntoWind) * vec * windEffect );
+			transform.GetComponent<Rigidbody>().AddRelativeTorque(  -0.15f * (1-sailIntoWind) * vec * windEffect );
 
 		}else if( windLR == Wind.right){
 			
-			transform.GetComponent<Rigidbody>().AddRelativeTorque(  0.1f * (1-sailIntoWind)* vec * windEffect );
+			transform.GetComponent<Rigidbody>().AddRelativeTorque(  0.15f * (1-sailIntoWind)* vec * windEffect );
 
 		}
 

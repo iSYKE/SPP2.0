@@ -24,7 +24,7 @@ public class AINavalBehaviour : MonoBehaviour {
 	//--------------------------------
 
 	public enum CurrentAction{
-		Chase, Engage, Withdraw, Surrender, Travel
+		Chase, Engage, Withdraw, Surrender, Travel, Wait
 	}
 
 	public CurrentAction currentAction;
@@ -32,18 +32,27 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	// Situational Awareness Vars
 	//--------------------------------
-	public enum TargetLeftRight{
-		Left, Right
+	public enum TargetLRAB{
+		Left, Right, Ahead, Behind
 	}
 
-	public TargetLeftRight targetLR;
+	public TargetLRAB targetLRAB;
+
+	//-----------------------------
+
+	public enum TargetTALR{
+		None, Towards, Away, Left, Right
+	}
+	public TargetTALR targetTALR;
+
+	//-------------------------------
 
 	bool hasEnemy;
 
 	public GameObject target;
 
 	public Vector3 	targetLocation;
-
+	public Vector3 	destination;
 	
 	public Vector3 	heading;
 	public Vector3 	headingToTarget;
@@ -51,9 +60,12 @@ public class AINavalBehaviour : MonoBehaviour {
 	public Vector3 	targetVelocity;
 	public float 	rightVelDot;
 	public float 	forwardVelDot;
+
 	//Movement Vars
 	//--------------------------------
-	public  float relativeDot;
+	public  float relativeDotRight;
+	public 	float relativeDotForward;
+
 	public 	float minusRelativeDot;
 	private float zRot;
 	private float yRot;
@@ -79,8 +91,8 @@ public class AINavalBehaviour : MonoBehaviour {
 	//------------------------------------
 	void Start () {
 
-		maxEngageRange  = 200f;
-		minEngageRange  = 100f;
+		maxEngageRange  = 300f;
+		minEngageRange  = 50f;
 
 		maxWeaponsRange = 400f;
 		minWeaponsRange =  0f;
@@ -97,15 +109,17 @@ public class AINavalBehaviour : MonoBehaviour {
 		yRot = transform.eulerAngles.y;
 
 
-		relativeDot = Vector3.Dot( (transform.position - targetLocation).normalized, transform.right );
-		minusRelativeDot = -relativeDot;
+		relativeDotRight = Vector3.Dot( (transform.position - targetLocation).normalized, transform.right   );
+		relativeDotForward = Vector3.Dot( (transform.position - targetLocation).normalized, transform.forward );
+
+		//minusRelativeDot = -relativeDotRight;
 
 
 		windDirection = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection;
 
 
 
-		SeekEnemy();
+		SeekCurrentFocus();
 
 
 
@@ -122,20 +136,14 @@ public class AINavalBehaviour : MonoBehaviour {
 
 		}else{
 
-			targetLocation = transform.position;
-			rangeToTarget  = 0f;
+			targetLocation = destination;
+			rangeToTarget 	= (transform.position - targetLocation).magnitude;
 
 		}
 
 
-
-		if( relativeDot > 0 ){
-			targetLR = TargetLeftRight.Left; 
-		}else if( relativeDot < 0){
-			targetLR = TargetLeftRight.Right; 
-		}
-
-
+		DetermineLRAB();
+		DetermineTALR();
 		DetermineMorale();
 		DetermineAction();
 		Action();
@@ -144,8 +152,122 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	//------------------------------------
 
+	// USES DOT PRODUCT OF POSITION VECTORS TO DETERMINE POSITION OF TARGET RELATIVE TO THE AI
+	void DetermineLRAB(){
 
-	void SeekEnemy(){
+		if( relativeDotForward < -0.5f && relativeDotRight > -0.5f && relativeDotRight < 0.5f ){
+			
+			targetLRAB = TargetLRAB.Ahead; 
+			
+		}else if( relativeDotForward > 0.5f && relativeDotRight > -0.5f && relativeDotRight < 0.5f ){
+			
+			targetLRAB = TargetLRAB.Behind; 
+			
+		}else if( relativeDotRight < -0.5f && relativeDotForward > -0.5f && relativeDotForward < 0.5f ){
+			
+			targetLRAB = TargetLRAB.Right;
+			
+		}else if( relativeDotRight > 0.5f && relativeDotForward > -0.5f && relativeDotForward < 0.5f ){
+			
+			targetLRAB = TargetLRAB.Left;
+		}
+
+	}
+
+	//METHODS USES DOT PRODUCT OF VELOCITY VECTORS RELATIVE TO THE POSITION OF THE TARGET TO SEE THE MOVEMENT IN RELATION TO THE AI
+	void DetermineTALR(){
+
+
+		if ( !hasEnemy ){
+			
+			targetTALR = TargetTALR.None;
+		
+		}else if( forwardVelDot > 0.5f && rightVelDot > -0.5f && rightVelDot < 0.5f ){
+
+			if( targetLRAB == TargetLRAB.Ahead){
+
+				targetTALR = TargetTALR.Away;
+
+			}else if(targetLRAB == TargetLRAB.Behind){
+
+				targetTALR = TargetTALR.Towards;
+			
+			}else if(targetLRAB == TargetLRAB.Left){
+				
+				targetTALR = TargetTALR.Right;
+			
+			}else if(targetLRAB == TargetLRAB.Right){
+				
+				targetTALR = TargetTALR.Left;
+			
+			}
+			
+		}else if( forwardVelDot < -0.5f && rightVelDot > -0.5f && forwardVelDot < 0.5f ){
+			
+			if( targetLRAB == TargetLRAB.Ahead){
+				
+				targetTALR = TargetTALR.Towards;
+				
+			}else if(targetLRAB == TargetLRAB.Behind){
+				
+				targetTALR = TargetTALR.Away;
+				
+			}else if(targetLRAB == TargetLRAB.Left){
+				
+				targetTALR = TargetTALR.Left;
+				
+			}else if(targetLRAB == TargetLRAB.Right){
+				
+				targetTALR = TargetTALR.Right;
+				
+			}
+			
+		}else if( rightVelDot > 0.5f && forwardVelDot > -0.5f && forwardVelDot < 0.5f ){
+			
+			if( targetLRAB == TargetLRAB.Ahead){
+				
+				targetTALR = TargetTALR.Right;
+				
+			}else if(targetLRAB == TargetLRAB.Behind){
+				
+				targetTALR = TargetTALR.Right;
+				
+			}else if(targetLRAB == TargetLRAB.Left){
+				
+				targetTALR = TargetTALR.Towards;
+				
+			}else if(targetLRAB == TargetLRAB.Right){
+				
+				targetTALR = TargetTALR.Away;
+				
+			} 
+		
+		}else if( rightVelDot < -0.5f && forwardVelDot > -0.5f && forwardVelDot < 0.5f ){
+			
+			if( targetLRAB == TargetLRAB.Ahead){
+				
+				targetTALR = TargetTALR.Left;
+				
+			}else if(targetLRAB == TargetLRAB.Behind){
+				
+				targetTALR = TargetTALR.Left;
+				
+			}else if(targetLRAB == TargetLRAB.Left){
+				
+				targetTALR = TargetTALR.Away;
+				
+			}else if(targetLRAB == TargetLRAB.Right){
+				
+				targetTALR = TargetTALR.Towards;
+				
+			}
+			
+		}
+		
+	}
+
+	// AI SEEKS TARGETS TO FOCUSE ON IE DESTINATION, ENEMY, ETC.
+	void SeekCurrentFocus(){
 
 
 		if( GameObject.Find("Player") ){
@@ -156,35 +278,47 @@ public class AINavalBehaviour : MonoBehaviour {
 
 			target = GameObject.Find("Player");
 
-		}else{
+		}else if (destination != null ){
 
 			hasEnemy = false;
 			
 			behaviourMode = BehaviourMode.Peaceful;
 			
-			target = null;
+			//target = gameObject;
 
+		}else{
+
+			behaviourMode = BehaviourMode.Peaceful;
+			//target = gameObject;
 		}
+	
 	}
 
 
 //--------------------------------------------------------
+
 	void DetermineMorale(){
 		float maxHealth = transform.GetComponent<AIHealth>().aiMaxHealth;
 		float health = transform.GetComponent<AIHealth>().aiHealth;
-		//if ( behaviourMode == BehaviourMode.Combat ){
-		//}
+		if ( behaviourMode == BehaviourMode.Combat ){
 
-		if ( health > 0.25 * maxHealth ){
-			morale = Morale.Steady;
-		}else if (  health <= 0.20 * maxHealth && health > 0.10 * maxHealth ){
-			morale = Morale.Wavering;
-		}else if (  health <= 0.10 * maxHealth ){
-			morale = Morale.Surrender;
-		}
+			if ( health > 0.25 * maxHealth ){
+				morale = Morale.Steady;
+			}else if (  health <= 0.20 * maxHealth && health > 0.10 * maxHealth ){
+				morale = Morale.Wavering;
+			}else if (  health <= 0.10 * maxHealth ){
+				morale = Morale.Surrender;
+			}
 		
-	}
+		}else{
+
+			morale = Morale.Steady;
+
+		}
 	
+	}
+
+
 	void DetermineAction(){
 
 		if( behaviourMode == BehaviourMode.Combat ){
@@ -211,6 +345,20 @@ public class AINavalBehaviour : MonoBehaviour {
 
 			}
 		
+		}else if( behaviourMode == BehaviourMode.Peaceful){
+
+
+			if( rangeToTarget > 5f ){
+
+				currentAction = CurrentAction.Travel;
+
+			}else{
+				 
+				currentAction = CurrentAction.Wait;
+
+			}
+
+
 		}
 
 	}
@@ -239,22 +387,29 @@ public class AINavalBehaviour : MonoBehaviour {
 			
 			Travel();
 
+		}else if( currentAction == CurrentAction.Wait){
+			
+			Wait();
+			
 		}
 
 
 	}
+
 //--------------------------------------------------------
 
 	void Chase(){
 
-		SailTo ( targetLocation, relativeDot );
+		SailTo ( targetLocation);
 		SailSpeed( NavalMovement.SailSet.max);
 
 	}
 
 	void Engage(){
 
-		CombatSeamanship();
+		DetermineTALR(); //MIGHT NEED TO BE MOVED
+
+		CombatMovement();
 		SailSpeed( NavalMovement.SailSet.min);
 	
 	}
@@ -274,9 +429,24 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	void Travel(){
 
+		SailTo( targetLocation  );
+
+		if ( rangeToTarget > 200f ){
+			SailSpeed( NavalMovement.SailSet.max);
+		}else{
+			SailSpeed( NavalMovement.SailSet.min);
+		}
+
+
 	}
 
+	void Wait(){
 
+		SailSpeed(NavalMovement.SailSet.no);
+		StopTurn();
+		
+	}
+	
 //--------------------------------------------------------
 
 	void SailSpeed( NavalMovement.SailSet sail ){
@@ -286,26 +456,23 @@ public class AINavalBehaviour : MonoBehaviour {
 	}
 
 
-	void SailTo( Vector3 tarLoc, float relD ){
+	void SailTo( Vector3 tarLoc ){
 
 		moveTo = tarLoc;
 		
-		if( moveTo != null ){
+		if( moveTo != transform.position ){
 			
-			if(  relD > 0.02 ){
+			if(  relativeDotRight > 0.02 && relativeDotForward > -0.98 ){
 				
-				transform.GetComponent<NavalMovement>().turnLeft  = true;
-				transform.GetComponent<NavalMovement>().turnRight = false;
+				LeftTurn();
 				
-			}else if( relD < -0.02 ){
+			}else if( relativeDotRight < -0.02 && relativeDotForward > -0.98 ){
 				
-				transform.GetComponent<NavalMovement>().turnLeft  = false;
-				transform.GetComponent<NavalMovement>().turnRight = true;
+				RightTurn();
 				
 			}else{
 				
-				transform.GetComponent<NavalMovement>().turnLeft  = false;
-				transform.GetComponent<NavalMovement>().turnRight = false;
+				StopTurn();
 				
 			}
 			
@@ -320,18 +487,15 @@ public class AINavalBehaviour : MonoBehaviour {
 
 		if( transform.eulerAngles.y  > hdg-1 ){
 			
-			transform.GetComponent<NavalMovement>().turnLeft  = true;
-			transform.GetComponent<NavalMovement>().turnRight = false;
+			LeftTurn();
 			
 		}else if( transform.eulerAngles.y  < hdg+1 ){
 			
-			transform.GetComponent<NavalMovement>().turnLeft  = false;
-			transform.GetComponent<NavalMovement>().turnRight = true;
+			RightTurn();
 			
 		}else{
 			
-			transform.GetComponent<NavalMovement>().turnLeft  = false;
-			transform.GetComponent<NavalMovement>().turnRight = false;
+			StopTurn();
 			
 		}
 
@@ -339,45 +503,194 @@ public class AINavalBehaviour : MonoBehaviour {
 	}
 
 
-	void CombatSeamanship(){
+	void CombatMovement(){
 
 
+		if( rangeToTarget > minEngageRange){
 
-		if(  relativeDot < 0.98f && relativeDot > 0 ){
+			if( targetTALR == TargetTALR.Away){
 
-			if( forwardVelDot < 0 ){
+				if(rangeToTarget > 200 ){
 
-				transform.GetComponent<NavalMovement>().turnLeft  = true;
-				transform.GetComponent<NavalMovement>().turnRight = false;
-			
-			}else if(forwardVelDot > 0){
+					SailTo( targetLocation );
+				
+				}else if (targetLRAB == TargetLRAB.Left){
 
-				transform.GetComponent<NavalMovement>().turnLeft  = false;
-				transform.GetComponent<NavalMovement>().turnRight = true;
-			
+					if( relativeDotForward < -0.01f ){
+						
+						RightTurn();
+						
+					}else if( relativeDotForward > 0.01f ){
+						
+						LeftTurn();
+						
+					}
+				}else if( targetLRAB == TargetLRAB.Right ){
+						
+						if( relativeDotForward < -0.01f ){
+							
+							LeftTurn();
+
+							
+						}else if( relativeDotForward > 0.01f ){
+							
+							RightTurn();
+						
+						}
+
+				}else{
+
+					SailTo( targetLocation );
+				}
+
+
+			}else if( targetTALR == TargetTALR.Towards){
+
+				if( targetLRAB == TargetLRAB.Ahead || targetLRAB == TargetLRAB.Behind ){
+
+					if( relativeDotForward < -0.01f ){
+					
+						RightTurn();
+					
+					}else if( relativeDotForward > 0.01f ){
+					
+						LeftTurn();
+
+					}
+				
+				}else if( targetLRAB == TargetLRAB.Right ){
+
+					if( relativeDotForward < -0.01f ){
+
+						LeftTurn();
+
+					}else if( relativeDotForward > 0.01f ){
+						
+						RightTurn();
+						
+					}
+
+				}else if( targetLRAB == TargetLRAB.Left ){
+					
+					if( relativeDotForward < -0.01f ){
+						
+						RightTurn();
+						
+					}else if( relativeDotForward > 0.01f ){
+						
+						LeftTurn();
+						
+					}
+				
+				}
+
+			}else if( targetTALR == TargetTALR.Left){
+
+				if( targetLRAB == TargetLRAB.Ahead){
+
+					if( relativeDotRight < -0.01f ){
+						
+						LeftTurn();
+						
+					}else if( relativeDotRight > 0.01f ){
+						
+						RightTurn();
+						
+					}
+
+				}else if( targetLRAB == TargetLRAB.Behind){
+
+					if( relativeDotForward > 0.01f ){
+						
+						LeftTurn();
+						
+					}else if( relativeDotForward < -0.01f ){
+						
+						RightTurn();
+						
+					}
+
+				}else if( targetLRAB == TargetLRAB.Left){
+					
+					if( relativeDotForward > 0.01f ){
+						
+						LeftTurn();
+						
+					}else if( relativeDotForward < -0.01f ){
+						
+						RightTurn();
+						
+					}
+					
+				}else if( targetLRAB == TargetLRAB.Right){
+					
+					if( relativeDotForward > 0.01f ){
+						
+						RightTurn();
+						
+					}else if( relativeDotForward < -0.01f ){
+						
+						LeftTurn();
+						
+					}
+				}
+
+			}else if( targetTALR == TargetTALR.Right ){
+
+				if( targetLRAB == TargetLRAB.Ahead){
+					
+					if( relativeDotRight < -0.01f ){
+						
+						RightTurn();
+						
+					}else if( relativeDotRight > 0.01f ){
+						
+						LeftTurn();
+						
+					}
+					
+				}else if( targetLRAB == TargetLRAB.Behind){
+					
+					if( relativeDotForward > 0.01f ){
+						
+						RightTurn();
+						
+					}else if( relativeDotForward < -0.01f ){
+						
+						LeftTurn();
+						
+					}
+					
+				}else if( targetLRAB == TargetLRAB.Left){
+					
+					if( relativeDotForward > 0.01f ){
+						
+						LeftTurn();
+						
+					}else if( relativeDotForward < -0.01f ){
+						
+						RightTurn();
+						
+					}
+					
+				}else if( targetLRAB == TargetLRAB.Right){
+					
+					if( relativeDotForward > 0.01f ){
+						
+						RightTurn();
+						
+					}else if( relativeDotForward < -0.01f ){
+						
+						LeftTurn();
+						
+					}
+				}
+
 			}
-
-		}else if( relativeDot > -0.98f && relativeDot < 0 ){
-
-			if( forwardVelDot < 0 ){
-
-				transform.GetComponent<NavalMovement>().turnLeft  = false;
-				transform.GetComponent<NavalMovement>().turnRight = true;
-			
-			}else if(forwardVelDot > 0){
-
-				transform.GetComponent<NavalMovement>().turnLeft  = true;
-				transform.GetComponent<NavalMovement>().turnRight = false;
-			
-			}
-
+		
 		}else{
-			
-			transform.GetComponent<NavalMovement>().turnLeft  = false;
-			transform.GetComponent<NavalMovement>().turnRight = false;
-			
+			// ESCAPE IF TOO CLOSE
 		}
-
 
 		AimAndFireCannons();
 
@@ -385,7 +698,8 @@ public class AINavalBehaviour : MonoBehaviour {
 	
 
 	//-----------------------------------------------------
-	void AimAndFireCannons(){
+	
+		void AimAndFireCannons(){
 
 		float aimForm	= (( rangeToTarget *9.81f)/(100f*100f)) ; 
 		float aimThetaR	= 0.5f * Mathf.Asin( aimForm ) ;
@@ -411,7 +725,7 @@ public class AINavalBehaviour : MonoBehaviour {
 		}
 
 
-		if( rangeToTarget <= maxWeaponsRange  &&  relativeDot > 0.95f && ( zRot > 355f || zRot < 5f) ){
+		if( rangeToTarget <= maxWeaponsRange  &&  relativeDotRight > 0.95f && ( zRot > 355f || zRot < 5f) ){
 			
 			foreach( Transform child in transform.FindChild("Sloop/Nodes/LeftGuns") ){
 				
@@ -424,7 +738,7 @@ public class AINavalBehaviour : MonoBehaviour {
 			}
 			
 			
-		}else if( rangeToTarget <= maxWeaponsRange && relativeDot < -0.95f && ( zRot > 355f || zRot < 5f) ){
+		}else if( rangeToTarget <= maxWeaponsRange && relativeDotRight < -0.95f && ( zRot > 355f || zRot < 5f) ){
 			
 			foreach( Transform child in transform.FindChild("Sloop/Nodes/RightGuns") ){
 				
@@ -439,8 +753,23 @@ public class AINavalBehaviour : MonoBehaviour {
 		}
 	}
 
+	
+void LeftTurn(){
+	transform.GetComponent<NavalMovement>().turnLeft  = true;
+	transform.GetComponent<NavalMovement>().turnRight = false;
+}
+void RightTurn(){
+	transform.GetComponent<NavalMovement>().turnLeft  = false;
+	transform.GetComponent<NavalMovement>().turnRight = true;
+}
+void StopTurn(){
+	transform.GetComponent<NavalMovement>().turnLeft  = false;
+	transform.GetComponent<NavalMovement>().turnRight = false;
+}
 
-
-
+	
+	
+	
+	
 
 }

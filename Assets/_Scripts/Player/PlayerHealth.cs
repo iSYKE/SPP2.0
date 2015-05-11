@@ -58,6 +58,7 @@ public class PlayerHealth : MonoBehaviour {
 
 		if (hullCurrentHealth == 0)
 			shipHealthImage.texture = hull100;
+
 		//playerAudio.Play();
 
 		if (hullCurrentHealth <= 0 && !isDead) {

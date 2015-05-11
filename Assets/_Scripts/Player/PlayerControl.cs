@@ -171,6 +171,7 @@ public class PlayerControl : MonoBehaviour {
 			foreach( Transform child in transform.FindChild("Sloop/Nodes/LeftGuns") ){
 				
 				if(child.GetComponentInChildren<CannonFire>()){
+
 					child.GetComponentInChildren<CannonFire>().doFire = true;
 					//Debug.Log(child.name + " FIRED!!!");
 				}
@@ -184,6 +185,7 @@ public class PlayerControl : MonoBehaviour {
 			foreach( Transform child in transform.FindChild("Sloop/Nodes/RightGuns") ){
 				
 				if(child.GetComponentInChildren<CannonFire>()){
+
 					child.GetComponentInChildren<CannonFire>().doFire = true;
 					//Debug.Log(child.name + " FIRED!!!");
 				}

@@ -7,9 +7,14 @@ public class PlayerHealth : MonoBehaviour {
 
 	public int hullStartingHealth = 100;
 	public int hullCurrentHealth;
-	public Slider healthSlider;
 	public Text HealthNumberText;
 	public Text GameOverText;
+	public RawImage shipHealthImage;
+	public Texture hull0;
+	public Texture hull25;
+	public Texture hull50;
+	public Texture hull75;
+	public Texture hull100;
 
 	//AudioSource playerAudio;
 	bool isDead;
@@ -26,6 +31,7 @@ public class PlayerHealth : MonoBehaviour {
 		sinking = GameObject.FindGameObjectWithTag ("Player");
 		buoyancyForce = sinking.GetComponent<BuoyancyForce> ();
 		GameOverText.enabled = false;
+		shipHealthImage.texture = hull0;
 	}
 
 	void Update()
@@ -36,7 +42,19 @@ public class PlayerHealth : MonoBehaviour {
 	public void TakeDamage (int amount)
 	{
 		hullCurrentHealth -= amount;
-		healthSlider.value = hullCurrentHealth;
+
+		if (hullCurrentHealth == 150)
+			shipHealthImage.texture = hull25;
+		
+		if (hullCurrentHealth == 100)
+			shipHealthImage.texture = hull50;
+
+		if (hullCurrentHealth == 50)
+			shipHealthImage.texture = hull75;
+
+		if (hullCurrentHealth == 0)
+			shipHealthImage.texture = hull100;
+
 		//playerAudio.Play();
 
 		if (hullCurrentHealth <= 0 && !isDead) {

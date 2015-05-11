@@ -129,7 +129,7 @@ public class MenuController : MonoBehaviour {
 		backButtonObj.GetComponent<Animator> ().SetTrigger ("BackButtonSlideIn");
 		startGameButtonObj.GetComponent<Animator> ().SetTrigger ("StartGameSlideIn");
 
-		MenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideIn");
+		//MenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideIn");
 	}
 
 	void ReturningToMainMenu()
@@ -144,7 +144,7 @@ public class MenuController : MonoBehaviour {
 		startGameButtonObj.GetComponent<Animator> ().SetTrigger ("StartGameSlideOff");
 		backButtonObj.GetComponent<Animator> ().SetTrigger ("BackButtonSlideOff");
 
-		MenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideOff");
+		//MenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideOff");
 
 		playButtonObj.GetComponent<Animator> ().SetTrigger ("PlayButtonSlideIn");
 		optionsButtonObj.GetComponent<Animator> ().SetTrigger ("OptionsButtonSlideIn");

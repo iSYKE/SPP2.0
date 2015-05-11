@@ -170,25 +170,21 @@ public class AINavalBehaviour : MonoBehaviour {
 
 //--------------------------------------------------------
 	void DetermineMorale(){
+		float maxHealth = transform.GetComponent<AIHealth>().aiMaxHealth;
+		float health = transform.GetComponent<AIHealth>().aiHealth;
+		//if ( behaviourMode == BehaviourMode.Combat ){
+		//}
 
-		if ( behaviourMode == BehaviourMode.Combat ){
-
-			if ( transform.GetComponent<AIHealth>().aiHealth > 50f ){
-				morale = Morale.Steady;
-			}else if ( transform.GetComponent<AIHealth>().aiHealth < 50f ){
-				morale = Morale.Wavering;
-			}else if ( transform.GetComponent<AIHealth>().aiHealth < 20f ){
-				morale = Morale.Surrender;
-			}
-
-		}else{
-
+		if ( health > 0.25 * maxHealth ){
 			morale = Morale.Steady;
-
+		}else if (  health <= 0.20 * maxHealth && health > 0.10 * maxHealth ){
+			morale = Morale.Wavering;
+		}else if (  health <= 0.10 * maxHealth ){
+			morale = Morale.Surrender;
 		}
-
+		
 	}
-
+	
 	void DetermineAction(){
 
 		if( behaviourMode == BehaviourMode.Combat ){
@@ -236,6 +232,7 @@ public class AINavalBehaviour : MonoBehaviour {
 
 		}else if( currentAction == CurrentAction.Surrender){
 
+			behaviourMode = BehaviourMode.Peaceful;
 			Surrender();
 			
 		}else if( currentAction == CurrentAction.Travel){
@@ -271,7 +268,7 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	void Surrender(){
 
-		SailSpeed(NavalMovement.SailSet.no);
+		SailSpeed( NavalMovement.SailSet.no );
 
 	}
 

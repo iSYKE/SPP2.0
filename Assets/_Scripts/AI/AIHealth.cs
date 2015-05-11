@@ -4,9 +4,12 @@ using LostPolygon.DynamicWaterSystem;
 
 public class AIHealth : MonoBehaviour {
 
-
+	public float aiMaxHealth;
 	public float aiHealth = 200f;
 
+	void Start(){
+		aiMaxHealth = 200f;
+	}
 
 	void FixedUpdate () {
 	

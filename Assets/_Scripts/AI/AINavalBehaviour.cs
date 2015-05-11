@@ -315,7 +315,8 @@ public class AINavalBehaviour : MonoBehaviour {
 
 	void CombatSeamanship(){
 
-		if(  relativeDot < 0.98f && relativeDot > 0 ){
+		/*
+		 * if(  relativeDot < 0.98f && relativeDot > 0 ){
 			//Enemy Right 
 			if(  (rightVelDot > 0 && forwardVelDot < 0) || ( rightVelDot < 0 && forwardVelDot > 0 )  ){
 
@@ -344,7 +345,37 @@ public class AINavalBehaviour : MonoBehaviour {
 				transform.GetComponent<NavalMovement>().turnRight = true;
 			
 			}
-	
+
+		*/
+
+		if(  relativeDot < 0.98f && relativeDot > 0 ){
+
+			if( forwardVelDot < 0 ){
+
+				transform.GetComponent<NavalMovement>().turnLeft  = true;
+				transform.GetComponent<NavalMovement>().turnRight = false;
+			
+			}else if(forwardVelDot > 0){
+
+				transform.GetComponent<NavalMovement>().turnLeft  = false;
+				transform.GetComponent<NavalMovement>().turnRight = true;
+			
+			}
+
+		}else if( relativeDot > -0.98f && relativeDot < 0 ){
+
+			if( forwardVelDot < 0 ){
+
+				transform.GetComponent<NavalMovement>().turnLeft  = false;
+				transform.GetComponent<NavalMovement>().turnRight = true;
+			
+			}else if(forwardVelDot > 0){
+
+				transform.GetComponent<NavalMovement>().turnLeft  = true;
+				transform.GetComponent<NavalMovement>().turnRight = false;
+			
+			}
+
 		}else{
 			
 			transform.GetComponent<NavalMovement>().turnLeft  = false;
@@ -352,13 +383,8 @@ public class AINavalBehaviour : MonoBehaviour {
 			
 		}
 
-		//transform.GetComponent<NavalMovement>().turnLeft  = false;
-		//transform.GetComponent<NavalMovement>().turnRight = true;
-		
-		transform.GetComponent<NavalMovement>().turnLeft  = true;
-		transform.GetComponent<NavalMovement>().turnRight = false;
 
-		//AimAndFireCannons();
+		AimAndFireCannons();
 
 	}
 

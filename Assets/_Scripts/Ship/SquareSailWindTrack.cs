@@ -68,7 +68,7 @@ public class SquareSailWindTrack : MonoBehaviour {
 			
 			//print ("ROTATING SAIL 111");
 			
-			transform.eulerAngles = new Vector3 ( 0 , desiredRot , 0);
+			transform.eulerAngles = new Vector3 ( 0 , desiredRot , transform.parent.eulerAngles.z);
 			
 			
 			
@@ -94,7 +94,7 @@ public class SquareSailWindTrack : MonoBehaviour {
 				
 				//print ("ROTATING SAIL 222");
 				
-				transform.eulerAngles = new Vector3 (0, desiredRot, 0);
+			transform.eulerAngles = new Vector3 (0, desiredRot, transform.parent.transform.eulerAngles.z);
 				
 				
 				

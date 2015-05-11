@@ -160,7 +160,13 @@ public class NavalMovement : MonoBehaviour {
 		Vector3 vec = new Vector3( 0, 0, 1);
 
 		float windEffect = windStrength * sailCharCoef * (sailIntoWind + 0.1f) * currSailSetMod ;
-		transform.GetComponent<Rigidbody>().AddForceAtPosition( (windEffect * transform.forward) ,  transform.position /*+ Vector3.up*/ );
+
+		if( transform.position.y < 10f){
+
+			transform.GetComponent<Rigidbody>().AddForceAtPosition( (windEffect * transform.forward ) ,  transform.position /*+ Vector3.up*/ );
+
+		}
+
 
 		Wind windLR = wind;
 

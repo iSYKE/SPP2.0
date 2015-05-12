@@ -6,13 +6,12 @@ public class AtGameLoad : MonoBehaviour {
 	public Transform CameraTransform;
 	public Transform ShipTransform;
 
-	void Start () {
-		CameraTransform.position = new Vector3 (-49.9f, 30f, 74.7f);
-		CameraTransform.eulerAngles = new Vector3 (10.1f, 105.9f, 0f);
+	void Awake () {
+		Camera.main.transform.position = new Vector3 (-49.9f, 30f, 74.7f);
+		Camera.main.transform.eulerAngles = new Vector3 (10.1f, 105.9f, 0f);
 
+		ShipTransform = GameObject.Find ("Player").GetComponent<Transform> ();
 		ShipTransform.position = new Vector3 (0f, 0f, -60f);
-
-
 
 		//CameraTransform.position = new Vector3 (-7.4f, 20.54f, 37.4f);
 		//CameraTransform.eulerAngles = new Vector3 (14.02f, 133.7f, 0f);

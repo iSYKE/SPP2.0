@@ -14,7 +14,8 @@ public class MenuController : MonoBehaviour {
 	public GameObject backButtonObj;
 	public GameObject startGameButtonObj;
 
-	public GameObject MenuObj;
+	public GameObject ShipSelectionMenuObj;
+	public GameObject WeaponSelectionMenuObj;
 
 	public RectTransform optionsImageRect;
 	public RectTransform controlsImageRect;
@@ -37,6 +38,31 @@ public class MenuController : MonoBehaviour {
 	ExitMainMenu exitMainMenu;
 	PlayCannonFire playCannonFire;
 	ReturnToMainMenu returnToMainMenu;
+
+	void Awake() {
+		playButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Play Button");
+		exitButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Exit Game Button");
+		optionsButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Options Button");
+		controlButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Controls Button");
+		creditsButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Credits Button");
+		gameTitle = GameObject.Find ("Canvas/GameTitle");
+
+		backButtonObj = GameObject.Find ("Canvas/ShipSelectionMenuButtons/Back Button");
+		startGameButtonObj = GameObject.Find ("Canvas/ShipSelectionMenuButtons/StartGameButton");
+
+		ShipSelectionMenuObj = GameObject.Find ("Canvas/ShipSelectionMenu");
+		WeaponSelectionMenuObj = GameObject.Find ("Canvas/WeaponSelectionMenu");
+
+		optionsImageRect = GameObject.Find ("Canvas/OptionsRawImage").GetComponent<RectTransform> ();
+		controlsImageRect = GameObject.Find ("Canvas/ControlsRawImage").GetComponent<RectTransform> ();
+		creditsImageRect = GameObject.Find ("Canvas/CreditsRawImage").GetComponent<RectTransform> ();
+
+		playText = GameObject.Find ("Canvas/MainMenuButtons/Play Button/PlayButtonText").GetComponent<Text> ();
+		optionsText = GameObject.Find ("Canvas/MainMenuButtons/Options Button/OptionsButtonText").GetComponent<Text> ();
+		controlText = GameObject.Find ("Canvas/MainMenuButtons/Controls Button/ControlsButtonText").GetComponent<Text> ();
+		creditsText = GameObject.Find ("Canvas/MainMenuButtons/Credits Button/CreditsButtonText").GetComponent<Text> ();
+		exitText = GameObject.Find ("Canvas/MainMenuButtons/Exit Game Button/ExitGameButtonText").GetComponent<Text> ();
+	}
 
 	public void MainPanelChange (string panelToChangeTo) 
 	{
@@ -78,12 +104,14 @@ public class MenuController : MonoBehaviour {
 				controlText.GetComponent<Text>().color = Color.red;
 				optionsButtonObj.GetComponent<Button>().interactable = false;
 				creditsButtonObj.GetComponent<Button>().interactable = false;
+				playButtonObj.GetComponent<Button>().interactable = false;
 			} else if(controlsPanel == true) {
 				controlsPanel = false;
 				controlsImageRect.anchoredPosition = new Vector3(2000f, 20f, 0f);
 				controlText.GetComponent<Text>().color = Color.black;
 				optionsButtonObj.GetComponent<Button>().interactable = true;
 				creditsButtonObj.GetComponent<Button>().interactable = true;
+				playButtonObj.GetComponent<Button>().interactable = true;
 			}
 		}
 		if (panelToChangeTo == "Credits") {
@@ -93,12 +121,14 @@ public class MenuController : MonoBehaviour {
 				creditsText.GetComponent<Text>().color = Color.red;
 				controlButtonObj.GetComponent<Button> ().interactable = false;
 				optionsButtonObj.GetComponent<Button> ().interactable = false;
+				playButtonObj.GetComponent<Button>().interactable = false;
 			} else if(creditsPanel == true){
 				creditsPanel = false;
 				creditsImageRect.anchoredPosition = new Vector3(2000f, 10f, 0f);
 				creditsText.GetComponent<Text>().color = Color.black;
 				controlButtonObj.GetComponent<Button>().interactable = true;
 				optionsButtonObj.GetComponent<Button>().interactable = true;
+				playButtonObj.GetComponent<Button>().interactable = true;
 			}
 		}
 		if (panelToChangeTo == "Exit") {
@@ -129,7 +159,7 @@ public class MenuController : MonoBehaviour {
 		backButtonObj.GetComponent<Animator> ().SetTrigger ("BackButtonSlideIn");
 		startGameButtonObj.GetComponent<Animator> ().SetTrigger ("StartGameSlideIn");
 
-		//MenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideIn");
+		ShipSelectionMenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideIn");
 	}
 
 	void ReturningToMainMenu()
@@ -144,7 +174,8 @@ public class MenuController : MonoBehaviour {
 		startGameButtonObj.GetComponent<Animator> ().SetTrigger ("StartGameSlideOff");
 		backButtonObj.GetComponent<Animator> ().SetTrigger ("BackButtonSlideOff");
 
-		//MenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideOff");
+		ShipSelectionMenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideOff");
+		WeaponSelectionMenuObj.GetComponent<Animator> ().SetTrigger ("WeaponMenuSlideOff");
 
 		playButtonObj.GetComponent<Animator> ().SetTrigger ("PlayButtonSlideIn");
 		optionsButtonObj.GetComponent<Animator> ().SetTrigger ("OptionsButtonSlideIn");

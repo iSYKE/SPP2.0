@@ -27,8 +27,8 @@ public class IsSail : MonoBehaviour {
 
 		float windHdgR = windHdg * 2 * Mathf.PI / 360;
 
-		float forceX = 20 * windStr * Mathf.Sin( windHdgR );
-		float forceZ = 20 * windStr * Mathf.Cos( windHdgR );
+		float forceX =  windStr * Mathf.Sin( windHdgR );
+		float forceZ =  windStr * Mathf.Cos( windHdgR );
 
 
 		transform.GetComponent<Cloth>().externalAcceleration = new Vector3 ( forceX, 0, forceZ );

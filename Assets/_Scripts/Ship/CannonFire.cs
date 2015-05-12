@@ -30,7 +30,7 @@ public class CannonFire : MonoBehaviour {
 		// Fire if reloaded
 		if( doFire == true && isReloaded == true){
 
-			float time1 = Random.Range(0f,1f);
+			float time1 = Random.Range(0f,2f);
 			
 			StartCoroutine(DelayShot(time1));
 
@@ -77,6 +77,7 @@ public class CannonFire : MonoBehaviour {
 
 	IEnumerator DelayShot(float time) {
 		yield return new WaitForSeconds(time);
+
 		SpawnProjectile();
 		PlayAudio();
 	}

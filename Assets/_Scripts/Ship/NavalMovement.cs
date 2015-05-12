@@ -10,13 +10,32 @@ public class NavalMovement : MonoBehaviour {
 	}
 	public Wind wind;
 
-	GameObject courseSail;
-	GameObject topSail;
+	//Sails:
+
+	GameObject mainCourseSail;
+	GameObject mainTopSail;
+	GameObject mainTopGallant;
+	GameObject mainRoyalSail;
+
 	GameObject aftSail;
 
-	GameObject courseSailFolded;
-	GameObject topSailFolded;
+	GameObject foreCourseSail;
+	GameObject foreTopSail;
+	GameObject foreTopGallant;
+	GameObject foreRoyalSail;
+
+	//FoldedSails:
+	GameObject mainCourseSailFolded;
+	GameObject mainTopSailFolded;
+	GameObject mainTopGallantFolded;
+	GameObject mainRoyalSailFolded;
+
 	GameObject aftSailFolded;
+	
+	GameObject foreCourseSailFolded;
+	GameObject foreTopSailFolded;
+	GameObject foreTopGallantFolded;
+	GameObject foreRoyalSailFolded;
 
 
 	public enum SailSet {
@@ -58,16 +77,11 @@ public class NavalMovement : MonoBehaviour {
 	void Start () {
 
 		sailSet = SailSet.no;
-		sailCharCoef 		= 300000f;
-		turningForceCoeff 	= 1500000f;
+		sailCharCoef 		= 15f;
+		turningForceCoeff 	= 6f;
 
+		DetermineSailPresence();
 
-		courseSail 			= transform.Find("Sloop/MainMast1/CourseSailMast/CourseSail").gameObject;
-		courseSailFolded 	= transform.Find("Sloop/MainMast1/CourseSailMast/CourseSailFolded").gameObject;
-		topSail 			= transform.Find("Sloop/MainMast1/TopSailMast/TopSail").gameObject;
-		topSailFolded		= transform.Find("Sloop/MainMast1/TopSailMast/TopSailFolded").gameObject;
-		aftSail 			= transform.Find("Sloop/AftMast1/AftSail").gameObject;
-		aftSailFolded 		= transform.Find("Sloop/AftMast1/AftSailFolded").gameObject;
 
 
 
@@ -104,51 +118,10 @@ public class NavalMovement : MonoBehaviour {
 				TurnForceOnShipLeft();
 				
 			}
-			
-			
-			if( sailSet == SailSet.no){
-				
-				currSailSetMod = sailNoMod;
 
-				if(courseSail != null)
-					courseSail.SetActive(false);
-				if(topSail != null)
-					topSail.SetActive(false);
-				if(aftSail != null)
-					aftSail.SetActive(false);
 
-				if(courseSailFolded != null)
-					courseSailFolded.SetActive(true);
-				if(topSailFolded != null)
-					topSailFolded.SetActive(true);
-				if(aftSailFolded != null)
-					aftSailFolded.SetActive(true);
-				
-			}else if (sailSet == SailSet.min){
-				
-				currSailSetMod = sailMinMod;
-				
-				courseSail.SetActive(false);
-				topSail.SetActive(true);
-				aftSail.SetActive(true);
-				
-				courseSailFolded.SetActive(true);
-				topSailFolded.SetActive(false);
-				aftSailFolded.SetActive(false);
-				
-			}else if(sailSet == SailSet.max){
-				
-				currSailSetMod = sailMaxMod;
-				
-				courseSail.SetActive(true);
-				topSail.SetActive(true);
-				aftSail.SetActive(true);
-				
-				courseSailFolded.SetActive(false);
-				topSailFolded.SetActive(false);
-				aftSailFolded.SetActive(false);
-				
-			}
+			DetermineSetSail();
+
 
 		}
 
@@ -165,11 +138,11 @@ public class NavalMovement : MonoBehaviour {
 
 		Vector3 vec = new Vector3( 0, 0, 1);
 
-		float windEffect = windStrength * sailCharCoef * (sailIntoWind + 0.3f) * currSailSetMod ;
+		float windEffect = windStrength * (sailCharCoef * 100000) * (sailIntoWind + 0.3f) * currSailSetMod ;
 
 		if( transform.position.y < 10f){
-
-			transform.GetComponent<Rigidbody>().AddForceAtPosition( (windEffect * transform.forward ) ,  transform.position /*+ Vector3.up*/ );
+			print (transform.forward);
+			transform.GetComponent<Rigidbody>().AddForceAtPosition( (windEffect * new Vector3( transform.forward.x, 0, transform.forward.z) ) ,  transform.position /*+ Vector3.up*/ );
 
 		}
 
@@ -198,7 +171,7 @@ public class NavalMovement : MonoBehaviour {
 
 		Vector3 vec = new Vector3(0, 1, 0);
 
-		turningForce =  ( (2*velocity + 5)/(velocity + 1) ) * turningForceCoeff;
+		turningForce =  ( (2*velocity + 5)/(velocity + 1) ) * turningForceCoeff * 1000000;
 
 		transform.GetComponent<Rigidbody>().AddRelativeTorque(  -2 * vec * turningForce );
 
@@ -212,7 +185,7 @@ public class NavalMovement : MonoBehaviour {
 
 		Vector3 vec = new Vector3( 0, 1, 0);
 
-		turningForce = ( (velocity + 5)/(velocity + 1) ) * turningForceCoeff;
+		turningForce = ( (2*velocity + 5)/(velocity + 1) ) * (turningForceCoeff * 1000000);
 		
 		transform.GetComponent<Rigidbody>().AddRelativeTorque(   2 * vec * turningForce );
 
@@ -323,6 +296,301 @@ public class NavalMovement : MonoBehaviour {
 	}
 
 
+	void DetermineSailPresence(){
+		
+		//Aft Mast
+		if( transform.FindChild( string.Format("{0}/AftMast1/AftSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName ) ) ){
+			aftSail 	= transform.FindChild( string.Format("{0}/AftMast1/AftSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/AftMast1/AftSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			aftSailFolded 	= transform.FindChild(string.Format("{0}/AftMast1/AftSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+
+		//Main mast:
+		if( transform.FindChild( string.Format("{0}/MainMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ))){
+			mainCourseSail 	= transform.FindChild(string.Format("{0}/MainMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName )).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/MainMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			mainCourseSailFolded 	= transform.FindChild(string.Format("{0}/MainMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/MainMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			mainTopSail 	= transform.FindChild(string.Format("{0}/MainMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/MainMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			mainTopSailFolded 	= transform.FindChild(string.Format("{0}/MainMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			mainTopGallant 	= transform.FindChild(string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			mainTopGallantFolded 	= transform.FindChild(string.Format("{0}/MainMast1/TopGallantMast/TopGallantFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/MainMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ))){
+			mainRoyalSail	= transform.FindChild(string.Format("{0}/MainMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/MainMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			mainRoyalSailFolded	= transform.FindChild(string.Format("{0}/MainMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+
+
+		//Foremast:
+		if( transform.FindChild( string.Format("{0}/ForeMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ))){
+			foreCourseSail 	= transform.FindChild(string.Format("{0}/ForeMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/ForeMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName )) ){
+			foreCourseSailFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/ForeMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			foreTopSail 	= transform.FindChild(string.Format("{0}/ForeMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/ForeMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			foreTopSailFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			foreTopGallant 	= transform.FindChild(string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			foreTopGallantFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/TopGallantMast/TopGallantFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}/ForeMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			foreRoyalSail	= transform.FindChild(string.Format("{0}/MForeMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+		if( transform.FindChild( string.Format("{0}ForeMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
+			foreRoyalSailFolded	= transform.FindChild(string.Format("{0}/ForeMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		}
+
+
+
+
+
+
+	}
+	void DetermineSetSail(){
+
+		if( sailSet == SailSet.no){
+			
+			currSailSetMod = sailNoMod;
+
+			//Sails
+			if(mainCourseSail != null){
+				mainCourseSail.SetActive(false);
+			}
+			if(mainTopSail != null){
+				mainTopSail.SetActive(false);
+			}
+			if( mainTopGallant != null){
+				mainTopGallant.SetActive(false);
+			}
+			if( mainRoyalSail != null){
+				mainRoyalSail.SetActive(false);
+			}
+
+
+			if(aftSail != null){
+				aftSail.SetActive(false);
+			}
+
+
+			if(foreCourseSail != null){
+				foreCourseSail.SetActive(false);
+			}
+			if(foreTopSail != null){
+				foreTopSail.SetActive(false);
+			}
+			if( foreTopGallant != null){
+				foreTopGallant.SetActive(false);
+			}
+			if( foreRoyalSail != null){
+				foreRoyalSail.SetActive(false);
+			}
+
+
+
+			//FoldedSails
+			if(mainCourseSailFolded != null){
+				mainCourseSailFolded.SetActive(true);
+			}
+			if(mainTopSailFolded != null){
+				mainTopSailFolded.SetActive(true);
+			}
+			if( mainTopGallantFolded != null){
+				mainTopGallantFolded.SetActive(true);
+			}
+			if( mainRoyalSailFolded != null){
+				mainRoyalSailFolded.SetActive(true);
+			}
+
+
+			if(aftSailFolded != null){
+				aftSailFolded.SetActive(true);
+			}
+
+			
+			if(foreCourseSailFolded != null){
+				foreCourseSailFolded.SetActive(true);
+			}
+			if(foreTopSailFolded != null){
+				foreTopSailFolded.SetActive(true);
+			}
+			if( foreTopGallantFolded != null){
+				foreTopGallantFolded.SetActive(true);
+			}
+			if( foreRoyalSailFolded != null){
+				foreRoyalSailFolded.SetActive(true);
+			}
+			
+		
+		}else if (sailSet == SailSet.min){
+			
+			currSailSetMod = sailMinMod;
+			
+			//Sails
+			if(mainCourseSail != null){
+				mainCourseSail.SetActive(false);
+			}
+			if(mainTopSail != null){
+				mainTopSail.SetActive(false);
+			}
+			if( mainTopGallant != null){
+				mainTopGallant.SetActive(true);
+			}
+			if( mainRoyalSail != null){
+				mainRoyalSail.SetActive(true);
+			}
+			
+
+			if(aftSail != null){
+				aftSail.SetActive(true);
+			}
+
+
+			if(foreCourseSail != null){
+				foreCourseSail.SetActive(false);
+			}
+			if(foreTopSail != null){
+				foreTopSail.SetActive(false);
+			}
+			if( foreTopGallant != null){
+				foreTopGallant.SetActive(true);
+			}
+			if( foreRoyalSail != null){
+				foreRoyalSail.SetActive(true);
+			}
+			
+			
+			
+			//FoldedSails
+			if(mainCourseSailFolded != null){
+				mainCourseSailFolded.SetActive(true);
+			}
+			if(mainTopSailFolded != null){
+				mainTopSailFolded.SetActive(true);
+			}
+			if( mainTopGallantFolded != null){
+				mainTopGallantFolded.SetActive(false);
+			}
+			if( mainRoyalSailFolded != null){
+				mainRoyalSailFolded.SetActive(false);
+			}
+			
+
+			if(aftSailFolded != null){
+				aftSailFolded.SetActive(false);
+			}
+
+
+			if(foreCourseSailFolded != null){
+				foreCourseSailFolded.SetActive(true);
+			}
+			if(foreTopSailFolded != null){
+				foreTopSailFolded.SetActive(true);
+			}
+			if( foreTopGallantFolded != null){
+				foreTopGallantFolded.SetActive(false);
+			}
+			if( foreRoyalSailFolded != null){
+				foreRoyalSailFolded.SetActive(false);
+			}
+			
+		
+		
+		
+		
+		}else if(sailSet == SailSet.max){
+
+			currSailSetMod = sailMaxMod;
+
+			//Sails
+			if(mainCourseSail != null){
+				mainCourseSail.SetActive(true);
+			}
+			if(mainTopSail != null){
+				mainTopSail.SetActive(true);
+			}
+			if( mainTopGallant != null){
+				mainTopGallant.SetActive(true);
+			}
+			if( mainRoyalSail != null){
+				mainRoyalSail.SetActive(true);
+			}
+			
+
+			if(aftSail != null){
+				aftSail.SetActive(true);
+			}
+
+
+			if(foreCourseSail != null){
+				foreCourseSail.SetActive(true);
+			}
+			if(foreTopSail != null){
+				foreTopSail.SetActive(true);
+			}
+			if( foreTopGallant != null){
+				foreTopGallant.SetActive(true);
+			}
+			if( foreRoyalSail != null){
+				foreRoyalSail.SetActive(true);
+			}
+			
+			
+			
+			//FoldedSails
+			if(mainCourseSailFolded != null){
+				mainCourseSailFolded.SetActive(false);
+			}
+			if(mainTopSailFolded != null){
+				mainTopSailFolded.SetActive(false);
+			}
+			if( mainTopGallantFolded != null){
+				mainTopGallantFolded.SetActive(false);
+			}
+			if( mainRoyalSailFolded != null){
+				mainRoyalSailFolded.SetActive(false);
+			}
+			
+
+			if(aftSailFolded != null){
+				aftSailFolded.SetActive(false);
+			}
+
+
+			if(foreCourseSailFolded != null){
+				foreCourseSailFolded.SetActive(false);
+			}
+			if(foreTopSailFolded != null){
+				foreTopSailFolded.SetActive(false);
+			}
+			if( foreTopGallantFolded != null){
+				foreTopGallantFolded.SetActive(false);
+			}
+			if( foreRoyalSailFolded != null){
+				foreRoyalSailFolded.SetActive(false);
+			}
+
+		}
+
+	}
 
 
 

@@ -77,23 +77,22 @@ public class PlayerControl : MonoBehaviour {
 	void TurnShip(){
 
 		if( Input.GetAxis("Horizontal") > 0 ){
-			transform.FindChild("Sloop/Rudder").transform.localEulerAngles = new Vector3(0,-45*Input.GetAxis("Horizontal")*Input.GetAxis("Horizontal"),0);
+			transform.FindChild(string.Format("{0}/Rudder", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )).transform.localEulerAngles = new Vector3(0,-45*Input.GetAxis("Horizontal")*Input.GetAxis("Horizontal"),0);
 			transform.GetComponent<NavalMovement>().turnRight = true;
 			transform.GetComponent<NavalMovement>().turnLeft = false;
 			
 			
 		}else if(Input.GetAxis("Horizontal") < 0 ){
-			transform.FindChild("Sloop/Rudder").transform.localEulerAngles = new Vector3(0,-45*Input.GetAxis("Horizontal")*-Input.GetAxis("Horizontal"),0);
+			transform.FindChild(string.Format("{0}/Rudder", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )).transform.localEulerAngles = new Vector3(0,-45*Input.GetAxis("Horizontal")*-Input.GetAxis("Horizontal"),0);
 			transform.GetComponent<NavalMovement>().turnRight = false;
 			transform.GetComponent<NavalMovement>().turnLeft = true;
 			
 		}else{
-			transform.FindChild("Sloop/Rudder").transform.localEulerAngles = new Vector3(0,0,0);
+			transform.FindChild(string.Format("{0}/Rudder", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName ) ).transform.localEulerAngles = new Vector3(0,0,0);
 			transform.GetComponent<NavalMovement>().turnLeft = false;
 			transform.GetComponent<NavalMovement>().turnRight = false;
 			
 		}
-
 	}
 
 	public void SetCannonAngle(string gunSide) {
@@ -135,7 +134,7 @@ public class PlayerControl : MonoBehaviour {
 		float aimTheta	= aimThetaR * (360/(2*Mathf.PI));
 		//print (aimTheta);
 
-		foreach( Transform child in transform.FindChild("Sloop/Nodes/LeftGuns") ){
+		foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )) ){
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
 
@@ -153,7 +152,7 @@ public class PlayerControl : MonoBehaviour {
 		float aimTheta	= aimThetaR * (360/(2*Mathf.PI));
 		//print (aimTheta);
 			
-		foreach( Transform child in transform.FindChild("Sloop/Nodes/RightGuns") ){
+		foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/RightGuns", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )) ){
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
 				
@@ -168,7 +167,7 @@ public class PlayerControl : MonoBehaviour {
 		//Go through each child in Left and Right gun nodes and invoke firing command in the objects possessing the CannonFire cmponent, ie. cannons
 		if( Input.GetKeyDown(KeyCode.Q) ){
 			
-			foreach( Transform child in transform.FindChild("Sloop/Nodes/LeftGuns") ){
+			foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )) ){
 				
 				if(child.GetComponentInChildren<CannonFire>()){
 
@@ -182,7 +181,7 @@ public class PlayerControl : MonoBehaviour {
 			
 		}else if( Input.GetKeyDown(KeyCode.E) ){
 			
-			foreach( Transform child in transform.FindChild("Sloop/Nodes/RightGuns") ){
+			foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/RightGuns", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )) ){
 				
 				if(child.GetComponentInChildren<CannonFire>()){
 

@@ -8,7 +8,7 @@ public class AIHealth : MonoBehaviour {
 	public float aiHealth = 200f;
 
 	void Start(){
-		aiMaxHealth = 200f;
+		aiMaxHealth = 500f;
 	}
 
 	void FixedUpdate () {

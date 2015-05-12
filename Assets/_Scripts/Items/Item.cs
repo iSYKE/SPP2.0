@@ -19,12 +19,14 @@ public class Item{
 	public ItemStorageType itemStorageType;
 
 	public enum ItemType{
+		Ship,
 		Cannon,
 		Projectile,
 		Rigging
 	}
 
 	public enum ItemStorageType{
+		CurrentShip,
 		GunNode,
 		Hold
 	}

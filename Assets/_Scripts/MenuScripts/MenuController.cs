@@ -36,7 +36,6 @@ public class MenuController : MonoBehaviour {
 	float targetTime;
 
 	ExitMainMenu exitMainMenu;
-	PlayCannonFire playCannonFire;
 	ReturnToMainMenu returnToMainMenu;
 
 	void Awake() {

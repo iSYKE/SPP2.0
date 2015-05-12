@@ -7,7 +7,9 @@ public class ShipSelectionController : MonoBehaviour {
 	public GameObject Ship;
 	public GameObject PlayerObject;
 	public Transform PlayerTransform;
+	GameObject CurrentShip;
 	GameObject SpawningShip;
+	GameObject CurrentWeapons;
 
 	public GameObject _ShipSelectionMenuObj;
 	public GameObject _WeaponSelectionMenuObj;
@@ -19,9 +21,9 @@ public class ShipSelectionController : MonoBehaviour {
 	public bool readyToStartGame = false;
 	
 	public void ShipButtons(string buttonName) {
-		if (buttonName == "RedSloop") {
+		if (buttonName == "Sloop") {
 			MoveShipOff();
-			StartCoroutine(KillShipCoroutine());
+			StartCoroutine(KillShipCoroutine(buttonName));
 
 		}
 		if (buttonName == "BlueSloop") {
@@ -34,7 +36,8 @@ public class ShipSelectionController : MonoBehaviour {
 			TriggerWeaponsMenu();
 		}
 		if (buttonName == "Cannon1") {
-
+			DestroyCurrentWeapons();
+			SpawnSelectedWeapons(buttonName);
 		}
 		if (buttonName == "Back") {
 			TriggerShipsMenu();
@@ -67,26 +70,40 @@ public class ShipSelectionController : MonoBehaviour {
 		shipMovingOffMenu.enabled = true;
 	}
 
-	IEnumerator KillShipCoroutine(){
+	IEnumerator KillShipCoroutine(string newShip){
 		yield return new WaitForSeconds (10f);
 		DestroyCurrentShip ();
-		SpawnsSelectedShip ();
+		SpawnsSelectedShip (newShip);
 		shipMovingOffMenu.enabled = false;
 		Debug.Log ("This HAs Been 10Seconds");
 	}
 
 	void DestroyCurrentShip() {
-		Ship = GameObject.Find("Player/Sloop");
-		Destroy (Ship.gameObject);
+		CurrentShip = GameObject.Find ("Player");
+		if (CurrentShip.GetComponent<Transform> ().FindChild ("Sloop")) {
+			Ship = GameObject.Find("Player/Sloop");
+			Destroy (Ship.gameObject);
+			Debug.Log("Sloop Was Destroyed");
+		}
 	}
 
-	void SpawnsSelectedShip() {
-		//PlayerObject = GameObject.Find ("Player");
+	void SpawnsSelectedShip(string newShip) {
 		PlayerTransform = GameObject.Find ("Player").GetComponent<Transform> ();
 		PlayerTransform.position = new Vector3 (0f, 0f, -60f);
-		SpawningShip = Instantiate (Resources.Load ("Ships/Sloop"), PlayerTransform.position , PlayerTransform.rotation) as GameObject;
+		SpawningShip = Instantiate (Resources.Load ("Ships/" + newShip), PlayerTransform.position , PlayerTransform.rotation) as GameObject;
 		SpawningShip.transform.parent = PlayerTransform;
 		SpawningShip.transform.name = "Sloop";
+	}
+
+	void DestroyCurrentWeapons() {
+		foreach (Transform child in GameObject.Find("Player").transform.FindChild("Sloop/Nodes/LeftGuns").transform) {
+
+		}
+
+	}
+
+	void SpawnSelectedWeapons(string newWeapons) {
+
 	}
 
 	void TriggerWeaponsMenu() {

@@ -8,6 +8,7 @@ public class ShipSelectionController : MonoBehaviour {
 	public GameObject PlayerObject;
 	public Transform PlayerTransform;
 	GameObject CurrentShip;
+	string ActiveShip = "Sloop";
 	GameObject SpawningShip;
 	GameObject CurrentWeapons;
 
@@ -21,13 +22,13 @@ public class ShipSelectionController : MonoBehaviour {
 	public bool readyToStartGame = false;
 	
 	public void ShipButtons(string buttonName) {
-		if (buttonName == "Sloop") {
+		if (buttonName == "Sloop" && ActiveShip != buttonName) {
 			MoveShipOff();
 			StartCoroutine(KillShipCoroutine(buttonName));
-
 		}
-		if (buttonName == "BlueSloop") {
-
+		if (buttonName == "Brig" && ActiveShip != buttonName) {
+			MoveShipOff();
+			StartCoroutine(KillShipCoroutine(buttonName));
 		}
 		if (buttonName == "YellowSloop") {
 
@@ -73,18 +74,15 @@ public class ShipSelectionController : MonoBehaviour {
 	IEnumerator KillShipCoroutine(string newShip){
 		yield return new WaitForSeconds (10f);
 		DestroyCurrentShip ();
-		SpawnsSelectedShip (newShip);
+		yield return new WaitForSeconds (1f);
+		SpawnsSelectedShip(newShip);
 		shipMovingOffMenu.enabled = false;
-		Debug.Log ("This HAs Been 10Seconds");
+		//Debug.Log ("This HAs Been 10Seconds");
 	}
 
 	void DestroyCurrentShip() {
-		CurrentShip = GameObject.Find ("Player");
-		if (CurrentShip.GetComponent<Transform> ().FindChild ("Sloop")) {
-			Ship = GameObject.Find("Player/Sloop");
-			Destroy (Ship.gameObject);
-			Debug.Log("Sloop Was Destroyed");
-		}
+		Ship = GameObject.Find ("Player/" + ActiveShip);
+		Destroy (Ship.gameObject);
 	}
 
 	void SpawnsSelectedShip(string newShip) {
@@ -92,7 +90,9 @@ public class ShipSelectionController : MonoBehaviour {
 		PlayerTransform.position = new Vector3 (0f, 0f, -60f);
 		SpawningShip = Instantiate (Resources.Load ("Ships/" + newShip), PlayerTransform.position , PlayerTransform.rotation) as GameObject;
 		SpawningShip.transform.parent = PlayerTransform;
-		SpawningShip.transform.name = "Sloop";
+		SpawningShip.transform.name = newShip;
+
+		ActiveShip = newShip;
 	}
 
 	void DestroyCurrentWeapons() {

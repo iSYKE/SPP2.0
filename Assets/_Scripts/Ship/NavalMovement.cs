@@ -109,14 +109,20 @@ public class NavalMovement : MonoBehaviour {
 			if( sailSet == SailSet.no){
 				
 				currSailSetMod = sailNoMod;
-				
-				courseSail.SetActive(false);
-				topSail.SetActive(false);
-				aftSail.SetActive(false);
-				
-				courseSailFolded.SetActive(true);
-				topSailFolded.SetActive(true);
-				aftSailFolded.SetActive(true);
+
+				if(courseSail != null)
+					courseSail.SetActive(false);
+				if(topSail != null)
+					topSail.SetActive(false);
+				if(aftSail != null)
+					aftSail.SetActive(false);
+
+				if(courseSailFolded != null)
+					courseSailFolded.SetActive(true);
+				if(topSailFolded != null)
+					topSailFolded.SetActive(true);
+				if(aftSailFolded != null)
+					aftSailFolded.SetActive(true);
 				
 			}else if (sailSet == SailSet.min){
 				

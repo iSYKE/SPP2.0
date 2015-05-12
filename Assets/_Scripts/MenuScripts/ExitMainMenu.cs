@@ -6,6 +6,8 @@ public class ExitMainMenu : MonoBehaviour {
 	public Transform CameraTransform;
 
 	void Update() {
+		CameraTransform = GameObject.Find ("Main Camera").GetComponent<Transform> ();
+
 		Vector3 targetPosition = new Vector3 (-7.4f, 20.54f, 37.4f);
 		Vector3 targetEuler = new Vector3 (14.02f, 133.7f, 0f);
 

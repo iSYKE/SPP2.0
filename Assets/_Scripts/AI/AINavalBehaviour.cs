@@ -410,7 +410,7 @@ public class AINavalBehaviour : MonoBehaviour {
 		DetermineTALR(); //MIGHT NEED TO BE MOVED
 
 		CombatMovement();
-		SailSpeed( NavalMovement.SailSet.min);
+		//SailSpeed( NavalMovement.SailSet.min);
 	
 	}
 
@@ -513,8 +513,11 @@ public class AINavalBehaviour : MonoBehaviour {
 				if(rangeToTarget > 200 ){
 
 					SailTo( targetLocation );
-				
+					SailSpeed( NavalMovement.SailSet.max);
+
 				}else if (targetLRAB == TargetLRAB.Left){
+
+					SailSpeed( NavalMovement.SailSet.min);
 
 					if( relativeDotForward < -0.01f ){
 						
@@ -526,7 +529,9 @@ public class AINavalBehaviour : MonoBehaviour {
 						
 					}
 				}else if( targetLRAB == TargetLRAB.Right ){
-						
+
+					SailSpeed( NavalMovement.SailSet.min);
+
 						if( relativeDotForward < -0.01f ){
 							
 							LeftTurn();
@@ -540,6 +545,8 @@ public class AINavalBehaviour : MonoBehaviour {
 
 				}else{
 
+					SailSpeed( NavalMovement.SailSet.min);
+
 					SailTo( targetLocation );
 				}
 
@@ -547,6 +554,8 @@ public class AINavalBehaviour : MonoBehaviour {
 			}else if( targetTALR == TargetTALR.Towards){
 
 				if( targetLRAB == TargetLRAB.Ahead || targetLRAB == TargetLRAB.Behind ){
+
+					SailSpeed( NavalMovement.SailSet.min);
 
 					if( relativeDotForward < -0.01f ){
 					
@@ -560,6 +569,8 @@ public class AINavalBehaviour : MonoBehaviour {
 				
 				}else if( targetLRAB == TargetLRAB.Right ){
 
+					SailSpeed( NavalMovement.SailSet.min);
+
 					if( relativeDotForward < -0.01f ){
 
 						LeftTurn();
@@ -571,7 +582,9 @@ public class AINavalBehaviour : MonoBehaviour {
 					}
 
 				}else if( targetLRAB == TargetLRAB.Left ){
-					
+
+					SailSpeed( NavalMovement.SailSet.min);
+
 					if( relativeDotForward < -0.01f ){
 						
 						RightTurn();
@@ -588,6 +601,8 @@ public class AINavalBehaviour : MonoBehaviour {
 
 				if( targetLRAB == TargetLRAB.Ahead){
 
+					SailSpeed ( NavalMovement.SailSet.min );
+
 					if( relativeDotRight < -0.01f ){
 						
 						LeftTurn();
@@ -600,6 +615,8 @@ public class AINavalBehaviour : MonoBehaviour {
 
 				}else if( targetLRAB == TargetLRAB.Behind){
 
+					SailSpeed ( NavalMovement.SailSet.min );
+
 					if( relativeDotForward > 0.01f ){
 						
 						LeftTurn();
@@ -611,7 +628,9 @@ public class AINavalBehaviour : MonoBehaviour {
 					}
 
 				}else if( targetLRAB == TargetLRAB.Left){
-					
+
+					SailSpeed ( target.transform.GetComponent<NavalMovement>().sailSet );
+
 					if( relativeDotForward > 0.01f ){
 						
 						LeftTurn();
@@ -623,7 +642,9 @@ public class AINavalBehaviour : MonoBehaviour {
 					}
 					
 				}else if( targetLRAB == TargetLRAB.Right){
-					
+
+					SailSpeed ( target.transform.GetComponent<NavalMovement>().sailSet );
+
 					if( relativeDotForward > 0.01f ){
 						
 						RightTurn();
@@ -638,7 +659,9 @@ public class AINavalBehaviour : MonoBehaviour {
 			}else if( targetTALR == TargetTALR.Right ){
 
 				if( targetLRAB == TargetLRAB.Ahead){
-					
+
+					SailSpeed ( NavalMovement.SailSet.min );
+
 					if( relativeDotRight < -0.01f ){
 						
 						RightTurn();
@@ -650,7 +673,9 @@ public class AINavalBehaviour : MonoBehaviour {
 					}
 					
 				}else if( targetLRAB == TargetLRAB.Behind){
-					
+
+					SailSpeed ( NavalMovement.SailSet.min );
+
 					if( relativeDotForward > 0.01f ){
 						
 						RightTurn();
@@ -662,7 +687,9 @@ public class AINavalBehaviour : MonoBehaviour {
 					}
 					
 				}else if( targetLRAB == TargetLRAB.Left){
-					
+
+					SailSpeed ( target.transform.GetComponent<NavalMovement>().sailSet );
+
 					if( relativeDotForward > 0.01f ){
 						
 						LeftTurn();
@@ -674,7 +701,9 @@ public class AINavalBehaviour : MonoBehaviour {
 					}
 					
 				}else if( targetLRAB == TargetLRAB.Right){
-					
+
+					SailSpeed ( target.transform.GetComponent<NavalMovement>().sailSet );
+
 					if( relativeDotForward > 0.01f ){
 						
 						RightTurn();
@@ -686,10 +715,33 @@ public class AINavalBehaviour : MonoBehaviour {
 					}
 				}
 
+			}else if (targetTALR == TargetTALR.None){
+
+				if( rangeToTarget < maxEngageRange ){
+
+					if( relativeDotForward > 0.01f ){
+						
+						RightTurn();
+						
+					}else if( relativeDotForward < -0.01f ){
+						
+						LeftTurn();
+						
+					}
+
+				}else if( rangeToTarget > maxEngageRange){
+
+					SailTo( targetLocation );
+					SailSpeed( NavalMovement.SailSet.max);
+
+				}
+
 			}
 		
 		}else{
 			// ESCAPE IF TOO CLOSE
+			SailSpeed( NavalMovement.SailSet.no);
+
 		}
 
 		AimAndFireCannons();

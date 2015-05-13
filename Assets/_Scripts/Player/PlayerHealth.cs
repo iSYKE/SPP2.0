@@ -5,8 +5,8 @@ using LostPolygon.DynamicWaterSystem;
 
 public class PlayerHealth : MonoBehaviour {
 
-	public int hullStartingHealth = 100;
-	public int hullCurrentHealth;
+	public float hullStartingHealth = 500;
+	public float hullCurrentHealth;
 	public Text HealthNumberText;
 	public Text GameOverText;
 	public RawImage shipHealthImage;
@@ -15,6 +15,10 @@ public class PlayerHealth : MonoBehaviour {
 	public Texture hull50;
 	public Texture hull75;
 	public Texture hull100;
+
+	public bool isRepaired = true;
+	public bool isSmoking = true;
+
 
 	//AudioSource playerAudio;
 	bool isDead;
@@ -36,8 +40,26 @@ public class PlayerHealth : MonoBehaviour {
 
 	void Update()
 	{
+
+
 		HealthNumberText.text = (hullCurrentHealth.ToString() + " / " + hullStartingHealth.ToString());
+	
+
+		IsDamaged();
+		ShowDamage();
+
+		if( Input.GetKeyDown( KeyCode.H) && hullCurrentHealth <= 0.5f*hullStartingHealth ){
+
+			QuickRepair();
+
+		}
+
+
+	
 	}
+
+
+
 
 	public void TakeDamage (int amount)
 	{
@@ -64,6 +86,18 @@ public class PlayerHealth : MonoBehaviour {
 
 	void Death()
 	{
+					
+		if( !isDead ){
+				
+			Quaternion rotUp = Quaternion.Euler( transform.eulerAngles.x - 90f, transform.eulerAngles.y, transform.eulerAngles.z );
+				
+			GameObject shipDamageSmoke;
+			shipDamageSmoke = Instantiate( Resources.Load("VFX/ShipDeathPlume1") , transform.position , rotUp ) as GameObject;
+			shipDamageSmoke.name = Resources.Load("VFX/ShipDathPlume1").name;
+			shipDamageSmoke.transform.SetParent( transform );
+				
+		}
+
 		isDead = true;
 		//playerAudio.clip = sinkingClip;
 		//playerAudio.Play();
@@ -76,4 +110,42 @@ public class PlayerHealth : MonoBehaviour {
 		buoyancyForce.Density = 1000f;
 
 	}
+
+	void IsDamaged(){
+		
+		if ( hullCurrentHealth < hullStartingHealth ){
+			
+			isRepaired = false;
+		
+		}
+		
+	}
+
+	void ShowDamage(){
+
+		if ( !isSmoking && !isRepaired && hullCurrentHealth < 0.5f*hullStartingHealth){
+
+			GameObject shipDamageSmoke;
+			shipDamageSmoke = Instantiate( Resources.Load("VFX/ShipDamageSmoke") , transform.position , Quaternion.Euler(transform.up) ) as GameObject;
+			shipDamageSmoke.name = Resources.Load("VFX/ShipDamageSmoke").name;
+
+			isSmoking = true;
+
+		}
+
+
+	}
+	
+	void QuickRepair(){
+		
+		hullCurrentHealth = hullCurrentHealth + (0.2f*hullStartingHealth );
+		
+		isRepaired = true;
+		isSmoking = false;
+		
+		
+	}
+
+
+
 }

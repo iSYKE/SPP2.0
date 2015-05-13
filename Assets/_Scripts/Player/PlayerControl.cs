@@ -128,11 +128,23 @@ public class PlayerControl : MonoBehaviour {
 
 	void RangeCannonsLeft(){
 
+		float aimTheta = 0;
 
-		float aimForm	= (( portAimRange *9.81f)/(100f*100f)) ; 
-		float aimThetaR	= 0.5f * Mathf.Asin( aimForm ) ;
-		float aimTheta	= aimThetaR * (360/(2*Mathf.PI));
-		//print (aimTheta);
+		if( portAimRange >= 100f){
+
+			float aimForm	= (( portAimRange *9.81f)/(100f*100f)) ; 
+			float aimThetaR	= 0.5f * Mathf.Asin( aimForm ) ;
+
+			aimTheta	= aimThetaR * (360/(2*Mathf.PI));
+		
+		}else if( portAimRange == 75f){
+
+			aimTheta = -5f;
+
+		}else if( portAimRange == 50f ){
+
+			aimTheta = -10f ;
+		}
 
 		foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )) ){
 			
@@ -147,10 +159,23 @@ public class PlayerControl : MonoBehaviour {
 	void RangeCannonsRight(){
 		
 
-		float aimForm	= (( starBoardAimRange *9.81f)/(100f*100f)) ; 
-		float aimThetaR	= 0.5f * Mathf.Asin( aimForm ) ;
-		float aimTheta	= aimThetaR * (360/(2*Mathf.PI));
-		//print (aimTheta);
+		float aimTheta = 0;
+
+		if( starBoardAimRange >= 100f){
+			
+			float aimForm	= (( starBoardAimRange *9.81f)/(100f*100f)) ; 
+			float aimThetaR	= 0.5f * Mathf.Asin( aimForm ) ;
+			
+			aimTheta	= aimThetaR * (360/(2*Mathf.PI));
+			
+		}else if( starBoardAimRange == 75f){
+			
+			aimTheta = -5f;
+			
+		}else if( starBoardAimRange == 50f ){
+			
+			aimTheta = -10f ;
+		}
 			
 		foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/RightGuns", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )) ){
 			

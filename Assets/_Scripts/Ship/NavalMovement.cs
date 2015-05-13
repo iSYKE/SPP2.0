@@ -141,7 +141,7 @@ public class NavalMovement : MonoBehaviour {
 		float windEffect = windStrength * (sailCharCoef * 100000) * (sailIntoWind + 0.3f) * currSailSetMod ;
 
 		if( transform.position.y < 10f){
-			print (transform.forward);
+			//print (transform.forward);
 			transform.GetComponent<Rigidbody>().AddForceAtPosition( (windEffect * new Vector3( transform.forward.x, 0, transform.forward.z) ) ,  transform.position /*+ Vector3.up*/ );
 
 		}

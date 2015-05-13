@@ -22,12 +22,12 @@ public class CannonballDamage : MonoBehaviour {
 
 			if( contact.otherCollider.transform.parent){
 
-				if ( contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>() || contact.otherCollider.transform.parent.transform.GetComponent<PlayerHealth>()){
+				if ( contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>() || contact.otherCollider.transform.parent.transform.GetComponent<PlayerHealth>() ){
 
 					Destroy (gameObject);
 
 					if(contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>()){
-
+						//print ("AI HIT ITSELF...");
 						contact.otherCollider.transform.parent.transform.GetComponent<AIHealth>().aiHealth -= 10;
 					
 					}else if(contact.otherCollider.transform.parent.transform.GetComponent<PlayerHealth>()){

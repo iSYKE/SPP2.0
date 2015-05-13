@@ -46,7 +46,7 @@ public class PlayerHUD : MonoBehaviour {
 			if (isMiniMapOpen == false) {
 				miniMapCamera.enabled = true;
 				isMiniMapOpen = true;
-			} else if(isMiniMapOpen = true) {
+			} else if(isMiniMapOpen == true) {
 				miniMapCamera.enabled = false;
 				isMiniMapOpen = false;
 			}

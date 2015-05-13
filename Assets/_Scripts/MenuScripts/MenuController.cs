@@ -38,6 +38,11 @@ public class MenuController : MonoBehaviour {
 	ExitMainMenu exitMainMenu;
 	ReturnToMainMenu returnToMainMenu;
 
+	PlayerHealth playerHealth;
+	PlayerControl playerControl;
+	PlayerHUD playerHUD;
+	ManualCannonFire manualCannonFire;
+
 	void Awake() {
 		playButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Play Button");
 		exitButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Exit Game Button");
@@ -138,6 +143,14 @@ public class MenuController : MonoBehaviour {
 			ReturningToMainMenu();
 		}
 		if (panelToChangeTo == "StartGame") {
+			playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+			playerHealth.enabled = true;
+			playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
+			playerControl.enabled = true;
+			playerHUD = GameObject.Find("Player").GetComponent<PlayerHUD>();
+			playerHUD.enabled = true;
+			manualCannonFire = GameObject.Find("Player").GetComponent<ManualCannonFire>();
+			manualCannonFire.enabled = true;
 			Application.LoadLevel("scene01");
 		}
 	}

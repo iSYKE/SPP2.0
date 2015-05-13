@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using LostPolygon.DynamicWaterSystem;
 
 public class ShipSelectionController : MonoBehaviour {
 
@@ -12,21 +13,29 @@ public class ShipSelectionController : MonoBehaviour {
 	GameObject SpawningShip;
 	GameObject CurrentWeapons;
 
+	public float BoatsMass;
+	public float BoatsDensity;
+
 	public GameObject _ShipSelectionMenuObj;
 	public GameObject _WeaponSelectionMenuObj;
 
 	public GameObject startButtonActivateObj;
 
 	ShipMovingOffMenu shipMovingOffMenu;
+	BuoyancyForce buoyancyForce;
 
 	public bool readyToStartGame = false;
 	
 	public void ShipButtons(string buttonName) {
 		if (buttonName == "Sloop" && ActiveShip != buttonName) {
+			BoatsMass = 150000f;
+			BoatsDensity = 450f;
 			MoveShipOff();
 			StartCoroutine(KillShipCoroutine(buttonName));
 		}
 		if (buttonName == "Brig" && ActiveShip != buttonName) {
+			BoatsMass = 450000f;
+			BoatsDensity = 500f;
 			MoveShipOff();
 			StartCoroutine(KillShipCoroutine(buttonName));
 		}
@@ -44,7 +53,7 @@ public class ShipSelectionController : MonoBehaviour {
 			TriggerShipsMenu();
 		}
 		if (buttonName == "Confirm") {
-			foreach( Transform child in GameObject.Find("Player").transform.FindChild("Sloop/Nodes/LeftGuns").transform ){
+			foreach( Transform child in GameObject.Find("Player").transform.FindChild(ActiveShip +"/Nodes/LeftGuns").transform ){
 				
 				if(child.GetComponentInChildren<CannonFire>()){
 					child.GetComponentInChildren<CannonFire>().doFire = true;
@@ -52,7 +61,7 @@ public class ShipSelectionController : MonoBehaviour {
 				}
 			}
 
-			foreach( Transform child in GameObject.Find("Player").transform.FindChild("Sloop/Nodes/RightGuns").transform ){
+			foreach( Transform child in GameObject.Find("Player").transform.FindChild(ActiveShip +"/Nodes/RightGuns").transform ){
 				
 				if(child.GetComponentInChildren<CannonFire>()){
 					child.GetComponentInChildren<CannonFire>().doFire = true;
@@ -77,6 +86,13 @@ public class ShipSelectionController : MonoBehaviour {
 		yield return new WaitForSeconds (1f);
 		SpawnsSelectedShip(newShip);
 		shipMovingOffMenu.enabled = false;
+		GameObject.Find ("Player").GetComponent<Rigidbody> ().mass = BoatsMass;
+		buoyancyForce = GameObject.Find ("Player").GetComponent<BuoyancyForce> ();
+		buoyancyForce.Density = BoatsDensity;
+		buoyancyForce.ResetShip ();
+		buoyancyForce.ProcessChildren = false;
+		yield return new WaitForSeconds (.5f);
+		buoyancyForce.ProcessChildren = true;
 		//Debug.Log ("This HAs Been 10Seconds");
 	}
 
@@ -91,6 +107,8 @@ public class ShipSelectionController : MonoBehaviour {
 		SpawningShip = Instantiate (Resources.Load ("Ships/" + newShip), PlayerTransform.position , PlayerTransform.rotation) as GameObject;
 		SpawningShip.transform.parent = PlayerTransform;
 		SpawningShip.transform.name = newShip;
+
+
 
 		ActiveShip = newShip;
 	}

@@ -235,6 +235,18 @@ namespace LostPolygon.DynamicWaterSystem {
             RecalculateCache();
         }
 
+		public void ResetShip() {
+			_isReady = false;
+			
+			_recompileMarker = new RecompiledMarker();
+			
+			_transform = GetComponent<Transform>();
+			_rigidbody = GetComponent<Rigidbody>();
+			
+			RecalculateVoxels();
+			RecalculateCache();
+		}
+
         private void RecalculateCache() {
             if (_water == null || !_isReady) {
                 return;

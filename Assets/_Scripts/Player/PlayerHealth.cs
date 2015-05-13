@@ -28,7 +28,7 @@ public class PlayerHealth : MonoBehaviour {
 
 
 
-	void Awake()
+	void Start()
 	{
 		//playerAudio = GetComponent<AudioSource> ();
 		hullCurrentHealth = hullStartingHealth;

@@ -24,7 +24,7 @@ public class ManualCannonFire : MonoBehaviour {
 		ViewCamera = GameObject.Find ("Main Camera").GetComponent<Transform> ();
 		menuSelectedShip = GetComponent<MenuSelectedShip> ();
 
-		LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun3").GetComponent<Transform> ();;
+		LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun4").GetComponent<Transform> ();;
 
 		if (Input.GetKeyDown (KeyCode.F) && cannonView == false) {
 			navalCameraMovement = GameObject.Find("Main Camera").GetComponent<NavalCameraMovement> ();
@@ -32,9 +32,10 @@ public class ManualCannonFire : MonoBehaviour {
 			navalCameraMovement.enabled = false;
 			weaponCameraMovement.enabled = true;
 
-			ViewCamera.position = new Vector3(LeftCannonCamaraLocation.position.x, LeftCannonCamaraLocation.position.y + 3f, LeftCannonCamaraLocation.position.z -5f);
-			ViewCamera.eulerAngles = new Vector3(LeftCannonCamaraLocation.eulerAngles.x, LeftCannonCamaraLocation.eulerAngles.y -12f, LeftCannonCamaraLocation.eulerAngles.z);
 			ViewCamera.transform.parent = LeftCannonCamaraLocation.transform;
+			ViewCamera.position = new Vector3(LeftCannonCamaraLocation.position.x+6f, LeftCannonCamaraLocation.position.y + 3f, LeftCannonCamaraLocation.position.z + 6f);
+			ViewCamera.eulerAngles = new Vector3(LeftCannonCamaraLocation.eulerAngles.x, LeftCannonCamaraLocation.eulerAngles.y, LeftCannonCamaraLocation.eulerAngles.z);
+			//ViewCamera.transform.parent = LeftCannonCamaraLocation.transform;
 			Debug.Log("You Are Here");
 			cannonView = true;
 		} else if (Input.GetKeyDown (KeyCode.F) && cannonView == true) {
@@ -45,10 +46,10 @@ public class ManualCannonFire : MonoBehaviour {
 			cannonView = false;
 		}
 
-		if (Input.GetMouseButtonDown (1)) {
+		if (cannonView == true && Input.GetMouseButtonDown (1)) {
 			ViewCamera.GetComponent<Camera>().fieldOfView = 40f;
 		}
-		if (Input.GetMouseButtonUp (1)) {
+		if (cannonView == true && Input.GetMouseButtonUp (1)) {
 			ViewCamera.GetComponent<Camera>().fieldOfView = 80f;
 		}
 	}

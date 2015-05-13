@@ -65,16 +65,16 @@ public class PlayerHealth : MonoBehaviour {
 	{
 		hullCurrentHealth -= amount;
 
-		if (hullCurrentHealth == 150)
+		if ((hullCurrentHealth/hullStartingHealth) * 100 <= 75)
 			shipHealthImage.texture = hull25;
 		
-		if (hullCurrentHealth == 100)
+		if ((hullCurrentHealth/hullStartingHealth) * 100 <= 50)
 			shipHealthImage.texture = hull50;
 
-		if (hullCurrentHealth == 50)
+		if ((hullCurrentHealth/hullStartingHealth) * 100 <= 25)
 			shipHealthImage.texture = hull75;
 
-		if (hullCurrentHealth == 0)
+		if (hullCurrentHealth <= 0)
 			shipHealthImage.texture = hull100;
 
 		//playerAudio.Play();

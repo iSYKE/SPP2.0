@@ -93,7 +93,7 @@ public class PlayerHealth : MonoBehaviour {
 				
 			GameObject shipDamageSmoke;
 			shipDamageSmoke = Instantiate( Resources.Load("VFX/ShipDeathPlume1") , transform.position , rotUp ) as GameObject;
-			shipDamageSmoke.name = Resources.Load("VFX/ShipDathPlume1").name;
+			shipDamageSmoke.name = Resources.Load("VFX/ShipDeathPlume1").name;
 			shipDamageSmoke.transform.SetParent( transform );
 				
 		}
@@ -125,8 +125,10 @@ public class PlayerHealth : MonoBehaviour {
 
 		if ( !isSmoking && !isRepaired && hullCurrentHealth < 0.5f*hullStartingHealth){
 
+			Quaternion rotUp = Quaternion.Euler( transform.eulerAngles.x - 90f, transform.eulerAngles.y, transform.eulerAngles.z );
+			
 			GameObject shipDamageSmoke;
-			shipDamageSmoke = Instantiate( Resources.Load("VFX/ShipDamageSmoke") , transform.position , Quaternion.Euler(transform.up) ) as GameObject;
+			shipDamageSmoke = Instantiate( Resources.Load("VFX/ShipDamageSmoke") , transform.position , rotUp ) as GameObject;
 			shipDamageSmoke.name = Resources.Load("VFX/ShipDamageSmoke").name;
 
 			isSmoking = true;

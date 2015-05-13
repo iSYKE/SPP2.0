@@ -8,7 +8,7 @@ public class ShipSelectionController : MonoBehaviour {
 	public GameObject PlayerObject;
 	public Transform PlayerTransform;
 	GameObject CurrentShip;
-	string ActiveShip = "Sloop";
+	public string ActiveShip = "Sloop";
 	GameObject SpawningShip;
 	GameObject CurrentWeapons;
 

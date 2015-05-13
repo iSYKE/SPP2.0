@@ -43,16 +43,17 @@ public class PlayerHealth : MonoBehaviour {
 
 
 		HealthNumberText.text = (hullCurrentHealth.ToString() + " / " + hullStartingHealth.ToString());
-	
+
+		if( Input.GetKeyDown( KeyCode.H) && hullCurrentHealth <= 0.5f*hullStartingHealth ){
+			
+			QuickRepair();
+			
+		}//MUST BE CALLED BEFORE IsDamaged!
 
 		IsDamaged();
 		ShowDamage();
 
-		if( Input.GetKeyDown( KeyCode.H) && hullCurrentHealth <= 0.5f*hullStartingHealth ){
 
-			QuickRepair();
-
-		}
 
 
 	
@@ -130,6 +131,7 @@ public class PlayerHealth : MonoBehaviour {
 			GameObject shipDamageSmoke;
 			shipDamageSmoke = Instantiate( Resources.Load("VFX/ShipDamageSmoke") , transform.position , rotUp ) as GameObject;
 			shipDamageSmoke.name = Resources.Load("VFX/ShipDamageSmoke").name;
+			shipDamageSmoke.transform.SetParent( transform );
 
 			isSmoking = true;
 

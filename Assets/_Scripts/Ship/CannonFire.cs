@@ -28,30 +28,23 @@ public class CannonFire : MonoBehaviour {
 
 	void Update(){
 		// Fire if reloaded
+		if( !isReloaded){
+			doFire = false;
+		}
+
 		if( doFire == true && isReloaded == true){
 
-			float time1 = Random.Range(0f,2f);
+			float time1 = Random.Range(0f,1.5f);
 			
 			StartCoroutine(DelayShot(time1));
-
 
 			isReloaded 	= false;
 			doFire 		= false;
 		}
 
-		//Reload conditions
-		if( isReloaded == false && currReTime < reTime ){
 
-			currReTime += Time.deltaTime;
-			doFire 		= false;
 
-		}else if(isReloaded == false && currReTime > reTime ){
 
-			currReTime = 0f;
-			isReloaded = true;
-			doFire 		= false;
-
-		}
 	}
 
 	public void SpawnProjectile(){
@@ -78,8 +71,12 @@ public class CannonFire : MonoBehaviour {
 	IEnumerator DelayShot(float time) {
 		yield return new WaitForSeconds(time);
 
+		transform.parent.GetComponent<Animator>().SetTrigger( "Fire");
 		SpawnProjectile();
 		PlayAudio();
+
+
+
 	}
 
 

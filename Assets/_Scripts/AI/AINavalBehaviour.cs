@@ -730,7 +730,6 @@ public class AINavalBehaviour : MonoBehaviour {
 					}
 
 				}else if( rangeToTarget > maxEngageRange){
-
 					SailTo( targetLocation );
 					SailSpeed( NavalMovement.SailSet.max);
 

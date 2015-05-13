@@ -4,6 +4,7 @@ using System.Collections;
 public class LevelLoad : MonoBehaviour {
 
 	GameObject PlayerShip;
+	public string ShipName = "Brig";
 
 	MenuSelectedShip menuSelectedShip;
 

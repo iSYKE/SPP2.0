@@ -1,28 +1,27 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NavalCameraMovement : MonoBehaviour {
+public class WeaponCameraMovement : MonoBehaviour {
 
 	public static Transform target;
-	public float distance = 75.0f;
-	public float xSpeed = 5.0f;
-	public float ySpeed = 100.0f;
-	
-	public float yMinLimit = 5f;
-	public float yMaxLimit = 80f;
-	
-	public float distanceMin = 20f;
-	public float distanceMax = 20f;
-	
+	public float distance = 0.0f;
+	public float xSpeed = 0.5f;
+	public float ySpeed = 0.8f;
+
+	public float yMinLimit = -5.0f;
+	public float yMaxLimit = 5.0f;
+
+	public float distanceMin = 1.0f;
+	public float distanceMax = 4.0f;
+
 	public float smoothTime = 200f;
-	
+
 	float rotationYAxis = 0.0f;
 	float rotationXAxis = 0.0f;
-	
+
 	float velocityX = 0.0f;
 	float velocityY = 0.0f;
-	
-	// Use this for initialization
+
 	void Start()
 	{
 		Vector3 angles = transform.eulerAngles;
@@ -54,12 +53,12 @@ public class NavalCameraMovement : MonoBehaviour {
 			//Quaternion fromRotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, 0);
 			Quaternion toRotation = Quaternion.Euler(rotationXAxis, rotationYAxis, 0);
 			Quaternion rotation = toRotation;
-
+			
 			distance = ( transform.position - target.position).magnitude;
-		
+			
 			distance = Mathf.Clamp(distance - Input.GetAxis("Mouse ScrollWheel") * 50, distanceMin, distanceMax);
-
-		
+			
+			
 			Vector3 negDistance = new Vector3(0.0f, 0.0f, -distance);
 			Vector3 position = rotation * negDistance + target.position;
 			
@@ -69,7 +68,6 @@ public class NavalCameraMovement : MonoBehaviour {
 			velocityX = Mathf.Lerp(velocityX, 0, Time.deltaTime * smoothTime);
 			velocityY = Mathf.Lerp(velocityY, 0, Time.deltaTime * smoothTime);
 		}
-		
 	}
 	
 	public static float ClampAngle(float angle, float min, float max)
@@ -80,5 +78,6 @@ public class NavalCameraMovement : MonoBehaviour {
 			angle -= 360F;
 		return Mathf.Clamp(angle, min, max);
 	}
-
+	
 }
+

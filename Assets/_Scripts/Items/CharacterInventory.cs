@@ -4,11 +4,20 @@ using System.Collections.Generic;
 
 public class CharacterInventory : MonoBehaviour {
 
-	public List<Item> characterInventory = new List<Item>();
+
+
+	public List<Item> characterItems = new List<Item>();
+
+	public Ship playerCurrentShip;
+	public GameObject playerShip;
+
+
 
 	void Start(){
 
-		characterInventory.Add( GameObject.FindGameObjectWithTag("WorldController").GetComponent<ItemList>().gameItems.Find( x => x.itemPrefabName == "Brig" ));
+		characterItems.Add( GameObject.FindGameObjectWithTag("WorldController").GetComponent<ItemList>().gameItems.Find( x => x.itemPrefabName == "Brig" ));
+
+
 
 	}
 

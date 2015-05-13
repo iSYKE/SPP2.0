@@ -138,7 +138,7 @@ public class NavalMovement : MonoBehaviour {
 
 		Vector3 vec = new Vector3( 0, 0, 1);
 
-		float windEffect = windStrength * (sailCharCoef * 100000) * (sailIntoWind + 0.3f) * currSailSetMod ;
+		float windEffect = windStrength * (sailCharCoef * 100000) * (sailIntoWind + (1/(1+sailIntoWind))*sailIntoWindModifier) * currSailSetMod ;
 
 		if( transform.position.y < 10f){
 			//print (transform.forward);

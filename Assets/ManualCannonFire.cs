@@ -33,8 +33,8 @@ public class ManualCannonFire : MonoBehaviour {
 			weaponCameraMovement.enabled = true;
 
 			ViewCamera.transform.parent = LeftCannonCamaraLocation.transform;
-			ViewCamera.position = new Vector3(LeftCannonCamaraLocation.position.x+6f, LeftCannonCamaraLocation.position.y + 3f, LeftCannonCamaraLocation.position.z + 6f);
-			ViewCamera.eulerAngles = new Vector3(LeftCannonCamaraLocation.eulerAngles.x, LeftCannonCamaraLocation.eulerAngles.y, LeftCannonCamaraLocation.eulerAngles.z);
+			ViewCamera.localPosition = new Vector3( 0, 2, -5);
+			ViewCamera.localEulerAngles = new Vector3(LeftCannonCamaraLocation.localEulerAngles.x, LeftCannonCamaraLocation.localEulerAngles.y + 90 , LeftCannonCamaraLocation.localEulerAngles.z);
 			//ViewCamera.transform.parent = LeftCannonCamaraLocation.transform;
 			Debug.Log("You Are Here");
 			cannonView = true;

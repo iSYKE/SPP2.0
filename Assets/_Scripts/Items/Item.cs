@@ -19,7 +19,6 @@ public class Item{
 	public ItemStorageType itemStorageType;
 
 	public enum ItemType{
-		Ship,
 		Cannon,
 		Projectile,
 		Rigging

@@ -13,7 +13,7 @@ public class PlayerHUD : MonoBehaviour {
 
 	bool isMiniMapOpen = false;
 
-	void Awake () 
+	void Start () 
 	{
 		SpeedText = GameObject.Find ("SpeedText").GetComponent<Text> ();
 		NeedleTransform = GameObject.Find ("NeedleRawImage").GetComponent<RectTransform> ();

@@ -5,7 +5,7 @@ public class ManualCannonFire : MonoBehaviour {
 
 	public Transform ViewCamera;
 
-	public Transform LeftCannonCamaraLocation;
+	public Transform LeftCannonCameraLocation;
 
 	bool cannonView = false;
 
@@ -24,7 +24,7 @@ public class ManualCannonFire : MonoBehaviour {
 		ViewCamera = GameObject.Find ("Main Camera").GetComponent<Transform> ();
 		menuSelectedShip = GetComponent<MenuSelectedShip> ();
 
-		LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun4").GetComponent<Transform> ();;
+		LeftCannonCameraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun4/CannonStand").GetComponent<Transform> ();;
 
 		if (Input.GetKeyDown (KeyCode.F) && cannonView == false) {
 			navalCameraMovement = GameObject.Find("Main Camera").GetComponent<NavalCameraMovement> ();
@@ -32,9 +32,11 @@ public class ManualCannonFire : MonoBehaviour {
 			navalCameraMovement.enabled = false;
 			weaponCameraMovement.enabled = true;
 
-			ViewCamera.transform.parent = LeftCannonCamaraLocation.transform;
-			ViewCamera.position = new Vector3(LeftCannonCamaraLocation.position.x+6f, LeftCannonCamaraLocation.position.y + 3f, LeftCannonCamaraLocation.position.z + 6f);
-			ViewCamera.eulerAngles = new Vector3(LeftCannonCamaraLocation.eulerAngles.x, LeftCannonCamaraLocation.eulerAngles.y, LeftCannonCamaraLocation.eulerAngles.z);
+			ViewCamera.transform.parent = LeftCannonCameraLocation.transform;
+			ViewCamera.localPosition = new Vector3 (0f, 4f, -5f);
+			ViewCamera.localEulerAngles = new Vector3 (0f, 0f, 0f);
+			//ViewCamera.position = new Vector3(LeftCannonCameraLocation.position.x, LeftCannonCameraLocation.position.y + 3f, LeftCannonCameraLocation.position.z);
+			//ViewCamera.eulerAngles = new Vector3(LeftCannonCameraLocation.eulerAngles.x, LeftCannonCameraLocation.eulerAngles.y, LeftCannonCameraLocation.eulerAngles.z);
 			//ViewCamera.transform.parent = LeftCannonCamaraLocation.transform;
 			Debug.Log("You Are Here");
 			cannonView = true;

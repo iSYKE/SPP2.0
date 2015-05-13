@@ -3,7 +3,7 @@ using System.Collections;
 
 public class MenuSelectedShip : MonoBehaviour {
 
-	public string ShipName;
+	string ShipName = "Sloop";
 
 	GameObject InGameShip;
 	ShipSelectionController shipSelectionController;
@@ -16,6 +16,6 @@ public class MenuSelectedShip : MonoBehaviour {
 		shipSelectionController = GetComponent<ShipSelectionController> ();
 
 		InGameShip = GameObject.Find ("Player");
-		ShipName = shipSelectionController.ActiveShip;
+		//
 	}
-}
+} 

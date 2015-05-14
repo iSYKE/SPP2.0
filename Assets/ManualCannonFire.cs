@@ -6,11 +6,15 @@ public class ManualCannonFire : MonoBehaviour {
 	public Transform ViewCamera;
 
 	public Transform LeftCannonCamaraLocation;
+	public Transform RightCannonCamaraLocation;
 
 	bool cannonView = false;
+	bool setupCannonStart = false;
+	string currentShipSide;
+
+	int currentCannon = 1;
 
 	NavalCameraMovement navalCameraMovement;
-	WeaponCameraMovement weaponCameraMovement;
 	MenuSelectedShip menuSelectedShip;
 
 	void Start () {
@@ -20,30 +24,29 @@ public class ManualCannonFire : MonoBehaviour {
 	}
 
 	void Update () {
-
-		ViewCamera = GameObject.Find ("Main Camera").GetComponent<Transform> ();
+		ViewCamera = Camera.main.GetComponent<Transform> ();
 		menuSelectedShip = GetComponent<MenuSelectedShip> ();
 
-		LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun4").GetComponent<Transform> ();;
+		if (setupCannonStart == false) {
+			LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun1/CannonStand").GetComponent<Transform> ();
+			RightCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/RightGuns/gun1/CannonStand").GetComponent<Transform> ();
+			setupCannonStart = true;
+		}
 
 		if (Input.GetKeyDown (KeyCode.F) && cannonView == false) {
-			navalCameraMovement = GameObject.Find("Main Camera").GetComponent<NavalCameraMovement> ();
-			weaponCameraMovement = GameObject.Find("Main Camera").GetComponent<WeaponCameraMovement> ();
-			navalCameraMovement.enabled = false;
-			weaponCameraMovement.enabled = true;
-
-			ViewCamera.transform.parent = LeftCannonCamaraLocation.transform;
-			ViewCamera.localPosition = new Vector3( 0, 2, -5);
-			ViewCamera.localEulerAngles = new Vector3(LeftCannonCamaraLocation.localEulerAngles.x, LeftCannonCamaraLocation.localEulerAngles.y + 90 , LeftCannonCamaraLocation.localEulerAngles.z);
-			//ViewCamera.transform.parent = LeftCannonCamaraLocation.transform;
-			Debug.Log("You Are Here");
-			cannonView = true;
+			currentShipSide = "Left";
+			EnableCannonView();
+			SetCurrentCannon(LeftCannonCamaraLocation);
 		} else if (Input.GetKeyDown (KeyCode.F) && cannonView == true) {
-			weaponCameraMovement.enabled = false;
-			navalCameraMovement.enabled = true;
+			DisableCannonView();
+		}
 
-			ViewCamera.transform.parent = null;
-			cannonView = false;
+		if (Input.GetKeyDown (KeyCode.G) && cannonView == false) {
+			currentShipSide = "Right";
+			EnableCannonView();
+			SetCurrentCannon(RightCannonCamaraLocation);
+		} else if (Input.GetKeyDown(KeyCode.G)) {
+			DisableCannonView();
 		}
 
 		if (cannonView == true && Input.GetMouseButtonDown (1)) {
@@ -52,5 +55,54 @@ public class ManualCannonFire : MonoBehaviour {
 		if (cannonView == true && Input.GetMouseButtonUp (1)) {
 			ViewCamera.GetComponent<Camera>().fieldOfView = 80f;
 		}
+
+		if (cannonView == true && Input.GetKeyDown (KeyCode.LeftArrow)) {
+
+			if (currentShipSide == "Left") {
+				currentCannon ++;
+				LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform> ();
+				SetCurrentCannon(LeftCannonCamaraLocation);
+			}
+			if (currentShipSide == "Right") {
+				currentCannon --;
+				RightCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/RightGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform> ();
+				SetCurrentCannon(RightCannonCamaraLocation);
+			}
+		}
+
+		if (cannonView == true && Input.GetKeyDown (KeyCode.RightArrow)) {
+			if (currentShipSide == "Left") {
+				currentCannon --;
+				LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform> ();
+				SetCurrentCannon(LeftCannonCamaraLocation);
+			}
+			if (currentShipSide == "Right") {
+				currentCannon ++;
+				RightCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/RightGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform> ();
+				SetCurrentCannon(RightCannonCamaraLocation);
+			}
+		}
 	}
+
+	void EnableCannonView() {
+			navalCameraMovement = Camera.main.GetComponent<NavalCameraMovement> ();
+			navalCameraMovement.enabled = false;
+		}
+
+	void SetCurrentCannon(Transform side) {
+		ViewCamera.transform.parent = side.transform;
+		ViewCamera.localPosition = new Vector3( 0f, 4f, -6f);
+		ViewCamera.localEulerAngles = new Vector3(side.localEulerAngles.x, side.localEulerAngles.y, side.localEulerAngles.z);
+		
+		cannonView = true;
+	}
+
+	void DisableCannonView() {
+		navalCameraMovement.enabled = true;
+			
+		ViewCamera.transform.parent = null;
+		cannonView = false;
+		setupCannonStart = false;
+		currentCannon = 1;
+		}
 }

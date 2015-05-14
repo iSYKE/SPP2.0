@@ -296,67 +296,67 @@ public class NavalMovement : MonoBehaviour {
 	}
 
 
-	void DetermineSailPresence(){
+	public void DetermineSailPresence(){
 		
 		//Aft Mast
-		if( transform.FindChild( string.Format("{0}/AftMast1/AftSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName ) ) ){
-			aftSail 	= transform.FindChild( string.Format("{0}/AftMast1/AftSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/AftMast1/AftSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			aftSail 	= transform.FindChild( string.Format("{0}/AftMast1/AftSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/AftMast1/AftSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			aftSailFolded 	= transform.FindChild(string.Format("{0}/AftMast1/AftSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/AftMast1/AftSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			aftSailFolded 	= transform.FindChild(string.Format("{0}/AftMast1/AftSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
 
 		//Main mast:
-		if( transform.FindChild( string.Format("{0}/MainMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ))){
-			mainCourseSail 	= transform.FindChild(string.Format("{0}/MainMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName )).gameObject;
+		if( transform.FindChild( string.Format("{0}/MainMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ))){
+			mainCourseSail 	= transform.FindChild(string.Format("{0}/MainMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/MainMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			mainCourseSailFolded 	= transform.FindChild(string.Format("{0}/MainMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/MainMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			mainCourseSailFolded 	= transform.FindChild(string.Format("{0}/MainMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/MainMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			mainTopSail 	= transform.FindChild(string.Format("{0}/MainMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/MainMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			mainTopSail 	= transform.FindChild(string.Format("{0}/MainMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/MainMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			mainTopSailFolded 	= transform.FindChild(string.Format("{0}/MainMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/MainMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			mainTopSailFolded 	= transform.FindChild(string.Format("{0}/MainMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			mainTopGallant 	= transform.FindChild(string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			mainTopGallant 	= transform.FindChild(string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			mainTopGallantFolded 	= transform.FindChild(string.Format("{0}/MainMast1/TopGallantMast/TopGallantFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/MainMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			mainTopGallantFolded 	= transform.FindChild(string.Format("{0}/MainMast1/TopGallantMast/TopGallantFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/MainMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ))){
-			mainRoyalSail	= transform.FindChild(string.Format("{0}/MainMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/MainMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ))){
+			mainRoyalSail	= transform.FindChild(string.Format("{0}/MainMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/MainMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			mainRoyalSailFolded	= transform.FindChild(string.Format("{0}/MainMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/MainMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			mainRoyalSailFolded	= transform.FindChild(string.Format("{0}/MainMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
 
 
 		//Foremast:
-		if( transform.FindChild( string.Format("{0}/ForeMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ))){
-			foreCourseSail 	= transform.FindChild(string.Format("{0}/ForeMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/ForeMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			foreCourseSail 	= transform.FindChild(string.Format("{0}/ForeMast1/CourseSailMast/CourseSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/ForeMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName )) ){
-			foreCourseSailFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/ForeMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName) ) ){
+			foreCourseSailFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/CourseSailMast/CourseSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/ForeMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			foreTopSail 	= transform.FindChild(string.Format("{0}/ForeMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/ForeMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			foreTopSail 	= transform.FindChild(string.Format("{0}/ForeMast1/TopSailMast/TopSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/ForeMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			foreTopSailFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/ForeMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			foreTopSailFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/TopSailMast/TopSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			foreTopGallant 	= transform.FindChild(string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			foreTopGallant 	= transform.FindChild(string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			foreTopGallantFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/TopGallantMast/TopGallantFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/ForeMast1/TopGallantMast/TopGallant", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			foreTopGallantFolded 	= transform.FindChild(string.Format("{0}/ForeMast1/TopGallantMast/TopGallantFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName)).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}/ForeMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			foreRoyalSail	= transform.FindChild(string.Format("{0}/MForeMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}/ForeMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			foreRoyalSail	= transform.FindChild(string.Format("{0}/MForeMast1/RoyalSailMast/RoyalSail", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )).gameObject;
 		}
-		if( transform.FindChild( string.Format("{0}ForeMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName ) ) ){
-			foreRoyalSailFolded	= transform.FindChild(string.Format("{0}/ForeMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemName)).gameObject;
+		if( transform.FindChild( string.Format("{0}ForeMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
+			foreRoyalSailFolded	= transform.FindChild(string.Format("{0}/ForeMast1/RoyalSailMast/RoyalSailFolded", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )).gameObject;
 		}
 
 

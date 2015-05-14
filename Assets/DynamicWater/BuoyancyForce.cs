@@ -223,6 +223,8 @@ namespace LostPolygon.DynamicWaterSystem {
         private float _archimedesForceMagnitude;
         private readonly Vector3 _upDirection = Vector3.up; // Force direction is towards the XZ plane up
 
+
+
         private void Start() {
             _isReady = false;
 
@@ -291,7 +293,7 @@ namespace LostPolygon.DynamicWaterSystem {
                           " Enabled \"Process children\" if you have colliders attached to the children",
                     this);
 
-                Destroy(this);
+                //Destroy(this);
                 return;
             }
 

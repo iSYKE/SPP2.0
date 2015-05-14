@@ -2,7 +2,7 @@
 using System.Collections;
 
 [System.Serializable]
-public class Ship : MonoBehaviour {
+public class Ship {
 
 	public int shipID;
 
@@ -18,6 +18,7 @@ public class Ship : MonoBehaviour {
 	public float shipMass;
 	public float shipDensity;
 
+	public float shipSpawnYoffset;
 	public float shipSailCoefficient;
 	public float shipTurnCoefficient;
 	public float shipSailIntoWindModifier; //How Much Into the Wind can you sail... ~ between 0 and  0.5
@@ -28,7 +29,7 @@ public class Ship : MonoBehaviour {
 
 
 	public Ship( int id, string sName, string sDesc, string sPrefab, float sValue, float sCmass, float sCvol, float sMass, float sDens,
-	             float sSailCo, float sTurnCo, float sSIWmod, float sHull, float sSail, int sCrew){
+	             float sSco, float sSailCo, float sTurnCo, float sSIWmod, float sHull, float sSail, int sCrew){
 
 		shipID 			= id;
 		shipName 		= sName;
@@ -42,6 +43,7 @@ public class Ship : MonoBehaviour {
 		shipMass 					= sMass;
 		shipDensity 				= sDens;
 
+		shipSpawnYoffset 			= sSco;
 		shipSailCoefficient 		= sSailCo;
 		shipTurnCoefficient			= sTurnCo;
 		shipSailIntoWindModifier 	= sSIWmod;

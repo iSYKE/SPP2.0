@@ -15,7 +15,7 @@ public class PlayerNavalFire : MonoBehaviour {
 		//Go through each child in Left and Right gun nodes and invoke firing command in the objects possessing the CannonFire cmponent, ie. cannons
 		if( Input.GetKeyDown(KeyCode.Q) ){
 
-			foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )) ){
+			foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )) ){
 
 				if(child.GetComponentInChildren<CannonFire>()){
 					child.GetComponentInChildren<CannonFire>().doFire = true;
@@ -26,7 +26,7 @@ public class PlayerNavalFire : MonoBehaviour {
 
 		}else if( Input.GetKeyDown(KeyCode.E) ){
 			
-			foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/RightGuns", transform.GetComponent<CharacterInventory>().characterInventory.Find(x=>x.itemType == Item.ItemType.Ship).itemPrefabName )) ){
+			foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/RightGuns", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )) ){
 				
 				if(child.GetComponentInChildren<CannonFire>()){
 					child.GetComponentInChildren<CannonFire>().doFire = true;

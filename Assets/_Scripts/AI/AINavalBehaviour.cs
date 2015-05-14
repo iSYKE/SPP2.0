@@ -104,7 +104,6 @@ public class AINavalBehaviour : MonoBehaviour {
 	//------------------------------------
 	void FixedUpdate () {
 
-
 		zRot = transform.eulerAngles.z;
 		yRot = transform.eulerAngles.y;
 

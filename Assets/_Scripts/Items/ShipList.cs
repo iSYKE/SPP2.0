@@ -9,9 +9,9 @@ public class ShipList : MonoBehaviour {
 	
 	void Start(){
 			
-		gameShips.Add(new Ship( 0, "Sloop", "A Sloop.", "Sloop", 100f, 10000f, 10f, 150000f, 500f, -1f, 5f, 5f, 0.4f,  400f, 200f, 60) );
+		gameShips.Add(new Ship( 0, "Sloop", "A Sloop.", "Sloop", 100f, 10000f, 10f, 150000f, 500f, -1f, 4.5f, 2f, 0.4f,  400f, 200f, 60) );
 
-		gameShips.Add(new Ship( 10, "Brig", "A Brig.", "Brig", 500f, 30000f, 30f, 450000f, 500f, -0.7f, 12f, 6f, 0.4f,  1000f, 300f, 100) );
+		gameShips.Add(new Ship( 10, "Brig", "A Brig.", "Brig", 500f, 30000f, 30f, 450000, 550f, -0.7f, 12f, 6f, 0.35f,  1000f, 300f, 100) );
 		
 	}
 	

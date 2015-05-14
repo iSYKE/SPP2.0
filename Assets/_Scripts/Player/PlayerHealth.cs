@@ -33,7 +33,6 @@ public class PlayerHealth : MonoBehaviour {
 		//playerAudio = GetComponent<AudioSource> ();
 		hullCurrentHealth = hullStartingHealth;
 		sinking = GameObject.FindGameObjectWithTag ("Player");
-		buoyancyForce = sinking.GetComponent<BuoyancyForce> ();
 		GameOverText.enabled = false;
 		shipHealthImage.texture = hull0;
 	}
@@ -108,7 +107,9 @@ public class PlayerHealth : MonoBehaviour {
 		GameOverText.enabled = true;
 		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<NavalCameraMovement> ().enabled = false;
 		GameObject.FindGameObjectWithTag ("Player").GetComponent<NavalMovement>().sailSet = NavalMovement.SailSet.no;
-		buoyancyForce.Density = 1000f;
+
+		//buoyancyForce = sinking.GetComponent<BuoyancyForce> ();
+		//buoyancyForce.Density = 1200f;
 
 	}
 

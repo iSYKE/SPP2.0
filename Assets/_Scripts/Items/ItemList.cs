@@ -8,6 +8,8 @@ public class ItemList : MonoBehaviour {
 	public List<Item> gameItems = new List<Item>(); 
 	
 	void Start(){
+
+
 		//Weapons IDs #: 0-9
 		gameItems.Add(new Item(0, "Short Cannon", "Basic ship cannon", "Cannon1", 200f, true, Item.ItemType.Cannon, Item.ItemStorageType.GunNode, 100f, 5f));
 

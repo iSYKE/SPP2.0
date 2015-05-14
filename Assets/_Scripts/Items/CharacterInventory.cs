@@ -13,11 +13,6 @@ public class CharacterInventory : MonoBehaviour {
 	public Ship characterCurrentShip;
 	public GameObject characterShip;
 
-	float t1 = 1f;
-	float t2 = 0f;
-	float t3;
-	bool  off = false;
-
 	void Start(){
 
 		FillCharCurrShip();
@@ -27,19 +22,6 @@ public class CharacterInventory : MonoBehaviour {
 	void FixedUpdate(){
 
 		ChangeShip();
-
-
-		if(Input.GetKeyDown(KeyCode.V)){
-
-		}
-
-
-		if( off ){
-
-			t2 = t2 + Time.deltaTime;
-		}
-
-
 
 	}
 
@@ -97,12 +79,14 @@ public class CharacterInventory : MonoBehaviour {
 			characterShip = charShip;
 
 			charShip.transform.parent.GetComponent<NavalMovement>().DetermineSailPresence();
+			transform.GetComponent<Rigidbody>().mass = characterCurrentShip.shipMass;
+			
+			transform.GetComponent<NavalMovement>().sailIntoWindModifier 	= characterCurrentShip.shipSailIntoWindModifier;
+			transform.GetComponent<NavalMovement>().turningForceCoeff 		= characterCurrentShip.shipTurnCoefficient;
+			transform.GetComponent<NavalMovement>().sailCharCoef			= characterCurrentShip.shipSailCoefficient;
+			
 
 			transform.GetComponent<Rigidbody>().mass = characterCurrentShip.shipMass;
-
-
-
-
 
 			StartCoroutine(DelayBuoyancy(0.5f));
 		

@@ -90,6 +90,7 @@ public class NavalMovement : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
 
+
 		if( isAlive ){
 			windHdg = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection;
 			LRwind();

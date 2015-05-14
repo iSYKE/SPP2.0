@@ -168,13 +168,13 @@ namespace LostPolygon.DynamicWaterSystem {
         }
 
         [SerializeField]
-        private int _resolution = 2;
+        private int _resolution = 12;
 
         [SerializeField]
-        private float _density = 750f;
+        private float _density = 500f;
 
         [SerializeField]
-        private float _dragInFluid = 1f;
+        private float _dragInFluid = 0.5f;
 
         [SerializeField]
         private float _angularDragInFluid = 1f;
@@ -189,7 +189,7 @@ namespace LostPolygon.DynamicWaterSystem {
         private bool _calculateMassFromDensity = false;
 
         [SerializeField]
-        private bool _processChildren;
+        private bool _processChildren = true;
 
         private Transform _transform;
         private Collider[] _colliders;

@@ -70,11 +70,15 @@ public class CannonFire : MonoBehaviour {
 
 	IEnumerator DelayShot(float time) {
 		yield return new WaitForSeconds(time);
-
 		transform.parent.GetComponent<Animator>().SetTrigger( "Fire");
 		SpawnProjectile();
 		PlayAudio();
 
+		if(transform.parent.transform.parent.transform.parent.name == "LeftGuns"){
+			transform.root.GetComponent<CharacterShipStats>().gunCountUnloadedLeft++;
+		}else if(transform.parent.transform.parent.transform.parent.name == "RightGuns"){
+			transform.root.GetComponent<CharacterShipStats>().gunCountUnloadedRight++;
+		}
 
 
 	}

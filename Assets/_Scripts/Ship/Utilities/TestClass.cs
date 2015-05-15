@@ -1,24 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class CannonStandToReload : MonoBehaviour {
+public class TestClass : MonoBehaviour {
+
+
+	public float t1;
 
 	// Use this for initialization
 	void Start () {
 	
+
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
-	}
 
 
-	void ReloadCannon(){
-
-		transform.FindChild("Cannon1").GetComponent<CannonFire>().isReloaded = true;
+		print (t1);
+		t1 = t1 + 1;
 
 	}
-
-
 }

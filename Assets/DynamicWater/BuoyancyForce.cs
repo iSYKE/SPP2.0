@@ -174,10 +174,10 @@ namespace LostPolygon.DynamicWaterSystem {
         private float _density = 500f;
 
         [SerializeField]
-        private float _dragInFluid = .5f;
+        private float _dragInFluid = 0f;
 
         [SerializeField]
-        private float _angularDragInFluid = 1f;
+        private float _angularDragInFluid = 0f;
 
         [SerializeField]
         private float _splashForceFactor = 2.5f;
@@ -276,7 +276,6 @@ namespace LostPolygon.DynamicWaterSystem {
         /// </summary>
         private void RecalculateVoxels() {
             _isReady = false;
-
             // Extracting the array of required colliders
             if (_processChildren) {
                 _colliders = GetComponentsInChildren<Collider>();

@@ -66,7 +66,16 @@ public class CharacterShipStats : MonoBehaviour {
 		gunMaxCountLeft  =  transform.GetComponent<CharacterInventory>().characterCurrentShip.shipMaxGunsLeft;
 		gunMaxCountRight =  transform.GetComponent<CharacterInventory>().characterCurrentShip.shipMaxGunsRight;
 
+		//Returns guns, must be readded
+		int gunCount = gunCurrentCountLeft+gunCurrentCountRight;
+		while( gunCount > 0 ){
+			transform.GetComponent<CharacterShipInventory>().characterShipInventory.Add( 
+			                   GameObject.FindGameObjectWithTag("WorldController").GetComponent<ItemList>().gameItems.Find(x=>x.itemPrefabName == "Cannon1") ) ;
+			gunCount-- ;
 
+		}
+		gunCurrentCountLeft  = 0;
+		gunCurrentCountRight = 0;
 	}
 
 	//------------------------------------------------

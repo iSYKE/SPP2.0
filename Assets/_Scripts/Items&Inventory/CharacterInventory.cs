@@ -59,8 +59,11 @@ public class CharacterInventory : MonoBehaviour {
 
 			//Update values in Ship stats.
 			transform.GetComponent<CharacterShipStats>().UpdateToNewShip();
+			transform.GetComponent<ShipLoadout>().ListGuns();
+			transform.GetComponent<ShipLoadout>().AddGuns();
+
 			//Add buoyancy.
-			StartCoroutine(DelayBuoyancy(0.5f));
+			StartCoroutine(DelayBuoyancy(0.2f));
 
 
 		}else if( characterCurrentShip.shipName != desiredShip){
@@ -88,9 +91,11 @@ public class CharacterInventory : MonoBehaviour {
 
 			//Update values in Ship stats.
 			transform.GetComponent<CharacterShipStats>().UpdateToNewShip();
+			transform.GetComponent<ShipLoadout>().ListGuns();
+			transform.GetComponent<ShipLoadout>().AddGuns();
 
 			//Reset Buoyancy.
-			StartCoroutine(DelayBuoyancy(0.5f));
+			StartCoroutine(DelayBuoyancy(0.2f));
 		
 		}
 

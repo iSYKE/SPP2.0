@@ -80,7 +80,7 @@ public class NavalMovement : MonoBehaviour {
 		sailCharCoef 		= 15f;
 		turningForceCoeff 	= 6f;
 
-		DetermineSailPresence();
+		//DetermineSailPresence();
 
 
 

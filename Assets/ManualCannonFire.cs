@@ -9,27 +9,29 @@ public class ManualCannonFire : MonoBehaviour {
 	public Transform RightCannonCamaraLocation;
 
 	bool cannonView = false;
-	bool setupCannonStart = false;
+	bool setupCannonStart = true;
 	string currentShipSide;
 
 	int currentCannon = 1;
 
 	NavalCameraMovement navalCameraMovement;
-	MenuSelectedShip menuSelectedShip;
+
+	void OnLevelWasLoaded(int level){
+		if (level == 1) {
+			setupCannonStart = false;
+		}
+	}
 
 	void Start () {
-
-
 
 	}
 
 	void Update () {
 		ViewCamera = Camera.main.GetComponent<Transform> ();
-		menuSelectedShip = GetComponent<MenuSelectedShip> ();
 
 		if (setupCannonStart == false) {
-			LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Sloop" + "/Nodes/LeftGuns/gun1/CannonStand").GetComponent<Transform> ();
-			RightCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Sloop" + "/Nodes/RightGuns/gun1/CannonStand").GetComponent<Transform> ();
+			LeftCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/LeftGuns/gun1/CannonStand").GetComponent<Transform>();
+			RightCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/RightGuns/gun1/CannonStand").GetComponent<Transform>();
 			setupCannonStart = true;
 		}
 
@@ -60,12 +62,12 @@ public class ManualCannonFire : MonoBehaviour {
 
 			if (currentShipSide == "Left") {
 				currentCannon ++;
-				LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform> ();
+				LeftCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/LeftGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform>();
 				SetCurrentCannon(LeftCannonCamaraLocation);
 			}
 			if (currentShipSide == "Right") {
 				currentCannon --;
-				RightCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/RightGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform> ();
+				RightCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/RightGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform>();
 				SetCurrentCannon(RightCannonCamaraLocation);
 			}
 		}
@@ -73,12 +75,12 @@ public class ManualCannonFire : MonoBehaviour {
 		if (cannonView == true && Input.GetKeyDown (KeyCode.RightArrow)) {
 			if (currentShipSide == "Left") {
 				currentCannon --;
-				LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform> ();
+				LeftCannonCamaraLocation = transform.FindChild(transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName + "/Nodes/LeftGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform>();
 				SetCurrentCannon(LeftCannonCamaraLocation);
 			}
 			if (currentShipSide == "Right") {
 				currentCannon ++;
-				RightCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/RightGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform> ();
+				RightCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/RightGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform>();
 				SetCurrentCannon(RightCannonCamaraLocation);
 			}
 		}

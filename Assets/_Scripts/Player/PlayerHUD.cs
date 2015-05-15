@@ -15,7 +15,7 @@ public class PlayerHUD : MonoBehaviour {
 
 	void OnLevelWasLoaded(int level) {
 		if (level == 1) {
-			SpeedText = GameObject.Find ("SpeedText").GetComponent<Text> ();
+			SpeedText = GameObject.Find ("Canvas/CompassParent/SpeedText").GetComponent<Text> ();
 			NeedleTransform = GameObject.Find ("NeedleRawImage").GetComponent<RectTransform> ();
 			//miniMapCamera = GameObject.Find ("MapCamera").GetComponent<Camera> ();
 		}
@@ -40,11 +40,11 @@ public class PlayerHUD : MonoBehaviour {
 
 		int speedInt = (int)speed;
 
-		SpeedText.text = speedInt + " Knots";
+		//SpeedText.text = speedInt + " Knots";
 	}
 
 	void SetCompassDirection() {
-		NeedleTransform.eulerAngles = new Vector3 (0f, 0f, -transform.eulerAngles.y);
+		//NeedleTransform.eulerAngles = new Vector3 (0f, 0f, -transform.eulerAngles.y);
 	}
 
 //	void MiniMap() {

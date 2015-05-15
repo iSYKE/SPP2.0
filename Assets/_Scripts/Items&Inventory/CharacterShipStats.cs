@@ -13,6 +13,14 @@ public class CharacterShipStats : MonoBehaviour {
 	public int minCrew;
 	public int crew;
 
+	public int gunMaxCountLeft;
+	public int gunCurrentCountLeft;
+	public int gunCountUnloadedLeft;
+
+	public int gunMaxCountRight;
+	public int gunCurrentCountRight;
+	public int gunCountUnloadedRight;
+
 	public bool isSinking  = false;
 	public bool isSailable = false;
 	public bool isCrewed   = false;
@@ -55,6 +63,10 @@ public class CharacterShipStats : MonoBehaviour {
 			crew = minCrew;
 		}
 	
+		gunMaxCountLeft  =  transform.GetComponent<CharacterInventory>().characterCurrentShip.shipMaxGunsLeft;
+		gunMaxCountRight =  transform.GetComponent<CharacterInventory>().characterCurrentShip.shipMaxGunsRight;
+
+
 	}
 
 	//------------------------------------------------

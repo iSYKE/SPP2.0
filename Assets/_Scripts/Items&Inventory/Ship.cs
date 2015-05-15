@@ -27,9 +27,12 @@ public class Ship {
 	public float shipMaxSail;
 	public int	 shipMaxCrew;
 
+	public int	shipMaxGunsLeft;
+	public int  shipMaxGunsRight;
+
 
 	public Ship( int id, string sName, string sDesc, string sPrefab, float sValue, float sCmass, float sCvol, float sMass, float sDens,
-	             float sSco, float sSailCo, float sTurnCo, float sSIWmod, float sHull, float sSail, int sCrew){
+	             float sSco, float sSailCo, float sTurnCo, float sSIWmod, float sHull, float sSail, int sCrew, int maxGL, int maxGR ){
 
 		shipID 			= id;
 		shipName 		= sName;
@@ -52,6 +55,9 @@ public class Ship {
 		shipMaxSail = sSail;
 		shipMaxCrew = sCrew;
 
+
+		shipMaxGunsLeft  = maxGL;
+		shipMaxGunsRight = maxGR;
 
 
 

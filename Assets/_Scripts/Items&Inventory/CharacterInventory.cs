@@ -60,7 +60,7 @@ public class CharacterInventory : MonoBehaviour {
 			//Update values in Ship stats.
 			transform.GetComponent<CharacterShipStats>().UpdateToNewShip();
 			//Add buoyancy.
-			transform.gameObject.AddComponent<BuoyancyForce>();
+			StartCoroutine(DelayBuoyancy(0.5f));
 
 
 		}else if( characterCurrentShip.shipName != desiredShip){
@@ -68,7 +68,6 @@ public class CharacterInventory : MonoBehaviour {
 			//Destroy old ship.
 			Destroy(characterShip);
 			Destroy( transform.GetComponent<BuoyancyForce>() );
-
 
 			//Spawn new ship.
 			characterCurrentShip = GameObject.FindWithTag("WorldController").GetComponent<ShipList>().gameShips.Find(x => x.shipName == desiredShip );

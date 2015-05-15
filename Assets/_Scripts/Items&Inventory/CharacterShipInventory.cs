@@ -2,10 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class ShipInventory : MonoBehaviour {
+public class CharacterShipInventory : MonoBehaviour {
 
-	public List<Item> shipInventory = new List<Item>();
-
+	public List<Item> characterShipInventory = new List<Item>();
+	//makeCargo class in the future here...
 
 	// Use this for initialization
 	void Start () {

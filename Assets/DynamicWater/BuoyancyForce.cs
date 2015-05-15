@@ -174,7 +174,7 @@ namespace LostPolygon.DynamicWaterSystem {
         private float _density = 500f;
 
         [SerializeField]
-        private float _dragInFluid = 0.5f;
+        private float _dragInFluid = .5f;
 
         [SerializeField]
         private float _angularDragInFluid = 1f;
@@ -223,8 +223,6 @@ namespace LostPolygon.DynamicWaterSystem {
         private float _archimedesForceMagnitude;
         private readonly Vector3 _upDirection = Vector3.up; // Force direction is towards the XZ plane up
 
-
-
         private void Start() {
             _isReady = false;
 
@@ -237,7 +235,7 @@ namespace LostPolygon.DynamicWaterSystem {
             RecalculateCache();
         }
 
-		public void ResetShip() {
+		public void ResetShip () {
 			_isReady = false;
 			
 			_recompileMarker = new RecompiledMarker();
@@ -293,7 +291,7 @@ namespace LostPolygon.DynamicWaterSystem {
                           " Enabled \"Process children\" if you have colliders attached to the children",
                     this);
 
-                //Destroy(this);
+                Destroy(this);
                 return;
             }
 

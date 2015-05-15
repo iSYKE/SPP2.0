@@ -10,11 +10,11 @@ public class PlayerHealth : MonoBehaviour {
 	public Text HealthNumberText;
 	public Text GameOverText;
 	public RawImage shipHealthImage;
-	public Texture hull0;
-	public Texture hull25;
-	public Texture hull50;
-	public Texture hull75;
-	public Texture hull100;
+	public Texture2D hull0;
+	public Texture2D hull25;
+	public Texture2D hull50;
+	public Texture2D hull75;
+	public Texture2D hull100;
 
 	public bool isRepaired = true;
 	public bool isSmoking = true;
@@ -26,15 +26,31 @@ public class PlayerHealth : MonoBehaviour {
 	GameObject sinking;
 	BuoyancyForce buoyancyForce;
 
+	void OnLevelWasLoaded(int level) {
+		if (level == 1) {
+			hullCurrentHealth = hullStartingHealth;
+			sinking = GameObject.FindGameObjectWithTag ("Player");
+			shipHealthImage = GameObject.Find("Canvas/HealthUI/ShipHealthRawImage").GetComponent<RawImage>();
 
+
+
+
+			//hull0 = Resources.Load("/HUDImages/Hull0");
+//			hull25 = Resources.Load("/HUDImages/Hull25");
+//			hull50 = Resources.Load("/HUDImages/Hull50");
+//			hull75 = Resources.Load("/HUDImages/Hull75");
+//			hull100 = Resources.Load("/HUDImages/Hull100");
+			shipHealthImage.texture = (Texture)hull0;
+			HealthNumberText = GameObject.Find("Canvas/HealthUI/HealthNumberText").GetComponent<Text>();
+			GameOverText = GameObject.Find("Canvas/GameOver/GameOverText").GetComponent<Text>();
+			GameOverText.text = "";
+		}
+	}
 
 	void Start()
 	{
 		//playerAudio = GetComponent<AudioSource> ();
-		hullCurrentHealth = hullStartingHealth;
-		sinking = GameObject.FindGameObjectWithTag ("Player");
-		GameOverText.enabled = false;
-		shipHealthImage.texture = hull0;
+
 	}
 
 	void Update()
@@ -65,7 +81,7 @@ public class PlayerHealth : MonoBehaviour {
 	{
 		hullCurrentHealth -= amount;
 
-		if ((hullCurrentHealth/hullStartingHealth) * 100 <= 75)
+		if ((hullCurrentHealth / hullStartingHealth) * 100 <= 75)
 			shipHealthImage.texture = hull25;
 		
 		if ((hullCurrentHealth/hullStartingHealth) * 100 <= 50)
@@ -104,7 +120,7 @@ public class PlayerHealth : MonoBehaviour {
 
 //		Quaternion sinkingRotation = this.transform.rotation;
 //		sinkingRotation.z = 55f;
-		GameOverText.enabled = true;
+		GameOverText.text = "GAME OVER";
 		GameObject.FindGameObjectWithTag ("MainCamera").GetComponent<NavalCameraMovement> ().enabled = false;
 		GameObject.FindGameObjectWithTag ("Player").GetComponent<NavalMovement>().sailSet = NavalMovement.SailSet.no;
 

@@ -13,10 +13,18 @@ public class PlayerControl : MonoBehaviour {
 	public Text portNumberText;
 	public Text starboardNumberText;
 
-	void Start(){
-		portNumberText.text = portAimRange + "m";
-		starboardNumberText.text = starBoardAimRange + "m";
+	void OnLevelWasLoaded(int level) {
+		if (level == 1) {
+			portNumberText = GameObject.Find("Canvas/ShipFiringUI/PortNumberText").GetComponent<Text>();
+			portNumberText.text = portAimRange + "m";
+			starboardNumberText = GameObject.Find("Canvas/ShipFiringUI/StarboardNumberText").GetComponent<Text>();
+			starboardNumberText.text = starBoardAimRange + "m";
+		}
 
+	}
+
+	void Start(){
+	
 
 	}
 

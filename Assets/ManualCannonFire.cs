@@ -28,8 +28,8 @@ public class ManualCannonFire : MonoBehaviour {
 		menuSelectedShip = GetComponent<MenuSelectedShip> ();
 
 		if (setupCannonStart == false) {
-			LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/LeftGuns/gun1/CannonStand").GetComponent<Transform> ();
-			RightCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Brig" + "/Nodes/RightGuns/gun1/CannonStand").GetComponent<Transform> ();
+			LeftCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Sloop" + "/Nodes/LeftGuns/gun1/CannonStand").GetComponent<Transform> ();
+			RightCannonCamaraLocation = GameObject.Find ("Player/" + /*menuSelectedShip.ShipName*/ "Sloop" + "/Nodes/RightGuns/gun1/CannonStand").GetComponent<Transform> ();
 			setupCannonStart = true;
 		}
 

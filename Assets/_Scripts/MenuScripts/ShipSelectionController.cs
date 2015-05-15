@@ -12,10 +12,7 @@ public class ShipSelectionController : MonoBehaviour {
 	public string ActiveShip = "Sloop";
 	GameObject SpawningShip;
 	GameObject CurrentWeapons;
-
-	public float BoatsMass;
-	public float BoatsDensity;
-
+	
 	public GameObject _ShipSelectionMenuObj;
 	public GameObject _WeaponSelectionMenuObj;
 
@@ -23,19 +20,16 @@ public class ShipSelectionController : MonoBehaviour {
 
 	ShipMovingOffMenu shipMovingOffMenu;
 	BuoyancyForce buoyancyForce;
+	CharacterInventory characterInventory;
 
 	public bool readyToStartGame = false;
 	
 	public void ShipButtons(string buttonName) {
 		if (buttonName == "Sloop" && ActiveShip != buttonName) {
-			BoatsMass = 150000f;
-			BoatsDensity = 450f;
 			MoveShipOff();
 			StartCoroutine(KillShipCoroutine(buttonName));
 		}
 		if (buttonName == "Brig" && ActiveShip != buttonName) {
-			BoatsMass = 450000f;
-			BoatsDensity = 500f;
 			MoveShipOff();
 			StartCoroutine(KillShipCoroutine(buttonName));
 		}
@@ -82,35 +76,22 @@ public class ShipSelectionController : MonoBehaviour {
 
 	IEnumerator KillShipCoroutine(string newShip){
 		yield return new WaitForSeconds (10f);
-		DestroyCurrentShip ();
+		SpawnNewShip(newShip);
 		yield return new WaitForSeconds (1f);
-		SpawnsSelectedShip(newShip);
+		ResetShipLocation ();
 		shipMovingOffMenu.enabled = false;
-		GameObject.Find ("Player").GetComponent<Rigidbody> ().mass = BoatsMass;
-		buoyancyForce = GameObject.Find ("Player").GetComponent<BuoyancyForce> ();
-		buoyancyForce.Density = BoatsDensity;
-		buoyancyForce.ResetShip ();
-		buoyancyForce.ProcessChildren = false;
-		yield return new WaitForSeconds (.5f);
-		buoyancyForce.ProcessChildren = true;
-		//Debug.Log ("This HAs Been 10Seconds");
 	}
 
-	void DestroyCurrentShip() {
-		Ship = GameObject.Find ("Player/" + ActiveShip);
-		Destroy (Ship.gameObject);
-	}
-
-	void SpawnsSelectedShip(string newShip) {
-		PlayerTransform = GameObject.Find ("Player").GetComponent<Transform> ();
-		PlayerTransform.position = new Vector3 (0f, 0f, -60f);
-		SpawningShip = Instantiate (Resources.Load ("Ships/" + newShip), PlayerTransform.position , PlayerTransform.rotation) as GameObject;
-		SpawningShip.transform.parent = PlayerTransform;
-		SpawningShip.transform.name = newShip;
-
-
+	void SpawnNewShip(string newShip) {
+		characterInventory = GameObject.Find ("Player").GetComponent<CharacterInventory> ();
+		characterInventory.desiredShip = newShip;
 
 		ActiveShip = newShip;
+	}
+
+	void ResetShipLocation() {
+		PlayerTransform = GameObject.Find ("Player").GetComponent<Transform> ();
+		PlayerTransform.position = new Vector3 (0f, 0f, -60f);
 	}
 
 	void DestroyCurrentWeapons() {

@@ -6,25 +6,31 @@ public class PlayerHUD : MonoBehaviour {
 
 	public Text SpeedText;
 	public RectTransform NeedleTransform;
-	public Camera miniMapCamera;
+	//public Camera miniMapCamera;
 
 	float speed;
 	float direction;
 
 	bool isMiniMapOpen = false;
 
+	void OnLevelWasLoaded(int level) {
+		if (level == 1) {
+			SpeedText = GameObject.Find ("SpeedText").GetComponent<Text> ();
+			NeedleTransform = GameObject.Find ("NeedleRawImage").GetComponent<RectTransform> ();
+			//miniMapCamera = GameObject.Find ("MapCamera").GetComponent<Camera> ();
+		}
+	}
+
 	void Start () 
 	{
-		SpeedText = GameObject.Find ("SpeedText").GetComponent<Text> ();
-		NeedleTransform = GameObject.Find ("NeedleRawImage").GetComponent<RectTransform> ();
-		miniMapCamera = GameObject.Find ("MapCamera").GetComponent<Camera> ();
+
 	}
 
 	void Update () 
 	{
 		SetSpeed ();
 		SetCompassDirection ();
-		MiniMap ();
+		//MiniMap ();
 	}
 
 	void SetSpeed()
@@ -41,15 +47,15 @@ public class PlayerHUD : MonoBehaviour {
 		NeedleTransform.eulerAngles = new Vector3 (0f, 0f, -transform.eulerAngles.y);
 	}
 
-	void MiniMap() {
-		if (Input.GetKeyDown (KeyCode.M)) {
-			if (isMiniMapOpen == false) {
-				miniMapCamera.enabled = true;
-				isMiniMapOpen = true;
-			} else if(isMiniMapOpen == true) {
-				miniMapCamera.enabled = false;
-				isMiniMapOpen = false;
-			}
-		}
-	}
+//	void MiniMap() {
+//		if (Input.GetKeyDown (KeyCode.M)) {
+//			if (isMiniMapOpen == false) {
+//				miniMapCamera.enabled = true;
+//				isMiniMapOpen = true;
+//			} else if(isMiniMapOpen == true) {
+//				miniMapCamera.enabled = false;
+//				isMiniMapOpen = false;
+//			}
+//		}
+//	}
 }

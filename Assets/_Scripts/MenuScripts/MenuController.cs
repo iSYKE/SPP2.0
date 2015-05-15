@@ -38,7 +38,7 @@ public class MenuController : MonoBehaviour {
 	ExitMainMenu exitMainMenu;
 	ReturnToMainMenu returnToMainMenu;
 
-	PlayerHealth playerHealth;
+	//PlayerHealth playerHealth;
 	PlayerControl playerControl;
 	PlayerHUD playerHUD;
 	ManualCannonFire manualCannonFire;
@@ -143,8 +143,8 @@ public class MenuController : MonoBehaviour {
 			ReturningToMainMenu();
 		}
 		if (panelToChangeTo == "StartGame") {
-			playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-			playerHealth.enabled = true;
+			//playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+			//playerHealth.enabled = true;
 			playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
 			playerControl.enabled = true;
 			playerHUD = GameObject.Find("Player").GetComponent<PlayerHUD>();

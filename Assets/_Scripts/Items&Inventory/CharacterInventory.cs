@@ -12,7 +12,7 @@ public class CharacterInventory : MonoBehaviour {
 	public string desiredShip;
 	public Ship characterCurrentShip;
 	public GameObject characterShip;
-
+	
 	void Start(){
 
 		FillCharCurrShip();
@@ -29,7 +29,7 @@ public class CharacterInventory : MonoBehaviour {
 
 
 
-	void FillCharCurrShip(){
+	public void FillCharCurrShip(){
 
 		if( characterCurrentShip == null || characterCurrentShip.shipName != desiredShip ){
 

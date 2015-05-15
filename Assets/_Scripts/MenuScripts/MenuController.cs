@@ -11,6 +11,8 @@ public class MenuController : MonoBehaviour {
 	public GameObject creditsButtonObj;
 	public GameObject gameTitle;
 
+	public GameObject player;
+
 	public GameObject backButtonObj;
 	public GameObject startGameButtonObj;
 
@@ -151,6 +153,10 @@ public class MenuController : MonoBehaviour {
 			playerHUD.enabled = true;
 			manualCannonFire = GameObject.Find("Player").GetComponent<ManualCannonFire>();
 			manualCannonFire.enabled = true;
+
+			player = GameObject.Find("Player");
+
+
 			Application.LoadLevel("scene01");
 		}
 	}

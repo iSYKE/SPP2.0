@@ -6,13 +6,14 @@ public class PlayerControl : MonoBehaviour {
 
 	public float portAimRange = 100f;
 	public float starBoardAimRange = 100f;
-	public float aimRange = 100f;
+	//public float aimRange = 100f;
 	public float maxRange = 400f;
 	public float minRange = 0f;
 
 	public Text portNumberText;
 	public Text starboardNumberText;
 
+	/*
 	void OnLevelWasLoaded(int level) {
 		if (level == 1) {
 			portNumberText = GameObject.Find("Canvas/ShipFiringUI/PortNumberText").GetComponent<Text>();
@@ -21,10 +22,9 @@ public class PlayerControl : MonoBehaviour {
 			starboardNumberText.text = starBoardAimRange + "m";
 		}
 
-	}
+	}*/
 
 	void Start(){
-	
 
 	}
 
@@ -202,7 +202,7 @@ public class PlayerControl : MonoBehaviour {
 	///*
 
 
-		foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )) ){
+		foreach( Transform child in transform.FindChild( string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName ) ) ){
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
 

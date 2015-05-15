@@ -5,7 +5,7 @@ public class DontDestory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		DontDestroyOnLoad (this);
+		DontDestroyOnLoad (transform.gameObject);
 	}
 	
 	// Update is called once per frame

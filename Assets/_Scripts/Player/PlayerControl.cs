@@ -154,6 +154,7 @@ public class PlayerControl : MonoBehaviour {
 			aimTheta = -10f ;
 		}
 
+		//Don't know what's causing this bug. Might have to query the list in shiploadout instead?
 		foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )) ){
 			
 			if( child.GetComponentInChildren<CannonFire>() ){

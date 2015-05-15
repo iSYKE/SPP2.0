@@ -65,6 +65,7 @@ public class CharacterInventory : MonoBehaviour {
 			//Add buoyancy.
 			StartCoroutine(DelayBuoyancy(0.2f));
 
+			print ("First Ship");
 
 		}else if( characterCurrentShip.shipName != desiredShip){
 
@@ -96,6 +97,7 @@ public class CharacterInventory : MonoBehaviour {
 
 			//Reset Buoyancy.
 			StartCoroutine(DelayBuoyancy(0.2f));
+			print ("Changed Ship");
 		
 		}
 

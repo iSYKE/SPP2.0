@@ -71,8 +71,8 @@ public class ShipLoadout : MonoBehaviour {
 
 	//USED FOR KEEPING TRACK OF GUN NODES
 	public void ListGuns(){
-		leftGuns.Clear();
-		rightGuns.Clear();
+		leftGuns = new List<GameObject>();
+		rightGuns = new List<GameObject>();
 		ListLeftGuns();
 		ListRightGuns();
 	}
@@ -103,18 +103,6 @@ public class ShipLoadout : MonoBehaviour {
 		}
 		
 	}
-
-
-	/*Adding gun method:
-	void AddGunMethod( GameObject go ){
-
-		if( !transform.FindChild("CannonStand")){
-			GameObject cannon;
-			cannon = Instantiate( Resources.Load("Guns/CannonStand"), go.transform.position, go.transform.rotation );
-			cannon.name = Resources.Load("Guns/CannonStand").name;
-
-		}
-
-	}*/
+	
 
 }

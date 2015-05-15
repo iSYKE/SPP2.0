@@ -8,7 +8,7 @@ public class PlayerControl : MonoBehaviour {
 	public float starBoardAimRange = 100f;
 	public float aimRange = 100f;
 	public float maxRange = 400f;
-	public float minRange =   -100f;
+	public float minRange = 0f;
 
 	public Text portNumberText;
 	public Text starboardNumberText;
@@ -136,6 +136,8 @@ public class PlayerControl : MonoBehaviour {
 
 	void RangeCannonsLeft(){
 
+		print ("ranging!");
+
 		float aimTheta = 0;
 
 		if( portAimRange >= 100f){
@@ -154,7 +156,52 @@ public class PlayerControl : MonoBehaviour {
 			aimTheta = -10f ;
 		}
 
-		//Don't know what's causing this bug. Might have to query the list in shiploadout instead?
+		print (aimTheta);
+		print ( transform.GetComponent<ShipLoadout>().leftGuns.Count );
+
+
+		/*
+		 * Don't know what's causing this bug when cannons don't range up/down after loading in from main menu scene.
+		 * 
+		 * Update1:
+		 * Used ship loadout instead of a foreach, which fixed the null reference error, but still cannons refuse to actually move now.
+		 * All works fine when in Scene1 itself... but going from main menu game refuses to get past the calcualting theta part and
+		 * acknowledge the existance of the guns left/right lists... count remains at 0 despite both lists having gun objects in them.
+		 * Clearing/Reseting a list breaks it??
+		 * 
+		 * Update2: 
+		 * No, when in scene1 and change ship the clearing of a list as ListGuns is called returns the correct values for list.count.
+		 * Meanwhile after laoding from menu into scene1 list.count returns zero even after changing a ship...
+		 * Definitely a load level issue with Lists... hmm, hard reset/remove&add all scripts on player perhaps?
+		 * 
+		 * Update3:
+		 * Went from menu to scene1, paused and removed shiploadout component, attached new one with emtpy list. Called changeship. 
+		 * Lists still returns zero count despite the lists filling up with gun game objects as expected... ffs!
+		 * List.ForEach is a bitch, eats frames. Going back to the foreach.(fps drop fixed)
+		 * 
+		 * Update4:
+		 * List still returns count as zero.
+		 * NulleRef is back... error in finding transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )) ???
+		 * Why the fuck would charCurrShip.shipPrefabName be missing? Or Nodes? Or Left/RightGuns?! Everything is as should be in the inspector... Cast Transform is fine... wtf?
+		 * Tried using "Sloop" instead of string formatting same thing. Null reference despite the obejcts being there. I give up.
+.		 */
+
+	/*
+		transform.GetComponent<ShipLoadout>().leftGuns.ForEach( delegate(GameObject obj) {
+			print ("Cannon exists1");	
+			if(	obj.transform.GetComponentInChildren<CannonFire>()  ){
+				print ("Cannon exists2");	
+				obj.transform.GetComponentInChildren<CannonFire>().transform.localEulerAngles = new Vector3(  -aimTheta , transform.GetComponentInChildren<CannonFire>().transform.localEulerAngles.y , 0);
+						
+				}
+			
+			});
+		}
+		*/
+
+	///*
+
+
 		foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/LeftGuns", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )) ){
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
@@ -164,6 +211,8 @@ public class PlayerControl : MonoBehaviour {
 			}
 		}
 	}
+
+	//*/
 
 	void RangeCannonsRight(){
 		
@@ -185,7 +234,19 @@ public class PlayerControl : MonoBehaviour {
 			
 			aimTheta = -10f ;
 		}
-			
+
+	/*
+		transform.GetComponent<ShipLoadout>().rightGuns.ForEach( delegate(GameObject obj) {
+			if(	obj.transform.GetComponentInChildren<CannonFire>()  ){
+					
+				obj.transform.GetComponentInChildren<CannonFire>().transform.localEulerAngles = new Vector3(  -aimTheta , transform.GetComponentInChildren<CannonFire>().transform.localEulerAngles.y , 0);
+
+			}
+
+		});
+	*/
+
+		///*	
 		foreach( Transform child in transform.FindChild(string.Format("{0}/Nodes/RightGuns", transform.GetComponent<CharacterInventory>().characterCurrentShip.shipPrefabName )) ){
 			
 			if( child.GetComponentInChildren<CannonFire>() ){
@@ -194,7 +255,9 @@ public class PlayerControl : MonoBehaviour {
 				
 			}	
 		}
+		//*/
 	}
+	
 
 	void FireCannons(){
 

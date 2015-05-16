@@ -3,6 +3,7 @@ using System.Collections;
 
 public class AINavalBehaviour : MonoBehaviour {
 
+	public bool isAlive = true;
 	// AI Behaviour States
 	//--------------------------------
 	public enum BehaviourMode{
@@ -103,49 +104,53 @@ public class AINavalBehaviour : MonoBehaviour {
 	
 	//------------------------------------
 	void FixedUpdate () {
+		if( isAlive ){
 
-		zRot = transform.eulerAngles.z;
-		yRot = transform.eulerAngles.y;
-
-
-		relativeDotRight = Vector3.Dot( (transform.position - targetLocation).normalized, transform.right   );
-		relativeDotForward = Vector3.Dot( (transform.position - targetLocation).normalized, transform.forward );
-
-		//minusRelativeDot = -relativeDotRight;
-
-
-		windDirection = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection;
-
-
-
-		SeekCurrentFocus();
-
-
-
-		if( hasEnemy ){
-
-			targetLocation 	= target.transform.position;
-			rangeToTarget 	= (transform.position - targetLocation).magnitude;
-
-
-			//Feed into CombatSeamanship
-			targetVelocity 	= target.GetComponent<Rigidbody>().velocity;
-			rightVelDot 	= Vector3.Dot( transform.right.normalized, targetVelocity.normalized);
-			forwardVelDot	= Vector3.Dot( transform.forward.normalized, targetVelocity.normalized);
-
-		}else{
-
-			targetLocation = destination;
-			rangeToTarget 	= (transform.position - targetLocation).magnitude;
+			zRot = transform.eulerAngles.z;
+			yRot = transform.eulerAngles.y;
+			
+			
+			relativeDotRight = Vector3.Dot( (transform.position - targetLocation).normalized, transform.right   );
+			relativeDotForward = Vector3.Dot( (transform.position - targetLocation).normalized, transform.forward );
+			
+			//minusRelativeDot = -relativeDotRight;
+			
+			
+			windDirection = GameObject.FindGameObjectWithTag("WorldController").GetComponent<WindSim>().windDirection;
+			
+			
+			
+			SeekCurrentFocus();
+			
+			
+			
+			if( hasEnemy ){
+				
+				targetLocation 	= target.transform.position;
+				rangeToTarget 	= (transform.position - targetLocation).magnitude;
+				
+				
+				//Feed into CombatSeamanship
+				targetVelocity 	= target.GetComponent<Rigidbody>().velocity;
+				rightVelDot 	= Vector3.Dot( transform.right.normalized, targetVelocity.normalized);
+				forwardVelDot	= Vector3.Dot( transform.forward.normalized, targetVelocity.normalized);
+				
+			}else{
+				
+				targetLocation = destination;
+				rangeToTarget 	= (transform.position - targetLocation).magnitude;
+				
+			}
+			
+			
+			DetermineLRAB();
+			DetermineTALR();
+			DetermineMorale();
+			DetermineAction();
+			Action();
 
 		}
 
-
-		DetermineLRAB();
-		DetermineTALR();
-		DetermineMorale();
-		DetermineAction();
-		Action();
 
 	}
 
@@ -374,21 +379,25 @@ public class AINavalBehaviour : MonoBehaviour {
 			Engage();
 
 		}else if( currentAction == CurrentAction.Withdraw){
-			
-			Withdraw();
+
+			Engage();
+			//Withdraw();
 
 		}else if( currentAction == CurrentAction.Surrender){
 
-			behaviourMode = BehaviourMode.Peaceful;
-			Surrender();
+			Engage();
+			//behaviourMode = BehaviourMode.Peaceful;
+			//Surrender();
 			
 		}else if( currentAction == CurrentAction.Travel){
-			
-			Travel();
+
+			Engage();
+			//Travel();
 
 		}else if( currentAction == CurrentAction.Wait){
-			
-			Wait();
+
+			Engage();
+			//Wait();
 			
 		}
 

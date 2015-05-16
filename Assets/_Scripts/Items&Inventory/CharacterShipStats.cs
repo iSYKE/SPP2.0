@@ -29,7 +29,7 @@ public class CharacterShipStats : MonoBehaviour {
 
 	public bool isRepaired = true;
 	public bool isOnFire = false;
-
+	public bool isExploded = false;
 	public bool isUpdate = false;
 
 
@@ -125,8 +125,21 @@ public class CharacterShipStats : MonoBehaviour {
 		if( isSinking ){
 
 			transform.GetComponent<NavalMovement>().isAlive = false;
-			transform.GetComponent<BuoyancyForce>().Density = 1300f;
-			Destroy( gameObject, 45f );
+
+			if(transform.GetComponent<AINavalBehaviour>() ){
+				transform.GetComponent<AINavalBehaviour>().isAlive = false;
+			}
+
+			transform.GetComponent<BuoyancyForce>().Density = 1200f;
+			Destroy( gameObject, 30f );
+
+			if(!isExploded){
+				GameObject fire;
+				fire = Instantiate( Resources.Load("VFX/ShipDeathPlume1"), transform.position, transform.rotation ) as GameObject;
+				fire.name = Resources.Load("VFX/ShipDeathPlume1").name;
+				isExploded = true;
+			}
+
 
 		}
 

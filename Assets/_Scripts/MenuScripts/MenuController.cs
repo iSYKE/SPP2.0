@@ -71,7 +71,6 @@ public class MenuController : MonoBehaviour {
 
 	public void MainPanelChange (string panelToChangeTo) 
 	{
-
 		if (panelToChangeTo == "Play") {
 			ResetTheMenu();
 			RemoveMainMenu();

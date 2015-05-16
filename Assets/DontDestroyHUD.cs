@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class DontDestory : MonoBehaviour {
+public class DontDestroyHUD : MonoBehaviour {
 
 	void Awake() {
 		DontDestroyOnLoad (transform.gameObject);

@@ -4,6 +4,9 @@ using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
 
+	float time1 = 20f;
+	float time2 =  0f;
+
 	public float portAimRange = 100f;
 	public float starBoardAimRange = 100f;
 	//public float aimRange = 100f;
@@ -33,6 +36,9 @@ public class PlayerControl : MonoBehaviour {
 	
 	void Update()
 	{
+
+		RepairShip();
+
 		ChangeSailSetting();
 		TurnShip();
 		FireCannons();
@@ -41,7 +47,16 @@ public class PlayerControl : MonoBehaviour {
 	}
 
 
-
+	 void RepairShip(){
+		
+		if( Input.GetKeyDown(KeyCode.H) && transform.GetComponent<CharacterShipStats>().hullHealth < (0.5f * transform.GetComponent<CharacterShipStats>().maxHullHealth) ){
+			
+			transform.GetComponent<CharacterShipStats>().isRepaired = true;
+			transform.GetComponent<CharacterShipStats>().hullHealth += 0.2f*transform.GetComponent<CharacterShipStats>().maxHullHealth;
+			
+		}
+		
+	}
 
 
 
@@ -263,6 +278,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 	}
+
 
 
 

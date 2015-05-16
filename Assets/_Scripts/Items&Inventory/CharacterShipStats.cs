@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
+using LostPolygon.DynamicWaterSystem;
+
 
 public class CharacterShipStats : MonoBehaviour {
 
-	public float maxHullHealth;
-	public float hullHealth;
+	public float maxHullHealth = 100f;
+	public float hullHealth = 100f;
 
 	public float maxSailHealth;
 	public float sailHealth;
@@ -25,21 +27,33 @@ public class CharacterShipStats : MonoBehaviour {
 	public bool isSailable = false;
 	public bool isCrewed   = false;
 
+	public bool isRepaired = true;
+	public bool isOnFire = false;
+
+	public bool isUpdate = false;
+
+
 	//-----------------------------------------------
 
 
 	// Use this for initialization
 	void Start () {
-	
+		isUpdate = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
-		HullUpdate();
-		SailUpdate();
-		CrewUpdate();
+		if(isUpdate){
 
+			HullUpdate();
+			SailUpdate();
+			CrewUpdate();
+
+			ShowDamage();
+			Death();
+
+		}
+	
 	}
 
 
@@ -83,14 +97,14 @@ public class CharacterShipStats : MonoBehaviour {
 	void HullUpdate(){
 
 
-		if( hullHealth <= 0){
+		if( hullHealth < 0){
 			isSinking = true;
 		}
 
 
 	}
 	void SailUpdate(){
-		if( sailHealth <= 0){
+		if( sailHealth < 0){
 			isSailable = true;
 		}
 
@@ -104,6 +118,35 @@ public class CharacterShipStats : MonoBehaviour {
 
 	}
 
+
+
+	void Death(){
+
+		if( isSinking ){
+
+			transform.GetComponent<NavalMovement>().isAlive = false;
+			transform.GetComponent<BuoyancyForce>().Density = 1300f;
+			Destroy( gameObject, 45f );
+
+		}
+
+
+	}
+
+
+	void ShowDamage(){
+
+		if( hullHealth < 0.5f*maxHullHealth && isRepaired == false && !isOnFire){
+
+			isOnFire = true;
+
+			GameObject fire;
+			fire = Instantiate( Resources.Load("VFX/ShipDamageSmoke"), transform.position, Quaternion.Euler(transform.eulerAngles.x-90, transform.eulerAngles.y, transform.eulerAngles.z ) ) as GameObject;
+			fire.name = Resources.Load("VFX/ShipDamageSmoke").name;
+			fire.transform.parent = transform;
+		}
+
+	}
 
 
 

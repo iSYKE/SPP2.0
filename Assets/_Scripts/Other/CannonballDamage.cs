@@ -29,12 +29,10 @@ public class CannonballDamage : MonoBehaviour {
 					if(contact.otherCollider.transform.parent.transform.GetComponent<CharacterShipStats>()){
 						//print ("AI HIT ITSELF...");
 						contact.otherCollider.transform.parent.transform.GetComponent<CharacterShipStats>().hullHealth -= 10;
-					
-					}else if(contact.otherCollider.transform.parent.transform.GetComponent<CharacterShipStats>()){
-
-						contact.otherCollider.transform.parent.transform.GetComponent<CharacterShipStats>().hullHealth -= 10;
-
+						contact.otherCollider.transform.parent.transform.GetComponent<CharacterShipStats>().isRepaired = false;
 					}
+
+
 
 					Instantiate( Resources.Load("VFX/WoodSplinter") , contact.point , Quaternion.Euler( contact.normal) );
 

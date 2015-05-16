@@ -297,8 +297,8 @@ public class AINavalBehaviour : MonoBehaviour {
 //--------------------------------------------------------
 
 	void DetermineMorale(){
-		float maxHealth = transform.GetComponent<AIHealth>().aiMaxHealth;
-		float health = transform.GetComponent<AIHealth>().aiHealth;
+		float maxHealth = transform.GetComponent<CharacterShipStats>().maxHullHealth;
+		float health = transform.GetComponent<CharacterShipStats>().hullHealth;
 		if ( behaviourMode == BehaviourMode.Combat ){
 
 			if ( health > 0.25 * maxHealth ){
@@ -737,8 +737,18 @@ public class AINavalBehaviour : MonoBehaviour {
 			}
 		
 		}else{
-			// ESCAPE IF TOO CLOSE
+			// ESCAPE IF TOO CLOSE? Right now it turns.
 			SailSpeed( NavalMovement.SailSet.no);
+
+			if( relativeDotForward > 0.01f ){
+				
+				RightTurn();
+				
+			}else if( relativeDotForward < -0.01f ){
+				
+				LeftTurn();
+			}
+
 
 		}
 

@@ -1,42 +1,17 @@
 fileFormatVersion: 2
-guid: 4567f78c006879143820a930ec30ce30
-timeCreated: 1431504240
+guid: 7aafcee26d1244646b49a6099f844d3e
+timeCreated: 1431749522
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Head
-    100004: Armature
-    100006: Bone
-    100008: Bone_001
-    100010: Bone_002
-    100012: Bone_003
-    100014: Bone_004
-    100016: Bone_005
-    100018: Bone_006
-    100020: Torso
     400000: //RootNode
-    400002: Head
-    400004: Armature
-    400006: Bone
-    400008: Bone_001
-    400010: Bone_002
-    400012: Bone_003
-    400014: Bone_004
-    400016: Bone_005
-    400018: Bone_006
-    400020: Torso
     2300000: //RootNode
-    2300002: Head
     3300000: //RootNode
-    3300002: Head
-    4300000: Torso
-    4300002: Head
+    4300000: Cube
     7400000: Default Take
     9500000: //RootNode
-    13700000: Head
-    13700002: Torso
   materials:
     importMaterials: 1
     materialName: 0
@@ -74,7 +49,7 @@ ModelImporter:
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
-    normalImportMode: 1
+    normalImportMode: 0
     tangentImportMode: 1
   importAnimation: 1
   copyAvatar: 0

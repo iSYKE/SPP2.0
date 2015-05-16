@@ -71,6 +71,8 @@ public class CannonFire : MonoBehaviour {
 	IEnumerator DelayShot(float time) {
 		yield return new WaitForSeconds(time);
 		transform.parent.GetComponent<Animator>().SetTrigger( "Fire");
+		transform.parent.transform.parent.FindChild("CharMale").GetComponent<Animator>().SetTrigger("Fire");
+
 		SpawnProjectile();
 		PlayAudio();
 

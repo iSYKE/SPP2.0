@@ -29,6 +29,10 @@ public class HUDController : MonoBehaviour {
 	WindSim windSim;
 
 	void OnLevelWasLoaded(int level) {
+		if (level == 0) {
+			HUDHolder.GetComponent<RectTransform>().anchoredPosition = new Vector2(-2000f, 20f);
+		}
+
 		if (level == 1) {
 			// Sets Location of the HUD
 			HUDHolder = transform.FindChild("HUDHolder").transform.gameObject;
@@ -92,10 +96,6 @@ public class HUDController : MonoBehaviour {
 
 			IsLevelLoadedUp = true;
 		}
-	}
-
-	void Awake() {
-		DontDestroyOnLoad ( transform.gameObject );
 	}
 
 	void Update () {

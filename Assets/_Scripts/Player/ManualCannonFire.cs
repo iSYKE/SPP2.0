@@ -12,13 +12,22 @@ public class ManualCannonFire : MonoBehaviour {
 	bool setupCannonStart = true;
 	string currentShipSide;
 
+	int NumberOfLeftGuns;
+	int NumberOfRightGuns;
+
 	int currentCannon = 1;
 
 	NavalCameraMovement navalCameraMovement;
+	ShipLoadout shipLoadout;
 
 	void OnLevelWasLoaded(int level){
 		if (level == 1) {
-			setupCannonStart = false;
+			LeftCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/LeftGuns/gun1/CannonStand").GetComponent<Transform>();
+			RightCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/RightGuns/gun1/CannonStand").GetComponent<Transform>();
+
+			shipLoadout = GetComponent<ShipLoadout>();
+			NumberOfLeftGuns = shipLoadout.leftGuns.Count;
+			NumberOfRightGuns = shipLoadout.rightGuns.Count;
 		}
 	}
 
@@ -28,12 +37,6 @@ public class ManualCannonFire : MonoBehaviour {
 
 	void Update () {
 		ViewCamera = Camera.main.GetComponent<Transform> ();
-
-		if (setupCannonStart == false) {
-			LeftCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/LeftGuns/gun1/CannonStand").GetComponent<Transform>();
-			RightCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/RightGuns/gun1/CannonStand").GetComponent<Transform>();
-			setupCannonStart = true;
-		}
 
 		if (Input.GetKeyDown (KeyCode.F) && cannonView == false) {
 			currentShipSide = "Left";
@@ -62,11 +65,21 @@ public class ManualCannonFire : MonoBehaviour {
 
 			if (currentShipSide == "Left") {
 				currentCannon ++;
+				if(currentCannon > NumberOfLeftGuns) {
+					currentCannon = NumberOfLeftGuns;
+				} else if (currentCannon < 1) {
+					currentCannon = 1;
+				}
 				LeftCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/LeftGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform>();
 				SetCurrentCannon(LeftCannonCamaraLocation);
 			}
 			if (currentShipSide == "Right") {
 				currentCannon --;
+				if(currentCannon > NumberOfRightGuns) {
+					currentCannon = NumberOfRightGuns;
+				} else if (currentCannon < 1) {
+					currentCannon = 1;
+				}
 				RightCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/RightGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform>();
 				SetCurrentCannon(RightCannonCamaraLocation);
 			}
@@ -75,11 +88,21 @@ public class ManualCannonFire : MonoBehaviour {
 		if (cannonView == true && Input.GetKeyDown (KeyCode.RightArrow)) {
 			if (currentShipSide == "Left") {
 				currentCannon --;
+				if(currentCannon > NumberOfLeftGuns) {
+					currentCannon = NumberOfLeftGuns;
+				} else if (currentCannon < 1) {
+					currentCannon = 1;
+				}
 				LeftCannonCamaraLocation = transform.FindChild(transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName + "/Nodes/LeftGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform>();
 				SetCurrentCannon(LeftCannonCamaraLocation);
 			}
 			if (currentShipSide == "Right") {
 				currentCannon ++;
+				if(currentCannon > NumberOfRightGuns) {
+					currentCannon = NumberOfRightGuns;
+				} else if (currentCannon < 1) {
+					currentCannon = 1;
+				}
 				RightCannonCamaraLocation = transform.FindChild((transform.GetComponent<CharacterInventory>().characterCurrentShip.shipName).ToString() + "/Nodes/RightGuns/gun"+ currentCannon.ToString() +"/CannonStand").GetComponent<Transform>();
 				SetCurrentCannon(RightCannonCamaraLocation);
 			}

@@ -63,7 +63,7 @@ public class ShipSelectionController : MonoBehaviour {
 				}
 			}
 
-			startButtonActivateObj = GameObject.Find ("Canvas/ShipSelectionMenuButtons/StartGameButton");
+			startButtonActivateObj = GameObject.Find ("MainMenuCanvas/ShipSelectionMenuButtons/StartGameButton");
 			startButtonActivateObj.GetComponent<Button>().interactable = true;
 		}
 
@@ -106,8 +106,8 @@ public class ShipSelectionController : MonoBehaviour {
 	}
 
 	void TriggerWeaponsMenu() {
-		_ShipSelectionMenuObj = GameObject.Find ("Canvas/ShipSelectionMenu");
-		_WeaponSelectionMenuObj = GameObject.Find ("Canvas/WeaponSelectionMenu");
+		_ShipSelectionMenuObj = GameObject.Find ("MainMenuCanvas/ShipSelectionMenu");
+		_WeaponSelectionMenuObj = GameObject.Find ("MainMenuCanvas/WeaponSelectionMenu");
 
 		_ShipSelectionMenuObj.GetComponent<Animator> ().SetTrigger ("MenuSlideOff");
 		_WeaponSelectionMenuObj.GetComponent<Animator> ().SetTrigger ("WeaponMenuSlideIn");

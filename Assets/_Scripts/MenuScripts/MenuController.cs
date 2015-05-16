@@ -42,32 +42,31 @@ public class MenuController : MonoBehaviour {
 
 	//PlayerHealth playerHealth;
 	PlayerControl playerControl;
-	PlayerHUD playerHUD;
 	ManualCannonFire manualCannonFire;
 
 	void Awake() {
-		playButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Play Button");
-		exitButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Exit Game Button");
-		optionsButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Options Button");
-		controlButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Controls Button");
-		creditsButtonObj = GameObject.Find ("Canvas/MainMenuButtons/Credits Button");
-		gameTitle = GameObject.Find ("Canvas/GameTitle");
+		playButtonObj = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Play Button");
+		exitButtonObj = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Exit Game Button");
+		optionsButtonObj = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Options Button");
+		controlButtonObj = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Controls Button");
+		creditsButtonObj = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Credits Button");
+		gameTitle = GameObject.Find ("MainMenuCanvas/GameTitle");
 
-		backButtonObj = GameObject.Find ("Canvas/ShipSelectionMenuButtons/Back Button");
-		startGameButtonObj = GameObject.Find ("Canvas/ShipSelectionMenuButtons/StartGameButton");
+		backButtonObj = GameObject.Find ("MainMenuCanvas/ShipSelectionMenuButtons/Back Button");
+		startGameButtonObj = GameObject.Find ("MainMenuCanvas/ShipSelectionMenuButtons/StartGameButton");
 
-		ShipSelectionMenuObj = GameObject.Find ("Canvas/ShipSelectionMenu");
-		WeaponSelectionMenuObj = GameObject.Find ("Canvas/WeaponSelectionMenu");
+		ShipSelectionMenuObj = GameObject.Find ("MainMenuCanvas/ShipSelectionMenu");
+		WeaponSelectionMenuObj = GameObject.Find ("MainMenuCanvas/WeaponSelectionMenu");
 
-		optionsImageRect = GameObject.Find ("Canvas/OptionsRawImage").GetComponent<RectTransform> ();
-		controlsImageRect = GameObject.Find ("Canvas/ControlsRawImage").GetComponent<RectTransform> ();
-		creditsImageRect = GameObject.Find ("Canvas/CreditsRawImage").GetComponent<RectTransform> ();
+		optionsImageRect = GameObject.Find ("MainMenuCanvas/OptionsRawImage").GetComponent<RectTransform> ();
+		controlsImageRect = GameObject.Find ("MainMenuCanvas/ControlsRawImage").GetComponent<RectTransform> ();
+		creditsImageRect = GameObject.Find ("MainMenuCanvas/CreditsRawImage").GetComponent<RectTransform> ();
 
-		playText = GameObject.Find ("Canvas/MainMenuButtons/Play Button/PlayButtonText").GetComponent<Text> ();
-		optionsText = GameObject.Find ("Canvas/MainMenuButtons/Options Button/OptionsButtonText").GetComponent<Text> ();
-		controlText = GameObject.Find ("Canvas/MainMenuButtons/Controls Button/ControlsButtonText").GetComponent<Text> ();
-		creditsText = GameObject.Find ("Canvas/MainMenuButtons/Credits Button/CreditsButtonText").GetComponent<Text> ();
-		exitText = GameObject.Find ("Canvas/MainMenuButtons/Exit Game Button/ExitGameButtonText").GetComponent<Text> ();
+		playText = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Play Button/PlayButtonText").GetComponent<Text> ();
+		optionsText = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Options Button/OptionsButtonText").GetComponent<Text> ();
+		controlText = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Controls Button/ControlsButtonText").GetComponent<Text> ();
+		creditsText = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Credits Button/CreditsButtonText").GetComponent<Text> ();
+		exitText = GameObject.Find ("MainMenuCanvas/MainMenuButtons/Exit Game Button/ExitGameButtonText").GetComponent<Text> ();
 	}
 
 	public void MainPanelChange (string panelToChangeTo) 
@@ -145,18 +144,6 @@ public class MenuController : MonoBehaviour {
 			ReturningToMainMenu();
 		}
 		if (panelToChangeTo == "StartGame") {
-			//playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
-			//playerHealth.enabled = true;
-			playerControl = GameObject.Find("Player").GetComponent<PlayerControl>();
-			playerControl.enabled = true;
-			playerHUD = GameObject.Find("Player").GetComponent<PlayerHUD>();
-			playerHUD.enabled = true;
-			manualCannonFire = GameObject.Find("Player").GetComponent<ManualCannonFire>();
-			manualCannonFire.enabled = true;
-
-			player = GameObject.Find("Player");
-
-
 			Application.LoadLevel("scene01");
 		}
 	}

@@ -103,38 +103,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 	}
 
-	public void SetCannonAngle(string gunSide) {
-		if (gunSide == "PortUp") {
-			if(portAimRange < 375f) {
-				portAimRange += 25f;
-			} else { portAimRange = 400f; }
-		
-		}
-		if (gunSide == "PortDown") {
-			if(portAimRange > 75f) {
-				portAimRange -= 25f;
-			} else { portAimRange = 50f; }
-		}
-		if (gunSide == "StarboardUp") {
-			if(starBoardAimRange < 375f) {
-				starBoardAimRange += 25f;
-			} else { starBoardAimRange = 400f; }
-		}
-		if (gunSide == "StarboardDown") {
-			if(starBoardAimRange > 75f) {
-				starBoardAimRange -= 25f;
-			}	else { starBoardAimRange = 50f; }
-		}
-
-		portNumberText.text = portAimRange + "m";
-		starboardNumberText.text = starBoardAimRange + "m";
-
-		RangeCannonsLeft();
-		RangeCannonsRight();
-
-	}
-
-	void RangeCannonsLeft(){
+	public void RangeCannonsLeft(){
 
 		print ("ranging!");
 
@@ -214,7 +183,7 @@ public class PlayerControl : MonoBehaviour {
 
 	//*/
 
-	void RangeCannonsRight(){
+	public void RangeCannonsRight(){
 		
 
 		float aimTheta = 0;

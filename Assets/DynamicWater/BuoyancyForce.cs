@@ -168,16 +168,16 @@ namespace LostPolygon.DynamicWaterSystem {
         }
 
         [SerializeField]
-        private int _resolution = 12;
+        private int _resolution = 2;
 
         [SerializeField]
-        private float _density = 500f;
+        private float _density = 750f;
 
         [SerializeField]
-        private float _dragInFluid = 0f;
+        private float _dragInFluid = 1f;
 
         [SerializeField]
-        private float _angularDragInFluid = 0f;
+        private float _angularDragInFluid = 1f;
 
         [SerializeField]
         private float _splashForceFactor = 2.5f;
@@ -189,7 +189,7 @@ namespace LostPolygon.DynamicWaterSystem {
         private bool _calculateMassFromDensity = false;
 
         [SerializeField]
-        private bool _processChildren = true;
+        private bool _processChildren;
 
         private Transform _transform;
         private Collider[] _colliders;
@@ -235,18 +235,6 @@ namespace LostPolygon.DynamicWaterSystem {
             RecalculateCache();
         }
 
-		public void ResetShip () {
-			_isReady = false;
-			
-			_recompileMarker = new RecompiledMarker();
-			
-			_transform = GetComponent<Transform>();
-			_rigidbody = GetComponent<Rigidbody>();
-			
-			RecalculateVoxels();
-			RecalculateCache();
-		}
-
         private void RecalculateCache() {
             if (_water == null || !_isReady) {
                 return;
@@ -276,6 +264,7 @@ namespace LostPolygon.DynamicWaterSystem {
         /// </summary>
         private void RecalculateVoxels() {
             _isReady = false;
+
             // Extracting the array of required colliders
             if (_processChildren) {
                 _colliders = GetComponentsInChildren<Collider>();

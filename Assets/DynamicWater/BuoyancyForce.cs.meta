@@ -5,9 +5,13 @@ labels:
 - Water
 - Dynamic
 - Ripples
+timeCreated: 1431833067
+licenseType: Free
 MonoImporter:
   serializedVersion: 2
   defaultReferences: []
-  executionOrder: 0
+  executionOrder: 700
   icon: {fileID: 2800000, guid: 43abd109802b9f24ab28ff5b94df72ae, type: 3}
   userData: 
+  assetBundleName: 
+  assetBundleVariant: 

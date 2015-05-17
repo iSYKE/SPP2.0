@@ -13,6 +13,10 @@ public class AtGameLoad : MonoBehaviour {
 		ShipTransform = GameObject.Find ("Player").GetComponent<Transform> ();
 		ShipTransform.position = new Vector3 (0f, 0f, -60f);
 
+		DontDestroyOnLoad (GameObject.Find ("Player"));
+		DontDestroyOnLoad (GameObject.Find ("HUDCanvas"));
+		DontDestroyOnLoad (GameObject.Find ("_WorldController"));
+
 		//Zoomed In Coords For The Ship Selection View
 		//CameraTransform.position = new Vector3 (-7.4f, 20.54f, 37.4f);
 		//CameraTransform.eulerAngles = new Vector3 (14.02f, 133.7f, 0f);

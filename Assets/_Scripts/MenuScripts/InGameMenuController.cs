@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class InGameMenuController : MonoBehaviour {
 
@@ -11,8 +12,16 @@ public class InGameMenuController : MonoBehaviour {
 	GameObject worldController;
 	GameObject HUDCanvas;
 
+	RectTransform saveGameMenuRect;
+	public RectTransform loadGameMenuRect;
+	public RectTransform controlsMenuRect;
+
 	void Start() {
 		playingGameMenuRect = transform.FindChild ("InGameMenu").GetComponent<RectTransform> ();
+
+		saveGameMenuRect = transform.FindChild ("SaveGameMenuRawImage").GetComponent<RectTransform> ();
+		loadGameMenuRect = transform.FindChild ("LoadGameMenuRawImage").GetComponent<RectTransform> ();
+		controlsMenuRect = transform.FindChild ("ControlsRawImage").GetComponent<RectTransform> ();
 	}
 
 	void Update () {
@@ -32,6 +41,21 @@ public class InGameMenuController : MonoBehaviour {
 	}
 
 	public void InGameMenuButtons(string command) {
+		if (command == "Resume") {
+			playingGameMenuRect.anchoredPosition = new Vector3(2000f, 0f, 0f);
+			GameObject.Find("Main Camera").GetComponent<NavalCameraMovement>().enabled = true;
+			Time.timeScale = 1;
+			inGameMenuIsOpen = false;
+		}
+		if (command == "SaveGame") {
+			saveGameMenuRect.anchoredPosition = new Vector3(0f, 0f, 0f);
+		}
+		if (command == "LoadGame") {
+			loadGameMenuRect.anchoredPosition = new Vector3(0f, 0f, 0f);
+		}
+		if (command == "Controls") {
+			controlsMenuRect.anchoredPosition = new Vector3(0f, 0f, 0f);
+		}
 		if (command == "MainMenu") {
 			player = GameObject.Find("Player");
 			worldController = GameObject.Find("_WorldController");
@@ -42,17 +66,19 @@ public class InGameMenuController : MonoBehaviour {
 			Destroy(HUDCanvas);
 
 			Application.LoadLevel("MainMenu");
-
-			//StartCoroutine(LoadMainMenuCoroutine());
 		}
-
 		if (command == "ExitGame") {
 			Application.Quit();
 		}
+		if (command == "Back") {
+			saveGameMenuRect.anchoredPosition = new Vector3(-1500f, 0f, 0f);
+			loadGameMenuRect.anchoredPosition = new Vector3(-1500f, 0f, 0f);
+			controlsMenuRect.anchoredPosition = new Vector3(-1500f, 0f, 0f);
+		}
 	}
 
-	IEnumerator LoadMainMenuCoroutine() {
-		yield return new WaitForSeconds (.5f);
-		Application.LoadLevel("MainMenu");
+	IEnumerator TimerCoroutine() {
+		yield return new WaitForSeconds (2f);
+		//Time.timeScale = 0;
 	}
 }

@@ -294,6 +294,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 		if (mainCameraMainMenu.NewGameAngle == false) {
 			if (buttonCommand == "StartGame") {
 
+				Application.LoadLevel("scene01");
 			}
 
 			if (buttonCommand == "Back") {
@@ -334,7 +335,7 @@ public class MainMenuCanvasController : MonoBehaviour {
 		hullStrengthText.text = selectedViewingShip.shipMaxHull + " Units";
 		cargoVolumeText.text = selectedViewingShip.shipCargoVolume.ToString () + " m\x00b3";
 		maxCrewText.text = selectedViewingShip.shipMaxCrew.ToString () + " Men";
-		maxSpeedText.text = "8 Knots";
+		maxSpeedText.text = "10 Knots";
 		maxGuns = selectedViewingShip.shipMaxGunsLeft + selectedViewingShip.shipMaxGunsRight;
 		maxArmamentText.text = maxGuns.ToString () + " Cannons";
 	}

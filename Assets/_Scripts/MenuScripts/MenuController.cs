@@ -88,7 +88,6 @@ public class MenuController : MonoBehaviour {
 			if(optionsPanel == false) {
 				optionsPanel = true;
 				optionsImageRect.anchoredPosition = new Vector3(450f, 20f, 0f);
-				optionsText.GetComponent<Text>().color = Color.red;
 				controlButtonObj.GetComponent<Button>().interactable = false;
 				creditsButtonObj.GetComponent<Button>().interactable = false;
 				playButtonObj.GetComponent<Button>().interactable = false;

@@ -2,8 +2,13 @@
 using System.Collections;
 
 public class ShipDamageSmokeDie : MonoBehaviour {
-	
-	// Update is called once per frame
+
+	public AudioClip fireSound;
+
+	void Start() {
+		AudioSource.PlayClipAtPoint(fireSound, new Vector3(0,0,0),1f/(1+((GameObject.Find("Main Camera").transform.position - transform.position).magnitude)));
+	}
+
 	void Update () {
 
 		if( transform.parent.GetComponent<CharacterShipStats>().isRepaired ){
@@ -16,7 +21,6 @@ public class ShipDamageSmokeDie : MonoBehaviour {
 			Destroy( transform.gameObject);
 
 		}
-
 	}
 
 
